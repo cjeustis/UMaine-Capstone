@@ -1,0 +1,21 @@
+﻿You can use the FTDI 232 chips to program AVRs using Avrdude.  It uses “serial bit banging”, that is it doesn’t actually use the serial port as a serial port, but as a group of general purpose I/O lines.  You will need to have an entry in your configuration file avrdude.conf similar to the following
+
+
+id    = "FT232";
+desc  = "design ponyprog serial, reset=!txd sck=rts mosi=dtr miso=cts";
+type  = serbb;
+reset = ~7; # pin 3 on FT232
+sck   = ~4; # pin 2 on FT232
+mosi  = ~3; # pin 1 on FT232
+miso  = ~8; # pin 11 on FT232
+;
+
+
+To find where your default configuration file is run
+avrdude -v 
+
+
+The -v means verbose.  It will tell you all sorts of good stuff, including where your configuration file is.  At that point, you can either edit the above into the appropriate place in the configuration file, or copy the original configuration into a convenient location and edit that file.  To use a different configuration file add a -C /path/to/your/config/file/avrdude.conf, as well as a -c FT232 and any other command line arguments you need.
+
+
+Note that if you want to use the parallel port for programming (which is much faster) use -c bsd instead of -c FT232 (the bsd is, I understand, the initials of Brian Dean)
