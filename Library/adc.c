@@ -1,7 +1,7 @@
 #include "adc.h"
 #include <avr/io.h>
 
-uint16_t ReadADC(uint8_t channel)
+uint16_t start_adc(uint8_t channel)
 {
 	// Set channel (& keeps it between 0-7)
 	channel &= 0b00000111;
@@ -12,9 +12,19 @@ uint16_t ReadADC(uint8_t channel)
 	ADCSRA |= (1<<ADSC);
 
 	// Wait for conversion to complete
-	while(ADCSRA & (1<<ADSC));
+	// while(ADCSRA & (1<<ADSC));
 
 	return(ADC);
+}
+
+void adc_disable_int(void) {
+	// Disable ADC interrupt
+	ADCSRA &= ~(1<<ADIE);
+}
+
+void adc_enable_int(void) {
+	// Disable ADC interrupt
+	ADCSRA |= (1<<ADIE);
 }
 
 void set_reference(unsigned int ref)

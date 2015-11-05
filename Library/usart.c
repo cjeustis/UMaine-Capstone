@@ -74,7 +74,7 @@ void usart_transmit(unsigned char data)
     UDR0 = data;
 }
 
-unsigned char usart_receive(void)
+int usart_receive(void)
 {
     // Wait for data to be recieved
     while(!(UCSR0A & (1<<RXC0)));

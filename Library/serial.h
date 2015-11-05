@@ -7,7 +7,8 @@
 extern FILE mystdout;
 
 unsigned char check_recieve(void);
-void transmit_data(unsigned char *s);
+void transmit_data(unsigned char *data);
+int USART0ReceiveByte(FILE *stream);
 int stream_printf(unsigned char var, FILE *stream);
 
 #endif

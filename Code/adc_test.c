@@ -1,14 +1,15 @@
 #define F_CPU 16000000UL
 
 // Library files
-#include "adc.c"
-#include "usart.c"
-#include "serial.c"
+#include "../Library/adc.c"
+#include "../Library/usart.c"
+#include "../Library/serial.c"
 
 // Standard headers
 #include <avr/io.h>
 #include <stdio.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 // Set baud for serial communication
 #define BAUD 9600
@@ -21,10 +22,62 @@
 #define PARITY_BITS 0
 
 // Set adc info
-#define REFERENCE 2
+#define REFERENCE 0
 #define PRESCALER 128
-#define AVERAGE 5
+#define AVERAGE 10
 
+// Set temperature info
+#define TEMP_LOWER 35
+#define TEMP_UPPER 55
+
+struct TempSensors {
+	int channel;
+	float temp0F;
+	float temp1F;
+	float tempFinal;
+} temps;
+
+
+float convert_temp(uint16_t adc) {
+	float c, v;
+	/* Convert adc to voltage value */
+	v = adc * 5.0;
+	v = v / 1024.0;
+
+	/* Convert voltage to celcius */
+	c = (v - 0.5) * 10.0;
+
+	/* Convert celcius to farenheit */
+	return (c * 9.0 / 5.0) + 32.0;
+}
+
+ISR(ADC_vect) {
+	if (temps.channel == 0) {
+		temps.temp0F = convert_temp(ADC);
+	}
+	else if (temps.channel == 1) {
+		temps.temp1F = convert_temp(ADC);
+
+		temps.tempFinal = (temps.temp0F + temps.temp1F) / 2.0;
+		printf("Temperature: %1.2f\n", temps.tempFinal);
+	}
+
+	adc_disable_int();
+}
+
+void temperature_value(void) {
+	// Start ADC0 conversion
+	adc_enable_int();
+	temps.channel = 0;
+	start_adc(0);
+	_delay_ms(10);
+
+	// Start ADC1 conversion
+	adc_enable_int();
+	temps.channel = 1;
+	_delay_ms(10);
+	start_adc(1);
+}
 
 int main(int argc, const char *argv[])
 {
@@ -37,29 +90,22 @@ int main(int argc, const char *argv[])
 	// Initialize ADC
 	init_adc(REFERENCE, PRESCALER);
 
+	DDRB = 0x01;
+
+	// Enable global interrupts
+	sei();
+
 	while(1)
 	{
-		int i = 0;
-		uint16_t adc = 0;
+		temperature_value();
 
-		for (i = 0; i < AVERAGE; i++)
-		{
-			adc += ReadADC(1);
+		if (temps.temp1F >= TEMP_UPPER) {
+			PORTB = 0x01;
 		}
-
-		adc /= AVERAGE;
-
-		float voltage = adc * 5.0;
-		voltage = voltage / 1024.0;
-
-		printf("Voltage: %1.3f\n", voltage);
-
-		// float tempC = (voltage - 0.5) * 100.0;
-		// printf("Celcius: %1.2f\n", tempC);
-
-		// float tempF = (tempC * 9.0 / 5.0) + 32.0;
-		// printf("Temp (F): %1.2f*\n", tempF);
-
+		else {
+			PORTB = 0x00;
+		}
+		// Wait a second
 		_delay_ms(1000);
 	}
 

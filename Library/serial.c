@@ -18,20 +18,40 @@ unsigned char check_recieve(void)
 
 void transmit_data(unsigned char *data)
 {
-    // Loop through and trasnmit entire string
+    // Loop through and transmit entire string
     while (*data) { 
         usart_transmit(*data);
         data++;
     }
 }
- 
+
+int uart_getchar(FILE *stream)
+{
+    
+    char data = usart_receive(); //Temporarily store received data
+    if(data == '\r')
+        data = '\n';    
+    // stream_printf(data, stream); //Send to console what has been received, so we can see when typing
+    return data;        
+}
+
+int USART0ReceiveByte(FILE *stream)
+{
+    uint8_t u8Data;
+    // Wait for byte to be received
+    while(!(UCSR0A&(1<<RXC0))){};
+
+    u8Data=UDR0;
+    return u8Data;
+}
+
 // Function called by printf to send to created stream
 int stream_printf(unsigned char var, FILE *stream)
 {
     // Translate \n to \r for terminal
     if (var == '\n') 
     {
-        usart_transmit('\r');
+        stream_printf('\r', 0);
     }
 
     // Transmit data
@@ -40,5 +60,5 @@ int stream_printf(unsigned char var, FILE *stream)
     return 0;
 }
 
-// create stream pointing to serial
-FILE mystdout = FDEV_SETUP_STREAM(stream_printf, NULL, _FDEV_SETUP_WRITE);
+//set stream pointer
+FILE usart0_str = FDEV_SETUP_STREAM(stream_printf, USART0ReceiveByte, _FDEV_SETUP_RW);
