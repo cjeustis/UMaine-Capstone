@@ -1,0 +1,5 @@
+*.eeprom
+*.hex
+/classTest
+/main
+*.zip
