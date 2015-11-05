@@ -1,0 +1,24 @@
+{
+	"recipe_name": "Recipe One",
+	"glass_type": "Highball",
+	"ingredient_one": {
+		"name": "Ingredient One",
+		"amount": "0.5"
+	},
+	"ingredient_two": {
+		"name": "Ingredient Two",
+		"amount": "1"
+	},
+	"ingredient_three": {
+		"name": "Ingredient Three",
+		"amount": "2"
+	},
+	"ingredient_four": {
+		"name": "Ingredient Four",
+		"amount": "4"
+	},
+	"ingredient_five": {
+		"name": "Ingredient Five",
+		"amount": ".5"
+	}
+}
