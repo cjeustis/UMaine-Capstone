@@ -4,15 +4,15 @@
 #include <avr/io.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <avr/eeprom.h>
 #include <avr/interrupt.h>
-#include "../Library/lcd/lcd.h"
-#include "../Library/lcd/myutils.h"
-#include "../Library/lcd/lcd.c"
+#include <util/delay.h>
+// #include "../Library/lcd/lcd.h"
+// #include "../Library/lcd/myutils.h"
+// #include "../Library/lcd/lcd.c"
 #include "../Library/usart.c"
 #include "../Library/serial.c"
-#include "../Library/adc.c"
+// #include "../Library/adc.c"
 #include "../Library/recipes_object.c"
 #include "../Library/motors.c"
 
@@ -26,124 +26,88 @@
 #define STOP_BITS 1
 #define PARITY_BITS 0
 
-// Define recipe information
-#define NUMBER_OF_RECIPES 5
-#define RECIPE_TOTAL_LENGTH 117
-#define RECIPE_NAME_LENGTH 16
-#define RECIPE_AMOUNT_LENGTH 3
+#define USER_NAME_LENGTH 17
+#define USER_AMOUNT_LENGTH 4
 
 // static uint8_t user_temperature;
-Recipes recipes[NUMBER_OF_RECIPES];		// 5 Recipes structures
 volatile float tot_overflow;
+// volatile float motor1_overflow;
+// volatile float motor2_overflow;
+// volatile float motor3_overflow;
+// volatile float motor4_overflow;
 static float pouring_length;
 
-/* Timer/Counter 1 Overflow Interrupt (16-bit timer)
-* Not used now because checking/clearing flag ourselves in main function */
+/* Timer/Counter 1 Overflow Interrupt (16-bit timer) */
 ISR(TIMER1_OVF_vect) {
 	// Keep track of overflows
-	tot_overflow++;
-
-	// if (tot_overflow >= pouring_length) {
-	// 	motor_off(1);
-	// 	tot_overflow = 0;
+	// if(is_motor1_on) {
+	// 	motor1_overflow++;
 	// }
+	// if(is_motor2_on) {
+	// 	motor2_overflow++;
+	// }
+	// if(is_motor3_on) {
+	// 	motor3_overflow++;
+	// }
+	// if(is_motor4_on) {
+	// 	motor4_overflow++;
+	// }
+	tot_overflow++;
 }
 
-Recipes get_eeprom_recipe(uint8_t *location) {
-	Recipes recipe;
-	recipe = newRecipes();
-
-	// Recipe name
-    eeprom_read_block((void*)&recipe->RecipeName, (const void*)location, RECIPE_NAME_LENGTH);
-	location += (RECIPE_NAME_LENGTH + 1);
-
-    // ingredient one
-    eeprom_read_block((void*)&recipe->IngredientOne, (const void*)location, RECIPE_NAME_LENGTH);	
-	location += (RECIPE_NAME_LENGTH + 1);
-    
-    // ingredient one amount
-    eeprom_read_block((void*)&recipe->IngredientOne_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);	
-	location += (RECIPE_AMOUNT_LENGTH + 1);
-    
-    // ingredient two
-    eeprom_read_block((void*)&recipe->IngredientTwo, (const void*)location, RECIPE_NAME_LENGTH);	
-	location += (RECIPE_NAME_LENGTH + 1);
-    
-    // ingredient two amount
-    eeprom_read_block((void*)&recipe->IngredientTwo_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);	
-	location += (RECIPE_AMOUNT_LENGTH + 1);    
-
-    // ingredient three
-    eeprom_read_block((void*)&recipe->IngredientThree, (const void*)location, RECIPE_NAME_LENGTH);	
-	location += (RECIPE_NAME_LENGTH + 1);
-    
-    // ingredient three amount
-    eeprom_read_block((void*)&recipe->IngredientThree_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);	
-	location += (RECIPE_AMOUNT_LENGTH + 1);
-    
-	// ingredient four
-    eeprom_read_block((void*)&recipe->IngredientFour, (const void*)location, RECIPE_NAME_LENGTH);	
-	location += (RECIPE_NAME_LENGTH + 1);
-    
-    // ingredient four amount
-    eeprom_read_block((void*)&recipe->IngredientFour_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);	
-	location += (RECIPE_AMOUNT_LENGTH + 1);
-
-	// Glass type
-    eeprom_read_block((void*)&recipe->GlassType, (const void*)location, RECIPE_NAME_LENGTH);
-
-    // return recipe;
-    return recipe;
-}
-
-uint8_t* set_recipe_eeprom_address(int recipe_number) {
-	uint8_t *mem_address = 0x00;
-
-	switch(recipe_number) {
-		case 0:
-			return mem_address;
-		case 1:
-			return (mem_address + (RECIPE_TOTAL_LENGTH + 1));
-		case 2:
-			return (mem_address + (RECIPE_TOTAL_LENGTH * 2) + 1);
-		case 3:
-			return (mem_address + (RECIPE_TOTAL_LENGTH * 3) + 1);
-		case 4:
-			return (mem_address + (RECIPE_TOTAL_LENGTH * 4) + 1);
-		default:
-			return mem_address;
-	}
-}
-
-void init_recipes(void) {
-	int i;
-	for (i = 0; i < NUMBER_OF_RECIPES; i++) {
-		recipes[i] = newRecipes();
-		recipes[i] = get_eeprom_recipe(set_recipe_eeprom_address(i));
-	}
-	for(i = 0; i < NUMBER_OF_RECIPES; i++) {
-		recipes[i]->AmountOne = atof(recipes[i]->IngredientOne_amount);
-		recipes[i]->AmountTwo = atof(recipes[i]->IngredientTwo_amount);
-		recipes[i]->AmountThree = atof(recipes[i]->IngredientThree_amount);
-		recipes[i]->AmountFour = atof(recipes[i]->IngredientFour_amount);
-	}
+void init_timer(void) {
+	// Normal operation of timer
+	TCCR1A = 0x00;
+	// Prescaler = 8
+	TCCR1B = (1<<CS11);
+	// Initialize counter to 0
+	TCNT1 = 0;
+	// No forced output compares
+	TCCR1C = 0x00;
+	// Enable overflow interrupt
+	TIMSK1 = (1<<TOIE1);
+	// Initialize timer overflow count to 0
+	tot_overflow = 0.0;
 }
 
 void enable_motor_timer(int motor) {
-	motor_on(motor);
-	sei();
+	if(pouring_length != 0) {
+		motor_on(motor);
 
-	// Wait to be done pouring liquid
-	while (tot_overflow < pouring_length);
+		sei();
 
-	motor_off(motor);
-	tot_overflow = 0;
-	cli();
+		// Wait to be done pouring liquid
+		while (tot_overflow < pouring_length);
+
+		motor_off(motor);
+		tot_overflow = 0;
+		cli();
+	}
+}
+
+char* clean_string(int size, char string[]) {
+	int i;
+	for (i = 0; i < size; i++ )
+	{
+	    if ( string[i] == '\n' )
+	    {
+	        string[i] = '\0';
+	        break;
+	    }
+	}
+	return string;
 }
 
 void pour_recipe(int recipe) {
-	printf("You chose %s\n", recipes[recipe]->RecipeName);
-	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
+	int i;
+	printf("\n----------\nPOURING RECIPE\n----------\n");
+	printf("Make sure there is a glass ready\n\n");
+	printf("Pouring in 5...");
+	for (i = 4; i > 0; i--) {
+		_delay_ms(500);
+		printf("%d...", i);
+	}
+	printf("\n\nPouring %1.2f ounces of %s\n", recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
 	// Pour first ingredient
 	pouring_length = (recipes[recipe]->AmountOne * OUNCE);
 	enable_motor_timer(1);
@@ -164,36 +128,158 @@ void pour_recipe(int recipe) {
 	enable_motor_timer(4);
 }
 
+void update_recipe_name(int recipe) {
+	printf("\n----------\nUpdate Recipe Name\n----------\n");
+	char temp[USER_NAME_LENGTH];
+	printf("Current name of the recipe: %s\n", recipes[recipe]->RecipeName);
+	printf("New name of the recipe: ");
+	fgets(temp, USER_NAME_LENGTH, stdin);
+	memcpy(recipes[recipe]->RecipeName, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);
+
+	save_recipe_to_eeprom(recipe);
+	deleteRecipe(recipes[recipe]);
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
+	convert_amount_to_float(recipe);
+	printf("\n--------------------\nRecipe updated\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+}
+
+void update_recipe_glass(int recipe) {
+	printf("\n----------\nUpdate Glass Type\n----------\n");
+	char temp[USER_NAME_LENGTH];
+	printf("Current type of glass: %s\n", recipes[recipe]->GlassType);
+	printf("New glass type: ");
+	fgets(temp, USER_NAME_LENGTH, stdin);
+	memcpy(recipes[recipe]->GlassType, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);
+	// What happens to characters that are over length?
+
+	save_recipe_to_eeprom(recipe);
+	deleteRecipe(recipes[recipe]);
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
+	convert_amount_to_float(recipe);
+	printf("\n--------------------\nRecipe updated\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+}
+
+void update_recipe_ingredient(int recipe, int ingredient) {
+	printf("\n----------\nUpdate Recipe Ingredient\n----------\n");
+	char temp_name[USER_NAME_LENGTH];
+	char temp_amnt[USER_AMOUNT_LENGTH];
+
+	printf("Enter the name of the ingredient: ");
+	fgets(temp_name, USER_NAME_LENGTH, stdin);
+
+	printf("Enter amount of ingredient (0-8 ounces): ");
+	fgets(temp_amnt, USER_AMOUNT_LENGTH, stdin);
+
+
+	if (ingredient == 1) {
+		memcpy(recipes[recipe]->IngredientOne, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientOne_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+	else if (ingredient == 2) {
+		memcpy(recipes[recipe]->IngredientTwo, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientTwo_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+	else if (ingredient == 3) {
+		memcpy(recipes[recipe]->IngredientThree, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientThree_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+	else if (ingredient == 4) {
+		memcpy(recipes[recipe]->IngredientFour, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientFour_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+
+	save_recipe_to_eeprom(recipe);
+	deleteRecipe(recipes[recipe]);
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
+	convert_amount_to_float(recipe);
+	printf("\n--------------------\nRecipe updated\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+}
+
+void manage_recipe(int recipe) {
+	unsigned char choice;
+
+	printf("\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+	printf("\n--------------------\n");
+
+	while (1) {
+		printf("\n0. Display recipe's information\n");
+		printf("1. Update recipe name\n");
+		printf("2. Update ingredient one\n");
+		printf("3. Update ingredient two\n");
+		printf("4. Update ingredient three\n");
+		printf("5. Update ingredient four\n");
+		printf("6. Update glass type\n");
+		printf("7. --POUR RECIPE--\n");
+		printf("8. Back\n");
+		printf("\nSelect an option (1-8): ");
+		scanf("%c", &choice);
+
+		if (choice == '0') {
+			printf("\n--------------------\n");
+			dumpRecipeState(recipes[recipe]);
+			printf("\n--------------------\n");
+		}
+		else if (choice == '1') {
+			update_recipe_name(recipe);
+		}
+		else if (choice == '2') {
+			update_recipe_ingredient(recipe, 1);
+		}
+		else if (choice == '3') {
+			update_recipe_ingredient(recipe, 2);
+		}
+		else if (choice == '4') {
+			update_recipe_ingredient(recipe, 3);
+		}
+		else if (choice == '5') {
+			update_recipe_ingredient(recipe, 4);
+		}
+		else if (choice == '6') {
+			update_recipe_glass(recipe);
+		}
+		else if (choice == '7') {
+			pour_recipe(recipe);
+		}
+		else if (choice == '8') {
+			display_recipes();
+		}
+	}
+}
+
 void display_recipes(void) {
 	int i;
 	unsigned char choice;
 	for (i = 0; i < NUMBER_OF_RECIPES; i++) {
-		printf("Recipe %d\n", i+1);
+		printf("--------------------\nRecipe %d\n--------------------\n", i+1);
 		dumpRecipeState(recipes[i]);
 	}
-	printf("\nWhich recipe would you like to enjoy?\n");
 	
-	// while(1) {
+	while(1) {
+		printf("\nPick a recipe (1-5): ");
 		scanf("%c", &choice);
 
 		switch(choice) {
 			case '1':
-				pour_recipe(0);
+				manage_recipe(0);
 				break;
 			case '2':
-				pour_recipe(1);
+				manage_recipe(1);
 				break;
 			case '3':
-				pour_recipe(2);
+				manage_recipe(2);
 				break;
 			case '4':
-				pour_recipe(3);
+				manage_recipe(3);
 				break;
 			case '5':
-				pour_recipe(4);
+				manage_recipe(4);
 				break;
 		}
-	// }
+	}
 }
 
 int set_temperature(void) {
@@ -214,7 +300,7 @@ int set_temperature(void) {
 			return 0;
 		}
 	}
-	return -1;
+	return 1;
 }
 
 unsigned char welcome_screen(void) {
@@ -234,26 +320,10 @@ unsigned char welcome_screen(void) {
 		else if (choice == '2') return choice;
 	}
 
-	return -1;
-}
-
-void init_timer(void) {
-	// Normal operation of timer
-	TCCR1A = 0x00;
-	// Prescaler = 8
-	TCCR1B = (1<<CS11);
-	// Initialize counter to 0
-	TCNT1 = 0;
-	// No forced output compares
-	TCCR1C = 0x00;
-	// Enable overflow interrupt
-	TIMSK1 = (1<<TOIE1);
-	// Initialize timer overflow count to 0
-	tot_overflow = 0.0;
+	return 1;
 }
 
 int main(void) {
-	cli();
 	init_motors();
 	init_timer();
 	// Set standard streams to serial
