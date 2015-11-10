@@ -3,17 +3,17 @@
 #include <stdbool.h>
 
 /* Motor Information */
-#define MOTOR1A_ON ~(1<<PC0)
-#define MOTOR1B_ON (1<<PC1)
-#define MOTOR2A_ON ~(1<<PC2)
-#define MOTOR2B_ON (1<<PC3)
-#define MOTOR3A_ON ~(1<<PC4)
-#define MOTOR3B_ON (1<<PC5)
-#define MOTOR4A_ON ~(1<<PC6)
-#define MOTOR4B_ON (1<<PC7)
+#define MOTOR1A_ON ~(1<<PB0)
+#define MOTOR1B_ON (1<<PB1)
+#define MOTOR2A_ON ~(1<<PB2)
+#define MOTOR2B_ON (1<<PB3)
+#define MOTOR3A_ON ~(1<<PB4)
+#define MOTOR3B_ON (1<<PB5)
+#define MOTOR4A_ON ~(1<<PB6)
+#define MOTOR4B_ON (1<<PB7)
 
-#define MOTORS_PORT PORTC
-#define MOTORS_PORT_DIR DDRC
+#define MOTORS_PORT PORTB
+#define MOTORS_PORT_DIR DDRB
 
 /* Pouring measurements */
 #define TENTH_OUNCE 70.984
