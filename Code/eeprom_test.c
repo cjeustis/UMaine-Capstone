@@ -55,20 +55,20 @@ int main(int argc, const char *argv[])
 	// init_usart(BAUDRATE, TRANSMIT_RATE, DATA_BITS, STOP_BITS, PARITY_BITS);
 
 
-	char recipe1[RECIPE_TOTAL_LENGTH] = "Recipe One       Rec1Ing1         1   Rec1Ing2         1.2 Rec1Ing3         1.3 Rec1Ing4         1.4 Highball         ";
+	char recipe1[RECIPE_TOTAL_LENGTH] = "Recipe One      Rec1Ing1        1   Rec1Ing2        1.2 Rec1Ing3        1.3 Rec1Ing4        1.4 Highball        ";
     eeprom_write_block ((void*)&recipe1, (const void*)0x00, RECIPE_TOTAL_LENGTH);
 
-	char recipe2[RECIPE_TOTAL_LENGTH] = "Recipe Two       Rec2Ing1         2   Rec2Ing2         2.2 Rec2Ing3         2.3 Rec2Ing4         1.4 Pilsner          ";
-    eeprom_write_block ((void*)&recipe2, (const void*)0x76, RECIPE_TOTAL_LENGTH);
+	char recipe2[RECIPE_TOTAL_LENGTH] = "Recipe Two      Rec2Ing1        2   Rec2Ing2        2.2 Rec2Ing3        2.3 Rec2Ing4        1.4 Pilsner         ";
+    eeprom_write_block ((void*)&recipe2, (const void*)0x70, RECIPE_TOTAL_LENGTH);
 
-	char recipe3[RECIPE_TOTAL_LENGTH] = "Recipe Three     Rec3Ing1         3   Rec3Ing2         3.2 Rec3Ing3         3.3 Rec3Ing4         3.4 Thistle          ";
-    eeprom_write_block ((void*)&recipe3, (const void*)0xEB, RECIPE_TOTAL_LENGTH);
+	char recipe3[RECIPE_TOTAL_LENGTH] = "Recipe Three    Rec3Ing1        3   Rec3Ing2        3.2 Rec3Ing3        3.3 Rec3Ing4        3.4 Thistle         ";
+    eeprom_write_block ((void*)&recipe3, (const void*)0xE0, RECIPE_TOTAL_LENGTH);
 
-	char recipe4[RECIPE_TOTAL_LENGTH] = "Recipe Four      Rec4Ing1         4   Rec4Ing2         4.2 Rec4Ing3         4.3 Rec4Ing4         4.4 Beer Flute       ";
-    eeprom_write_block ((void*)&recipe4, (const void*)0x160, RECIPE_TOTAL_LENGTH);
+	char recipe4[RECIPE_TOTAL_LENGTH] = "Recipe Four      Rec4Ing1        4   Rec4Ing2        4.2 Rec4Ing3        4.3 Rec4Ing4        4.4 Beer Flute      ";
+    eeprom_write_block ((void*)&recipe4, (const void*)0x150, RECIPE_TOTAL_LENGTH);
 
-	char recipe5[RECIPE_TOTAL_LENGTH] = "Recipe Five      Rec5Ing1         5   Rec5Ing2         5.2 Rec5Ing3         5.3 Rec5Ing4         5.4 Snifter          ";
-    eeprom_write_block ((void*)&recipe5, (const void*)0x1D5, RECIPE_TOTAL_LENGTH);
+	char recipe5[RECIPE_TOTAL_LENGTH] = "Recipe Five      Rec5Ing1        5   Rec5Ing2        5.2 Rec5Ing3        5.3 Rec5Ing4        5.4 Snifter         ";
+    eeprom_write_block ((void*)&recipe5, (const void*)0x1C0, RECIPE_TOTAL_LENGTH);
 
 	// int length = strlen(RECIPE_ONE_NAME);
 

@@ -68,19 +68,19 @@ int main(int argc, const char *argv[])
 	// Set values of ingredients to pour
 	// Link ing1 to motor 1, ing2 to motor2, etc.
 	float ing1 = 0.1;	// Let be motor 1
-	float ing2 = 0.2;	// Let be motor 2
+	float ing2 = 5.0;	// Let be motor 2
 	float ing3 = 0.1;	// Let be motor 3
 	float ing4 = 0.4;	// Let be motor 4
 
 	// Pour first ingredient
 	pouring_length = (ing1 * OUNCE);
-	motor_on(1);
+	motor_on(2);
 	sei();
 
 	// Wait to be done pouring liquid
 	while (tot_overflow < pouring_length);
 
-	motor_off(1);
+	// motor_off(2);
 	tot_overflow = 0;
 	cli();
 
