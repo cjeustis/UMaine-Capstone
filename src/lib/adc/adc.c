@@ -1,8 +1,7 @@
 #include "adc.h"
 #include <avr/io.h>
 
-uint16_t start_adc(uint8_t channel)
-{
+uint16_t start_adc(uint8_t channel) {
 	// Set channel (& keeps it between 0-7)
 	channel &= 0b00000111;
 	// Clear bottom 3 bits beforing setting channel

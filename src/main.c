@@ -10,11 +10,11 @@
 // #include "../Library/lcd/lcd.h"
 // #include "../Library/lcd/myutils.h"
 // #include "../Library/lcd/lcd.c"
-#include "../Library/usart.c"
-#include "../Library/serial.c"
+#include "lib/usart/usart.c"
+#include "lib/serial/serial.c"
 // #include "../Library/adc.c"
-#include "../Library/recipes_object.c"
-#include "../Library/motors.c"
+#include "lib/recipes/recipes_object.c"
+#include "lib/motors/motors.c"
 
 // Set baud for serial communication
 #define BAUD 9600
@@ -28,6 +28,20 @@
 
 #define USER_NAME_LENGTH 17
 #define USER_AMOUNT_LENGTH 4
+
+/* PROTOTYPES */
+void init_timer(void);
+void enable_motor_timer(int motor);
+char* clean_string(int size, char string[]);
+void pour_recipe(int recipe);
+void update_recipe_name(int recipe);
+void update_recipe_glass(int recipe);
+void update_recipe_ingredient(int recipe, int ingredient);
+void manage_recipe(int recipe);
+void display_recipes(void);
+int set_temperature(void);
+unsigned char welcome_screen(void);
+/* END PROTOTYPES */
 
 // static uint8_t user_temperature;
 volatile float tot_overflow;
@@ -327,7 +341,7 @@ int main(void) {
 	init_motors();
 	init_timer();
 	// Set standard streams to serial
-	stdin=stdout=&usart0_str;
+	stdin = stdout = &usart0_str;
 
 	// Initialize usart
 	init_usart(BAUDRATE, TRANSMIT_RATE, DATA_BITS, STOP_BITS, PARITY_BITS);
