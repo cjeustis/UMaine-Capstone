@@ -166,3 +166,155 @@ void save_recipe_to_eeprom(int recipe) {
 	// Write glass type to memory
     eeprom_write_block ((void*)&recipes[recipe]->GlassType, (void*)location, RECIPE_NAME_LENGTH);
 }
+
+void manage_recipe(int recipe) {
+	char choice;
+
+	printf("\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+	printf("\n--------------------\n");
+
+	while (1) {
+		printf("\n0. Display recipe's information\n");
+		printf("1. Update recipe name\n");
+		printf("2. Update ingredient one\n");
+		printf("3. Update ingredient two\n");
+		printf("4. Update ingredient three\n");
+		printf("5. Update ingredient four\n");
+		printf("6. Update glass type\n");
+		printf("7. --POUR RECIPE--\n");
+		printf("8. Back\n");
+		printf("\nSelect an option (1-8): ");
+		fgets(&choice, 1, stdin);
+
+		if (choice == '0') {
+			printf("\n--------------------\n");
+			dumpRecipeState(recipes[recipe]);
+			printf("\n--------------------\n");
+		}
+		else if (choice == '1') {
+			update_recipe_name(recipe);
+		}
+		else if (choice == '2') {
+			update_recipe_ingredient(recipe, 1);
+		}
+		else if (choice == '3') {
+			update_recipe_ingredient(recipe, 2);
+		}
+		else if (choice == '4') {
+			update_recipe_ingredient(recipe, 3);
+		}
+		else if (choice == '5') {
+			update_recipe_ingredient(recipe, 4);
+		}
+		else if (choice == '6') {
+			update_recipe_glass(recipe);
+		}
+		else if (choice == '7') {
+			pour_recipe(recipe);
+		}
+		else if (choice == '8') {
+			display_recipes();
+		}
+	}
+}
+
+void pour_recipe(int recipe) {
+	int i;
+	printf("\n----------\nPOURING RECIPE\n----------\n");
+	printf("Make sure there is a glass ready\n\n");
+	printf("Pouring in 5...");
+	for (i = 4; i > 0; i--) {
+		_delay_ms(500);
+		printf("%d...", i);
+	}
+	printf("\n\nPouring %1.2f ounces of %s\n\n", recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountOne * OUNCE);
+	begin_pouring(1);
+
+	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountTwo, recipes[recipe]->IngredientTwo);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountTwo * OUNCE);
+	begin_pouring(2);
+
+	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountThree, recipes[recipe]->IngredientThree);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountThree * OUNCE);
+	begin_pouring(3);
+	
+	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountFour, recipes[recipe]->IngredientFour);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountFour * OUNCE);
+	begin_pouring(4);
+}
+
+void update_recipe_name(int recipe) {
+	printf("\n----------\nUpdate Recipe Name\n----------\n");
+	char temp[USER_NAME_LENGTH];
+	printf("Current name of the recipe: %s\n", recipes[recipe]->RecipeName);
+	printf("New name of the recipe: ");
+	fgets(temp, USER_NAME_LENGTH, stdin);
+	memcpy(recipes[recipe]->RecipeName, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);
+
+	save_recipe_to_eeprom(recipe);
+	deleteRecipe(recipes[recipe]);
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
+	convert_amount_to_float(recipe);
+	printf("\n--------------------\nRecipe updated\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+}
+
+void update_recipe_glass(int recipe) {
+	printf("\n----------\nUpdate Glass Type\n----------\n");
+	char temp[USER_NAME_LENGTH];
+	printf("Current type of glass: %s\n", recipes[recipe]->GlassType);
+	printf("New glass type: ");
+	fgets(temp, USER_NAME_LENGTH, stdin);
+	memcpy(recipes[recipe]->GlassType, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);
+	// What happens to characters that are over length?
+
+	save_recipe_to_eeprom(recipe);
+	deleteRecipe(recipes[recipe]);
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
+	convert_amount_to_float(recipe);
+	printf("\n--------------------\nRecipe updated\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+}
+
+void update_recipe_ingredient(int recipe, int ingredient) {
+	printf("\n----------\nUpdate Recipe Ingredient\n----------\n");
+	char temp_name[USER_NAME_LENGTH];
+	char temp_amnt[USER_AMOUNT_LENGTH];
+
+	printf("Enter the name of the ingredient: ");
+	fgets(temp_name, USER_NAME_LENGTH, stdin);
+
+	printf("Enter amount of ingredient (0-8 ounces): ");
+	fgets(temp_amnt, USER_AMOUNT_LENGTH, stdin);
+
+
+	if (ingredient == 1) {
+		memcpy(recipes[recipe]->IngredientOne, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientOne_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+	else if (ingredient == 2) {
+		memcpy(recipes[recipe]->IngredientTwo, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientTwo_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+	else if (ingredient == 3) {
+		memcpy(recipes[recipe]->IngredientThree, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientThree_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+	else if (ingredient == 4) {
+		memcpy(recipes[recipe]->IngredientFour, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
+		memcpy(recipes[recipe]->IngredientFour_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
+	}
+
+	save_recipe_to_eeprom(recipe);
+	deleteRecipe(recipes[recipe]);
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
+	convert_amount_to_float(recipe);
+	printf("\n--------------------\nRecipe updated\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+}
