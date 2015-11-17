@@ -42,7 +42,7 @@ int USART0ReceiveByte(FILE *stream)
     while(!(UCSR0A&(1<<RXC0))){};
 
     u8Data=UDR0;
-    stream_printf(u8Data, stream); //Send to console what has been received, so we can see when typing
+    // stream_printf(u8Data, stream); //Send to console what has been received, so we can see when typing
     return u8Data;
 }
 
