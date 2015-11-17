@@ -1,6 +1,35 @@
 #include "adc.h"
 #include <avr/io.h>
 
+
+
+float convert_adc_to_fahrenheit(uint16_t adc) {
+	float c, v;
+	/* Convert adc to voltage value */
+	v = adc * 5.0;
+	v = v / 1024.0;
+
+	/* Convert voltage to celcius */
+	c = (v - 0.5) * 10.0;
+
+	/* Convert celcius to farenheit */
+	return (c * 9.0 / 5.0) + 32.0;
+}
+
+void get_temp_reading(void) {
+	// Start ADC0 conversion
+	adc_enable_int();
+	temps.channel = 0;
+	start_adc(0);
+	_delay_ms(10);
+
+	// Start ADC1 conversion
+	adc_enable_int();
+	temps.channel = 1;
+	_delay_ms(10);
+	start_adc(1);
+}
+
 uint16_t start_adc(uint8_t channel) {
 	// Set channel (& keeps it between 0-7)
 	channel &= 0b00000111;
