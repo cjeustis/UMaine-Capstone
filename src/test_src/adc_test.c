@@ -1,9 +1,9 @@
 #define F_CPU 16000000UL
 
 // Library files
-#include "../Library/adc.c"
-#include "../Library/usart.c"
-#include "../Library/serial.c"
+#include "../lib/adc/adc.c"
+#include "../lib/usart/usart.c"
+#include "../lib/serial/serial.c"
 
 // Standard headers
 #include <avr/io.h>
@@ -24,11 +24,11 @@
 // Set adc info
 #define REFERENCE 0
 #define PRESCALER 128
-#define AVERAGE 10
 
 // Set temperature info
 #define TEMP_LOWER 35
 #define TEMP_UPPER 55
+#define TEMP_OFFSET 230
 
 struct TempSensors {
 	int channel;
@@ -53,10 +53,10 @@ float convert_temp(uint16_t adc) {
 
 ISR(ADC_vect) {
 	if (temps.channel == 0) {
-		temps.temp0F = convert_temp(ADC);
+		temps.temp0F = convert_temp(ADC+TEMP_OFFSET);
 	}
 	else if (temps.channel == 1) {
-		temps.temp1F = convert_temp(ADC);
+		temps.temp1F = convert_temp(ADC+TEMP_OFFSET);
 
 		temps.tempFinal = (temps.temp0F + temps.temp1F) / 2.0;
 		printf("Temperature: %1.2f\n", temps.tempFinal);
@@ -81,8 +81,8 @@ void temperature_value(void) {
 
 int main(int argc, const char *argv[])
 {
-    // Point stdout to serial stream (for testing to see adc value)
-    stdout = &mystdout;
+	// Set standard streams to serial
+	stdin = stdout = &usart0_str;
 
 	// Initialize usart
 	init_usart(BAUDRATE, TRANSMIT_RATE, DATA_BITS, STOP_BITS, PARITY_BITS);
@@ -90,7 +90,7 @@ int main(int argc, const char *argv[])
 	// Initialize ADC
 	init_adc(REFERENCE, PRESCALER);
 
-	DDRB = 0x01;
+	// DDRB = 0x01;
 
 	// Enable global interrupts
 	sei();
@@ -99,12 +99,12 @@ int main(int argc, const char *argv[])
 	{
 		temperature_value();
 
-		if (temps.temp1F >= TEMP_UPPER) {
-			PORTB = 0x01;
-		}
-		else {
-			PORTB = 0x00;
-		}
+		// if (temps.temp1F >= TEMP_UPPER) {
+		// 	PORTB = 0x01;
+		// }
+		// else {
+		// 	PORTB = 0x00;
+		// }
 		// Wait a second
 		_delay_ms(1000);
 	}
