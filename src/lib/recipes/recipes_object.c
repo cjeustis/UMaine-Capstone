@@ -8,6 +8,9 @@
 #define RECIPE_AMOUNT_LENGTH 3
 #define NUMBER_OF_RECIPES 5
 
+#define USER_NAME_LENGTH 17
+#define USER_AMOUNT_LENGTH 4
+
 Recipes recipes[NUMBER_OF_RECIPES];		// 5 Recipes structures
 
 /* Struct for holding information about a particular recipe */
@@ -165,88 +168,6 @@ void save_recipe_to_eeprom(int recipe) {
 	location += RECIPE_AMOUNT_LENGTH+1;
 	// Write glass type to memory
     eeprom_write_block ((void*)&recipes[recipe]->GlassType, (void*)location, RECIPE_NAME_LENGTH);
-}
-
-void manage_recipe(int recipe) {
-	char choice;
-
-	printf("\n--------------------\n");
-	dumpRecipeState(recipes[recipe]);
-	printf("\n--------------------\n");
-
-	while (1) {
-		printf("\n0. Display recipe's information\n");
-		printf("1. Update recipe name\n");
-		printf("2. Update ingredient one\n");
-		printf("3. Update ingredient two\n");
-		printf("4. Update ingredient three\n");
-		printf("5. Update ingredient four\n");
-		printf("6. Update glass type\n");
-		printf("7. --POUR RECIPE--\n");
-		printf("8. Back\n");
-		printf("\nSelect an option (1-8): ");
-		fgets(&choice, 1, stdin);
-
-		if (choice == '0') {
-			printf("\n--------------------\n");
-			dumpRecipeState(recipes[recipe]);
-			printf("\n--------------------\n");
-		}
-		else if (choice == '1') {
-			update_recipe_name(recipe);
-		}
-		else if (choice == '2') {
-			update_recipe_ingredient(recipe, 1);
-		}
-		else if (choice == '3') {
-			update_recipe_ingredient(recipe, 2);
-		}
-		else if (choice == '4') {
-			update_recipe_ingredient(recipe, 3);
-		}
-		else if (choice == '5') {
-			update_recipe_ingredient(recipe, 4);
-		}
-		else if (choice == '6') {
-			update_recipe_glass(recipe);
-		}
-		else if (choice == '7') {
-			pour_recipe(recipe);
-		}
-		else if (choice == '8') {
-			display_recipes();
-		}
-	}
-}
-
-void pour_recipe(int recipe) {
-	int i;
-	printf("\n----------\nPOURING RECIPE\n----------\n");
-	printf("Make sure there is a glass ready\n\n");
-	printf("Pouring in 5...");
-	for (i = 4; i > 0; i--) {
-		_delay_ms(500);
-		printf("%d...", i);
-	}
-	printf("\n\nPouring %1.2f ounces of %s\n\n", recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
-	// Pour first ingredient
-	pouring_length = (recipes[recipe]->AmountOne * OUNCE);
-	begin_pouring(1);
-
-	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountTwo, recipes[recipe]->IngredientTwo);
-	// Pour first ingredient
-	pouring_length = (recipes[recipe]->AmountTwo * OUNCE);
-	begin_pouring(2);
-
-	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountThree, recipes[recipe]->IngredientThree);
-	// Pour first ingredient
-	pouring_length = (recipes[recipe]->AmountThree * OUNCE);
-	begin_pouring(3);
-	
-	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountFour, recipes[recipe]->IngredientFour);
-	// Pour first ingredient
-	pouring_length = (recipes[recipe]->AmountFour * OUNCE);
-	begin_pouring(4);
 }
 
 void update_recipe_name(int recipe) {
