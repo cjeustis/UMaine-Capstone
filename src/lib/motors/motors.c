@@ -22,17 +22,13 @@
 #define HALF_OUNCE (5.0 * TENTH_OUNCE)
 #define OUNCE (10.0 * TENTH_OUNCE)
 
-// 3.3814 ounces / minute
-// 0.05635666666 ounces / second
-
-
-// Pump = 1.67 mL / second
-// 0.1 Oz = 2.95735 mL
-
-
-
-// 1.774412965 seconds / 0.1 ounce
-// 17.74412965 seconds / 1 ounce
+/* Some useful tidbits about the timing of the pumps 
+/   3.3814 ounces / minute
+/   0.05635666666 ounces / second
+/   Pump = 1.67 mL / second
+/   0.1 Oz = 2.95735 mL
+/   1.774412965 seconds / 0.1 ounce
+/   17.74412965 seconds / 1 ounce */
 
 static bool is_motor1_on = false;
 static bool is_motor2_on = false;
