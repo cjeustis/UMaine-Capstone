@@ -5,7 +5,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <string.h>
-#include "../Library/motors.c"
+#include "../lib/motors/motors.c"
 
 #define second 122
 #define length 10
@@ -68,9 +68,21 @@ int main(int argc, const char *argv[])
 	// Set values of ingredients to pour
 	// Link ing1 to motor 1, ing2 to motor2, etc.
 	float ing1 = 0.1;	// Let be motor 1
-	float ing2 = 5.0;	// Let be motor 2
+	float ing2 = 0.1;	// Let be motor 2
 	float ing3 = 0.1;	// Let be motor 3
-	float ing4 = 0.4;	// Let be motor 4
+	float ing4 = 0.1;	// Let be motor 4
+
+	// Pour first ingredient
+	pouring_length = (ing1 * OUNCE);
+	motor_on(1);
+	sei();
+
+	// Wait to be done pouring liquid
+	while (tot_overflow < pouring_length);
+
+	motor_off(1);
+	tot_overflow = 0;
+	cli();
 
 	// Pour first ingredient
 	pouring_length = (ing1 * OUNCE);
@@ -80,45 +92,33 @@ int main(int argc, const char *argv[])
 	// Wait to be done pouring liquid
 	while (tot_overflow < pouring_length);
 
-	// motor_off(2);
+	motor_off(2);
 	tot_overflow = 0;
 	cli();
 
-	// // Pour first ingredient
-	// pouring_length = (ing1 * OUNCE);
-	// motor_on(2);
-	// sei();
+	// Pour first ingredient
+	pouring_length = (ing1 * OUNCE);
+	motor_on(3);
+	sei();
 
-	// // Wait to be done pouring liquid
-	// while (tot_overflow < pouring_length);
+	// Wait to be done pouring liquid
+	while (tot_overflow < pouring_length);
 
-	// motor_off(2);
-	// tot_overflow = 0;
-	// cli();
+	motor_off(3);
+	tot_overflow = 0;
+	cli();
 
-	// // Pour first ingredient
-	// pouring_length = (ing1 * OUNCE);
-	// motor_on(3);
-	// sei();
+	// Pour first ingredient
+	pouring_length = (ing1 * OUNCE);
+	motor_on(4);
+	sei();
 
-	// // Wait to be done pouring liquid
-	// while (tot_overflow < pouring_length);
+	// Wait to be done pouring liquid
+	while (tot_overflow < pouring_length);
 
-	// motor_off(3);
-	// tot_overflow = 0;
-	// cli();
-
-	// // Pour first ingredient
-	// pouring_length = (ing1 * OUNCE);
-	// motor_on(4);
-	// sei();
-
-	// // Wait to be done pouring liquid
-	// while (tot_overflow < pouring_length);
-
-	// motor_off(4);
-	// tot_overflow = 0;
-	// cli();
+	motor_off(4);
+	tot_overflow = 0;
+	cli();
 
 	return 0;
 }

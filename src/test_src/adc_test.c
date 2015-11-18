@@ -1,15 +1,17 @@
 #define F_CPU 16000000UL
 
-// Library files
-#include "../lib/adc/adc.c"
-#include "../lib/usart/usart.c"
-#include "../lib/serial/serial.c"
 
 // Standard headers
 #include <avr/io.h>
 #include <stdio.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+
+// Library files
+#include "../lib/adc/adc.c"
+#include "../lib/usart/usart.c"
+#include "../lib/serial/serial.c"
+#include "../lib/motors/motors.c"
 
 // Set baud for serial communication
 #define BAUD 9600
@@ -47,7 +49,7 @@ float convert_temp(uint16_t adc) {
 	/* Convert voltage to celcius */
 	c = (v - 0.5) * 10.0;
 
-	/* Convert celcius to farenheit */
+	/* Convert celcius to fahrenheit */
 	return (c * 9.0 / 5.0) + 32.0;
 }
 
@@ -90,7 +92,9 @@ int main(int argc, const char *argv[])
 	// Initialize ADC
 	init_adc(REFERENCE, PRESCALER);
 
-	// DDRB = 0x01;
+	init_motors();
+
+	DDRB = 0x01;
 
 	// Enable global interrupts
 	sei();
@@ -99,12 +103,12 @@ int main(int argc, const char *argv[])
 	{
 		temperature_value();
 
-		// if (temps.temp1F >= TEMP_UPPER) {
-		// 	PORTB = 0x01;
-		// }
-		// else {
-		// 	PORTB = 0x00;
-		// }
+		if (temps.temp1F >= TEMP_UPPER) {
+			PORTB = 0x01;
+		}
+		else {
+			PORTB = 0x00;
+		}
 		// Wait a second
 		_delay_ms(1000);
 	}
