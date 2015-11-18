@@ -1,65 +1,53 @@
 #include "serial.h"
-#include <avr/io.h>
-#include <stdio.h>
 
-unsigned char check_recieve(void)
-{
-    // Return 1 if receive complete, else 0
-    unsigned char received = 0;
+/* Check if there has been anything recieved over serial port */
+unsigned char check_recieve(void) {
+    unsigned char received = 0;                 // Return 1 if receive complete, else 0
 
-    // Check if received data
-    if (UCSR0A & (1<<RXC0))
-    {
+    if (UCSR0A & (1<<RXC0)) {                   // Check if received data
         received = 1;
     }
 
     return received;
 }
 
-void transmit_data(unsigned char *data)
-{
-    // Loop through and transmit entire string
-    while (*data) { 
+/* Transmit the given data over the serial port */
+void transmit_data(unsigned char *data) {
+    while (*data) {                             // Loop through and transmit entire string
         usart_transmit(*data);
         data++;
     }
 }
 
-int uart_getchar(FILE *stream)
-{
-    
-    char data = usart_receive(); //Temporarily store received data
-    if(data == '\r')
-        data = '\n';    
-    stream_printf(data, stream); //Send to console what has been received, so we can see when typing
+/* Get character from stream */
+int uart_getchar(FILE *stream) {
+    char data = usart_receive();                // Temporarily store the received data
+    if(data == '\r') {
+        data = '\n';                            // Convert for terminal to understand
+    }
+    // stream_printf(data, stream);                // Send to console what has been received, so we can see when typing
     return data;        
 }
 
-int USART0ReceiveByte(FILE *stream)
-{
-    uint8_t u8Data;
-    // Wait for byte to be received
-    while(!(UCSR0A&(1<<RXC0))){};
+/* Read data from the serial port */
+int USART0ReceiveByte(FILE *stream) {
+    while(!(UCSR0A&(1<<RXC0))){};               // Wait for byte to be received
 
-    u8Data=UDR0;
-    // stream_printf(u8Data, stream); //Send to console what has been received, so we can see when typing
-    return u8Data;
+    // stream_printf(u8Data, stream);              // Send to console what has been received, so we can see when typing
+    return UDR0;
 }
 
-// Function called by printf to send to created stream
-int stream_printf(unsigned char var, FILE *stream)
-{
-    // Translate \n to \r for terminal
+/* Function called by printf to send data to created stream */
+int stream_printf(unsigned char var, FILE *stream) {
     if (var == '\n') 
     {
-        stream_printf('\r', 0);
+        stream_printf('\r', 0);                 // Translate \n to \r for terminal
     }
 
-    // Transmit data
-    usart_transmit(var);
+    usart_transmit(var);                        // Transmit data
     
     return 0;
 }
 
-//set stream pointer
+/* Set stream pointer to translate stdin/stdout to serial port */
 FILE usart0_str = FDEV_SETUP_STREAM(stream_printf, USART0ReceiveByte, _FDEV_SETUP_RW);

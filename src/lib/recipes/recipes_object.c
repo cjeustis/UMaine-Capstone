@@ -1,17 +1,7 @@
-#include <stdio.h>
-#include <string.h> /* memset */
 #include "recipes_object.h"
 
-// Define recipe information
-#define RECIPE_TOTAL_LENGTH 112
-#define RECIPE_NAME_LENGTH 16
-#define RECIPE_AMOUNT_LENGTH 3
-#define NUMBER_OF_RECIPES 5
-
-#define USER_NAME_LENGTH 17
-#define USER_AMOUNT_LENGTH 4
-
-Recipes recipes[NUMBER_OF_RECIPES];		// 5 Recipes structures
+/* Array to hold the recipes */
+Recipes recipes[NUMBER_OF_RECIPES];
 
 /* Struct for holding information about a particular recipe */
 struct recipes {
@@ -33,8 +23,8 @@ struct recipes {
 
 /* Creates a new recipe struct */
 Recipes newRecipes(){
-	Recipes recipe=(Recipes)malloc(sizeof(struct recipes));
-	memset(recipe, 0, sizeof(struct recipes));
+	Recipes recipe = (Recipes)malloc(sizeof(struct recipes));			// Allocate memory for the struct
+	memset(recipe, 0, sizeof(struct recipes));							// Initialize the struct to 0s
 	return recipe;
 }
 
@@ -81,14 +71,15 @@ int set_recipe_eeprom_address(int recipe_number) {
 void init_recipes(void) {
 	int i;
 	for (i = 0; i < NUMBER_OF_RECIPES; i++) {
-		recipes[i] = newRecipes();
-		recipes[i] = get_recipe_from_eeprom(set_recipe_eeprom_address(i));
+		recipes[i] = newRecipes();					// Create new recipe struct
+		recipes[i] = get_recipe_from_eeprom(set_recipe_eeprom_address(i));		// Fill new recipe struct with data from EEPROM
 	}
 	for(i = 0; i < NUMBER_OF_RECIPES; i++) {
-		convert_amount_to_float(i);
+		convert_amount_to_float(i);												// Convert recipe amounts to a usable float value
 	}
 }
 
+/* Converts the recipe's ingredient's amounts from char to float to use when dispensing liquids */
 void convert_amount_to_float(int recipe) {
 	recipes[recipe]->AmountOne = atof(recipes[recipe]->IngredientOne_amount);
 	recipes[recipe]->AmountTwo = atof(recipes[recipe]->IngredientTwo_amount);
@@ -101,120 +92,105 @@ Recipes get_recipe_from_eeprom(int location) {
 	Recipes recipe;
 	recipe = newRecipes();
 
-	// Get recipe name from memory
-    eeprom_read_block((void*)&recipe->RecipeName, (const void*)location, RECIPE_NAME_LENGTH);
+    eeprom_read_block((void*)&recipe->RecipeName, (const void*)location, RECIPE_NAME_LENGTH);						// Get recipe name from memory
 	location += RECIPE_NAME_LENGTH;
-    // Get ingredient one from memory
-    eeprom_read_block((void*)&recipe->IngredientOne, (const void*)location, RECIPE_NAME_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientOne, (const void*)location, RECIPE_NAME_LENGTH);			    	// Get ingredient one from memory
 	location += RECIPE_NAME_LENGTH;
-    // Get ingredient one amount from memory
-    eeprom_read_block((void*)&recipe->IngredientOne_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientOne_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);	    	// Get ingredient one amount from memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-    // Get ingredient two from memory
-    eeprom_read_block((void*)&recipe->IngredientTwo, (const void*)location, RECIPE_NAME_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientTwo, (const void*)location, RECIPE_NAME_LENGTH);			    	// Get ingredient two from memory
 	location += RECIPE_NAME_LENGTH;
-    // Get ingredient two amount from memory
-    eeprom_read_block((void*)&recipe->IngredientTwo_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientTwo_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);	    	// Get ingredient two amount from memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-    // Get ingredient three from memory
-    eeprom_read_block((void*)&recipe->IngredientThree, (const void*)location, RECIPE_NAME_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientThree, (const void*)location, RECIPE_NAME_LENGTH);			    	// Get ingredient three from memory
 	location += RECIPE_NAME_LENGTH;
-    // Get ingredient three amount from memory
-    eeprom_read_block((void*)&recipe->IngredientThree_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientThree_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);     	// Get ingredient three amount from memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-	// Get ingredient four from memory
-    eeprom_read_block((void*)&recipe->IngredientFour, (const void*)location, RECIPE_NAME_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientFour, (const void*)location, RECIPE_NAME_LENGTH);					// Get ingredient four from memory
 	location += RECIPE_NAME_LENGTH;
-    // Get ingredient four amount from memory
-    eeprom_read_block((void*)&recipe->IngredientFour_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_read_block((void*)&recipe->IngredientFour_amount, (const void*)location, RECIPE_AMOUNT_LENGTH);	    	// Get ingredient four amount from memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-	// Get glass type from memory
-    eeprom_read_block((void*)&recipe->GlassType, (const void*)location, RECIPE_NAME_LENGTH);
+    eeprom_read_block((void*)&recipe->GlassType, (const void*)location, RECIPE_NAME_LENGTH);						// Get glass type from memory
 
-    // Return recipe;
     return recipe;
 }
 
 /* TODO: change from eeprom_write to eeprom_update */
+/* Save the given recipe to EEPROM so the data persists */
 void save_recipe_to_eeprom(int recipe) {
-	int location = set_recipe_eeprom_address(recipe);
+	int location = set_recipe_eeprom_address(recipe);				// Get recipe location before saving to EEPROM
 
-	// Write ecipe name to memory
-    eeprom_write_block ((void*)&recipes[recipe]->RecipeName, (void*)location, RECIPE_NAME_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->RecipeName, (void*)location, RECIPE_NAME_LENGTH);					// Write ecipe name to memory
 	location += RECIPE_NAME_LENGTH;
-    // Write ingredient one to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientOne, (void*)location, RECIPE_NAME_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientOne, (void*)location, RECIPE_NAME_LENGTH);		    	// Write ingredient one to memory
 	location += RECIPE_NAME_LENGTH;
-    // Write ingredient one amount to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientOne_amount, (void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientOne_amount, (void*)location, RECIPE_AMOUNT_LENGTH);  	// Write ingredient one amount to memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-    // Write ingredient two to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientTwo, (void*)location, RECIPE_NAME_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientTwo, (void*)location, RECIPE_NAME_LENGTH);  				// Write ingredient two to memory
 	location += RECIPE_NAME_LENGTH;    
-    // Write ingredient two amount to memory to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientTwo_amount, (void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientTwo_amount, (void*)location, RECIPE_AMOUNT_LENGTH);  	// Write ingredient two amount to memory to memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-    // Write ingredient three to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientThree, (void*)location, RECIPE_NAME_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientThree, (void*)location, RECIPE_NAME_LENGTH);    			// Write ingredient three to memory
 	location += RECIPE_NAME_LENGTH;    
-    // Write ingredient three amount to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientThree_amount, (void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientThree_amount, (void*)location, RECIPE_AMOUNT_LENGTH);	// Write ingredient three amount to memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-	// Write ingredient four to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientFour, (void*)location, RECIPE_NAME_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientFour, (void*)location, RECIPE_NAME_LENGTH);				// Write ingredient four to memory
 	location += RECIPE_NAME_LENGTH;    
-    // Write ingredient four amount to memory
-    eeprom_write_block ((void*)&recipes[recipe]->IngredientFour_amount, (void*)location, RECIPE_AMOUNT_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->IngredientFour_amount, (void*)location, RECIPE_AMOUNT_LENGTH);	    // Write ingredient four amount to memory
 	location += RECIPE_AMOUNT_LENGTH+1;
-	// Write glass type to memory
-    eeprom_write_block ((void*)&recipes[recipe]->GlassType, (void*)location, RECIPE_NAME_LENGTH);
+    eeprom_write_block ((void*)&recipes[recipe]->GlassType, (void*)location, RECIPE_NAME_LENGTH);					// Write glass type to memory
 }
 
+/* Update a given recipe's name, saving to EEPROM and displaying the updated recipe back to screen */
 void update_recipe_name(int recipe) {
-	printf("\n----------\nUpdate Recipe Name\n----------\n");
 	char temp[USER_NAME_LENGTH];
+
+	printf("\n----------\nUpdate Recipe Name\n----------\n");
 	printf("Current name of the recipe: %s\n", recipes[recipe]->RecipeName);
 	printf("New name of the recipe: ");
-	fgets(temp, USER_NAME_LENGTH, stdin);
-	memcpy(recipes[recipe]->RecipeName, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);
+	fgets(temp, USER_NAME_LENGTH, stdin);				// Read in data from the terminal
+	memcpy(recipes[recipe]->RecipeName, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);					// Save user input to recipe struct
 
-	save_recipe_to_eeprom(recipe);
-	deleteRecipe(recipes[recipe]);
-	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
-	convert_amount_to_float(recipe);
+	save_recipe_to_eeprom(recipe);						// Save recipe to EEPROM
+	deleteRecipe(recipes[recipe]);						// Delete (free) the recipe from memory
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));									// Get the updated recipe from EEPROM
+	convert_amount_to_float(recipe);					// Convert amounts to float values
+
 	printf("\n--------------------\nRecipe updated\n--------------------\n");
 	dumpRecipeState(recipes[recipe]);
 }
 
+/* Update a recipe's glass type, saving to EEPROM and displaying the updated recipe back to screen */
 void update_recipe_glass(int recipe) {
-	printf("\n----------\nUpdate Glass Type\n----------\n");
 	char temp[USER_NAME_LENGTH];
+
+	printf("\n----------\nUpdate Glass Type\n----------\n");
 	printf("Current type of glass: %s\n", recipes[recipe]->GlassType);
 	printf("New glass type: ");
-	fgets(temp, USER_NAME_LENGTH, stdin);
-	memcpy(recipes[recipe]->GlassType, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);
-	// What happens to characters that are over length?
+	fgets(temp, USER_NAME_LENGTH, stdin);				// Read in data from the terminal
+	memcpy(recipes[recipe]->GlassType, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);						// Save user input to recipe struct
 
-	save_recipe_to_eeprom(recipe);
-	deleteRecipe(recipes[recipe]);
-	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
-	convert_amount_to_float(recipe);
+	save_recipe_to_eeprom(recipe);						// Save recipe to EEPROM
+	deleteRecipe(recipes[recipe]);						// Delete (free) the recipe from memory
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));									// Get the updated recipe from EEPROM
+	convert_amount_to_float(recipe);					// Convert amounts to float values
+
 	printf("\n--------------------\nRecipe updated\n--------------------\n");
 	dumpRecipeState(recipes[recipe]);
 }
 
+/* Update a recipe's ingredient information, saving to EEPROM and displaying the udpated recipe back to screen */
 void update_recipe_ingredient(int recipe, int ingredient) {
-	printf("\n----------\nUpdate Recipe Ingredient\n----------\n");
 	char temp_name[USER_NAME_LENGTH];
 	char temp_amnt[USER_AMOUNT_LENGTH];
 
+	printf("\n----------\nUpdate Recipe Ingredient\n----------\n");
 	printf("Enter the name of the ingredient: ");
-	fgets(temp_name, USER_NAME_LENGTH, stdin);
-
+	fgets(temp_name, USER_NAME_LENGTH, stdin);					// Read in data from the terminal for ingredient name
 	printf("Enter amount of ingredient (0-8 ounces): ");
-	fgets(temp_amnt, USER_AMOUNT_LENGTH, stdin);
+	fgets(temp_amnt, USER_AMOUNT_LENGTH, stdin);				// Read in data from the terminal for ingredient amount
 
-
+	/* Save data to recipe struct, depending on which recipe it is */
 	if (ingredient == 1) {
 		memcpy(recipes[recipe]->IngredientOne, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
 		memcpy(recipes[recipe]->IngredientOne_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
@@ -232,10 +208,11 @@ void update_recipe_ingredient(int recipe, int ingredient) {
 		memcpy(recipes[recipe]->IngredientFour_amount, clean_string(USER_AMOUNT_LENGTH, temp_amnt), USER_AMOUNT_LENGTH);
 	}
 
-	save_recipe_to_eeprom(recipe);
-	deleteRecipe(recipes[recipe]);
-	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));
-	convert_amount_to_float(recipe);
+	save_recipe_to_eeprom(recipe);						// Save updated recipe to EEPROM
+	deleteRecipe(recipes[recipe]);						// Delete (free) the recipe from memory
+	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));									// Get the updated recipe from EEPROM
+	convert_amount_to_float(recipe);					// Convert amounts to float values
+
 	printf("\n--------------------\nRecipe updated\n--------------------\n");
 	dumpRecipeState(recipes[recipe]);
 }

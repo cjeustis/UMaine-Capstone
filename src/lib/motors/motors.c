@@ -1,6 +1,4 @@
-#include "motors.h"
-#include <avr/io.h>
-#include <stdbool.h>
+#include "motors.h"							// Prototypes
 
 /* Motor Information */
 #define MOTOR1A_ON ~(1<<PC0)
@@ -30,20 +28,22 @@
 /   1.774412965 seconds / 0.1 ounce
 /   17.74412965 seconds / 1 ounce */
 
+/* Variable to check if a motor is currently operating */
 static bool is_motor1_on = false;
 static bool is_motor2_on = false;
 static bool is_motor3_on = false;
 static bool is_motor4_on = false;
 
+/* Initialize the Ports used by the motors (defined above) and make sure all are turned off */
 void init_motors(void) {
-	// Set ports as outputs for motors
-	MOTORS_PORT_DIR = 0xFF;
+	MOTORS_PORT_DIR = 0xFF;					// Set ports as outputs for motors
 	int i;
 	for (i = 0; i < 4; i++) {
-		motor_off(i);
+		motor_off(i);						// Turn all motors off
 	}
 }
 
+/* Takes a motor designation as input and enables the motor */
 void motor_on(int motor) {
 	switch(motor) {
 		case 1:		// Turn on motor 1
@@ -69,6 +69,7 @@ void motor_on(int motor) {
 	}
 }
 
+/* Takes a motor designation as input and disables the motor */
 void motor_off(int motor) {
 	switch(motor) {
 		case 1:		// Turn on motor 1

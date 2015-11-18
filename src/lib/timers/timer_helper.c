@@ -1,44 +1,71 @@
-#include "timer_helper.h"
-#include <avr/io.h>
+#include "timer_helper.h"				// Prototypes
 
-volatile float tot_overflow;
+#define TEN_SECONDS 1220				// Number of overflows on Timer3 for 10 seconds 
+
+/* Timer counters and pouring length variables */
+volatile float motors_overflow_count;
+volatile int temp_overflow_count;
 static float pouring_length;
 
+/* Initializes both Timer/Counter1 and Timer/Counter2
+   - Timer/Counter1 is used for controlling how long motors remain on for dispensing liquids
+   - Timer/Counter2 is used to check internal temperature every so often to ensure internal temperature is being maintaned
+*/
 void init_motors_timer(void) {
-	// Normal operation of timer
-	TCCR1A = 0x00;
-	// Prescaler = 8
-	TCCR1B = (1<<CS10);
-	// Initialize counter to 0
-	TCNT1 = 0;
-	// No forced output compares
-	TCCR1C = 0x00;
-	// Initialize timer overflow count to 0
-	tot_overflow = 0.0;
+	/* Normal operation of timers */
+	TCCR1A = 0x00;						// Timer/Counter1
+	TCCR3A = 0x00;						// Timer/Counter3
+
+	/* Prescaler = 8 */
+	TCCR1B = (1<<CS10);					// Timer/Counter1
+	TCCR3B = (1<<CS10);					// Timer/Counter3
+	
+	/* Initialize counter to 0 */
+	TCNT1 = 0;							// Timer/Counter1
+	TCNT3 = 0;							// Timer/Counter3
+	
+	/* No forced output compares */
+	TCCR1C = 0x00;						// Timer/Counter1
+	TCCR3C = 0x00;						// Timer/Counter3
+
+	motors_overflow_count = 0.0;		// Initialize motor timer overflow count to 0
+	temp_overflow_count = 0;			// Initialize temp sensor reading overflow count to 0
 }
 
+/* Enables the given motor to start dispensing liquid - sets time and waits unil complete */
 void enable_motor_timer(int motor) {
+	/* Only proceed if the ingredient actually has any amount needed to be poured */
 	if(pouring_length != 0) {
-		motor_on(motor);
+		motor_on(motor);						// Enable the motor per the ingredient
 
-		enable_motors_timer_interrupt();
+		enable_motors_timer_interrupt();		// Enable Timer/Counter1 Overflow interrupt to start timing how long motor is on
 
 		// Wait to be done pouring liquid
-		while (tot_overflow < pouring_length);
+		while (motors_overflow_count < pouring_length);
 
-		motor_off(motor);
-		tot_overflow = 0;
+		motor_off(motor);						// Turn off the motor when finished
+		motors_overflow_count = 0.0;			// Reset the overflow counter
 
-		disable_motors_timer_interrupt();
+		disable_motors_timer_interrupt();		// Disable interrupts for Timer/Counter1 so they don't interfere with anything
 	}
 }
 
+/* Enable the Timer/Counter3 Overflow interrupt */
+void enable_temp_sensor_timer_interrupt(void) {
+	TIMSK3 = (1<<TOIE3);
+}
+
+/* Disable the Timer/Counter3 Overflow interrupt */
+void disable_temp_sensor_timer_interrupt(void) {
+	TIMSK1 &= ~(1<<TOIE1);
+}
+
+/* Enable the Timer/Counter1 Overflow interrupt */
 void enable_motors_timer_interrupt(void) {
-	// Enable overflow interrupt
 	TIMSK1 = (1<<TOIE1);
 }
 
+/* Disable the Timer/Counter1 Overflow interrupt */
 void disable_motors_timer_interrupt(void) {
-	// Disable overflow interrupt
 	TIMSK1 &= ~(1<<TOIE1);
 }

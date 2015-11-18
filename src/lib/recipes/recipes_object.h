@@ -1,11 +1,6 @@
-#ifndef RECIPES_OBJECT_H
-#define RECIPES_OBJECT_H
-#endif
-
 typedef struct recipes * Recipes;
 Recipes newRecipes();
-// void setRecipe(Recipes recipe, char, char, char, char, char, char, char, char, char, char);
-void dumpRecipeState(Recipes);      /* dumps debug contents of Recipes to stdout */
+void dumpRecipeState(Recipes);
 void deleteRecipe(Recipes);
 void convert_amount_to_float(int recipe);
 int set_recipe_eeprom_address(int recipe_number);
