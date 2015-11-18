@@ -7,24 +7,21 @@
 #include <avr/eeprom.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-
-// #include "lib/lcd/lcd.h"
-// #include "lib/lcd/myutils.h"
-// #include "lib/lcd/lcd.c"
+// #include "../Library/lcd/lcd.h"
+// #include "../Library/lcd/myutils.h"
+// #include "../Library/lcd/lcd.c"
 #include "lib/main.h"
 #include "lib/usart/usart.c"
 #include "lib/serial/serial.c"
 #include "lib/adc/adc.c"
 #include "lib/recipes/recipes_object.c"
 #include "lib/motors/motors.c"
+#include "lib/timers/timer_helper.c"
+#include "lib/temp/temp_helper.c"
 
 // Set baud for serial communication
 #define BAUD 9600
 #define BAUDRATE ((F_CPU) / (BAUD * 16UL) - 1)
-
-// Set adc info
-#define REFERENCE 0
-#define PRESCALER 128
 
 // Set usart info
 #define TRANSMIT_RATE 1
@@ -32,30 +29,15 @@
 #define STOP_BITS 1
 #define PARITY_BITS 0
 
-#define USER_NAME_LENGTH 17
-#define USER_AMOUNT_LENGTH 4
-
-// Set temperature info
-#define TEMP_LOWER 35
-#define TEMP_UPPER 55
-#define TEMP_OFFSET 240
+// Set adc info
+#define REFERENCE 0
+#define PRESCALER 128
 
 // static uint8_t user_temperature;
-volatile float tot_overflow;
 // volatile float motor1_overflow;
 // volatile float motor2_overflow;
 // volatile float motor3_overflow;
 // volatile float motor4_overflow;
-static float pouring_length;
-
-// Temp struct - needed? probably not
-struct TempSensors {
-	int channel;
-	float temp0F;
-	float temp1F;
-	float tempFinal;
-	int user_defined_temp;
-} temps;
 
 /* Timer/Counter 1 Overflow Interrupt (16-bit timer) */
 ISR(TIMER1_OVF_vect) {
@@ -89,22 +71,6 @@ ISR(ADC_vect) {
 	adc_disable_int();
 }
 
-void begin_pouring(int motor) {
-	if(pouring_length != 0) {
-		motor_on(motor);
-
-		enable_motors_timer_interrupt();
-
-		// Wait to be done pouring liquid
-		while (tot_overflow < pouring_length);
-
-		motor_off(motor);
-		tot_overflow = 0;
-
-		disable_motors_timer_interrupt();
-	}
-}
-
 char* clean_string(int size, char string[]) {
 	int i;
 	for (i = 0; i < size; i++ )
@@ -118,17 +84,100 @@ char* clean_string(int size, char string[]) {
 	return string;
 }
 
+void pour_recipe(int recipe) {
+	int i;
+	printf("\n----------\nPOURING RECIPE\n----------\n");
+	printf("Make sure there is a glass ready\n\n");
+	printf("Pouring in 5...");
+	for (i = 4; i > 0; i--) {
+		_delay_ms(500);
+		printf("%d...", i);
+	}
+	printf("\n\nPouring %1.2f ounces of %s\n", recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountOne * OUNCE);
+	enable_motor_timer(1);
+
+	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountTwo, recipes[recipe]->IngredientTwo);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountTwo * OUNCE);
+	enable_motor_timer(2);
+
+	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountThree, recipes[recipe]->IngredientThree);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountThree * OUNCE);
+	enable_motor_timer(3);
+	
+	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountFour, recipes[recipe]->IngredientFour);
+	// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountFour * OUNCE);
+	enable_motor_timer(4);
+}
+
+void manage_recipe(int recipe) {
+	unsigned char choice;
+
+	printf("\n--------------------\n");
+	dumpRecipeState(recipes[recipe]);
+	printf("\n--------------------\n");
+
+	while (1) {
+		printf("\n0. Display recipe's information\n");
+		printf("1. Update recipe name\n");
+		printf("2. Update ingredient one\n");
+		printf("3. Update ingredient two\n");
+		printf("4. Update ingredient three\n");
+		printf("5. Update ingredient four\n");
+		printf("6. Update glass type\n");
+		printf("7. --POUR RECIPE--\n");
+		printf("8. Back\n");
+		printf("\nSelect an option (1-8): ");
+
+		scanf("%c", &choice);
+
+		if (choice == '0') {
+			printf("\n--------------------\n");
+			dumpRecipeState(recipes[recipe]);
+			printf("\n--------------------\n");
+		}
+		else if (choice == '1') {
+			update_recipe_name(recipe);
+		}
+		else if (choice == '2') {
+			update_recipe_ingredient(recipe, 1);
+		}
+		else if (choice == '3') {
+			update_recipe_ingredient(recipe, 2);
+		}
+		else if (choice == '4') {
+			update_recipe_ingredient(recipe, 3);
+		}
+		else if (choice == '5') {
+			update_recipe_ingredient(recipe, 4);
+		}
+		else if (choice == '6') {
+			update_recipe_glass(recipe);
+		}
+		else if (choice == '7') {
+			pour_recipe(recipe);
+		}
+		else if (choice == '8') {
+			display_recipes();
+		}
+	}
+}
+
 void display_recipes(void) {
 	int i;
-	char choice;
+	unsigned char choice;
 	for (i = 0; i < NUMBER_OF_RECIPES; i++) {
 		printf("--------------------\nRecipe %d\n--------------------\n", i+1);
 		dumpRecipeState(recipes[i]);
 	}
 	
 	while(1) {
-		printf("\nPick a recipe (1-5) or type 'b' to go back: ");
-		fgets(&choice, 1, stdin);
+		printf("\nPick a recipe (1-5) or type 'b' to return home: ");
+		scanf("%c", &choice);
 
 		switch(choice) {
 			case '1':
@@ -147,52 +196,11 @@ void display_recipes(void) {
 				manage_recipe(4);
 				break;
 			case 'b':
-				welcome_screen();	// return
+				welcome_screen();
+			default:
+				printf("\nInvalid option!");
 		}
 	}
-}
-
-void update_temperature(void) {
-	char value;
-	printf("\n\nThe temperature is currently set to: %d\n", temps.user_defined_temp);
-	printf("Enter a value between 35 F and 55 F that you would like the internal temperature to be maintaned at: ");
-
-	while(1) {
-		fgets(&value, 2, stdin);
-		value += '0';
-		if ((value >= TEMP_LOWER) && (value <= TEMP_UPPER)) {
-			temps.user_defined_temp = value;
-			break;
-		}
-		printf("\n\nInvalid value. Enter a value between 35 F and 55 F that you would like the internal temperature to be maintaned at: ");
-	}
-	printf("\n\nThe desired internal temperature has been updated to %d F\n.", temps.user_defined_temp);
-}
-
-void set_temperature(void) {
-	char choice;
-	printf("\n\nMr. Pour: Temperature Control!\n--------------------\n\n");
-	get_temp_reading();
-	if (temps.tempFinal < 1) {
-		get_temp_reading();
-	}
-	/* Display current Temperature */
-	printf("Current temperature: %1.2f\n", temps.tempFinal);
-
-	printf("\nWould you like to change the internal temperature? (y = yes, n = no): ");
-
-	while(1) {
-		fgets(&choice, 1, stdin);
-		if (choice == 'y') {
-			update_temperature();
-			break;
-		}
-		else if (choice == 'n') {
-			break;
-		}
-		printf("\n\nInvalid value. Would you like to change the internal temperature? (y = yes, n = no): ");
-	}
-	welcome_screen();
 }
 
 void welcome_screen(void) {
@@ -206,7 +214,8 @@ void welcome_screen(void) {
 	printf("Please select any option above by entering the item number: ");
 
 	while (1) {
-		fgets(&choice, 1, stdin);
+		scanf("%c", &choice);
+		// fgets(&choice, 1, stdin);
 
 		if (choice == '1') {
 			display_recipes();
@@ -214,13 +223,16 @@ void welcome_screen(void) {
 		else if (choice == '2') {
 			set_temperature();
 		}
-		printf("Invalid value. Please select any option above by entering the item number: ");
+		else {
+			printf("Invalid value. Please select any option above by entering the item number: ");
+		}
 	}
 }
 
 int main(void) {
 	// Initialize motors - ensure they are not on
 	init_motors();
+
 	// Set up timer for controlling liquids
 	init_motors_timer();
 
@@ -242,11 +254,9 @@ int main(void) {
 	// Enable global interrupts
 	sei();	
 
-	while(1) {
-		// Start off with the welcome screen
-		welcome_screen();
+	// Start off with the welcome screen
+	welcome_screen();
 
-		// TODO: exit/standy-by/power-off?
-	}
+	// TODO: exit/standy-by/power-off?
 	return 1;
 }
