@@ -16,9 +16,9 @@ void this_to_that(int f1, int f2);
 void setup_stdin(void) {
   struct termios term_struct;
   
-  term_structgetattr(0, &term_struct);
+  tcgetattr(0, &term_struct);
   term_struct.c_lflag = ICANON | ECHO | ECHOE | VEOF | VINTR | VKILL;
-  term_structsetattr(0, TCSANOW, &term_struct);
+  tcsetattr(0, TCSANOW, &term_struct);
 }
 
 /* Open up the serial port and set parameters */
@@ -30,7 +30,7 @@ int init() {
   usb_file_desc = open(SERIAL_PORT, O_RDWR | O_NOCTTY);
   // TODO: check for error
   
-  term_structgetattr(usb_file_desc, &term_struct);                // Get the current settings
+  tcgetattr(usb_file_desc, &term_struct);                // Get the current settings
 
   term_struct.c_iflag = IGNPAR;                // Ignore parity
   term_struct.c_oflag = 0;                     // Don't need anything here
@@ -43,7 +43,7 @@ int init() {
   cfsetospeed(&term_struct, BAUD_RATE);
 
   // TODO: bits per character
-  term_structsetattr(usb_file_desc, TCSANOW, &term_struct);       // Save out the new setting
+  tcsetattr(usb_file_desc, TCSANOW, &term_struct);       // Save out the new setting
 
   return usb_file_desc;
 }
