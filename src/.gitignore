@@ -3,3 +3,6 @@
 /classTest
 /main
 *.zip
+*.out
+*.o
+*.obj
