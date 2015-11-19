@@ -19,7 +19,7 @@
 
 #define TEMP_LOWER 		35								// Temperature info
 #define TEMP_UPPER 		55								// -----------------
-#define TEMP_OFFSET 	8.5
+#define TEMP_OFFSET 	4.5
 
 #define MOTOR1A_ON 		~(1<<PC0)						// Motor info
 #define MOTOR1B_ON 		(1<<PC1)						// -----------
@@ -33,15 +33,15 @@
 #define MOTORS_PORT 	PORTC
 #define MOTORS_PORT_DIR DDRC
 
-#define TENTH_OUNCE 	550.0							// Pouring Measurements for liquid timing
+#define TENTH_OUNCE 	555.0							// Pouring Measurements for liquid timing
 #define QUARTER_OUNCE 	(2.5 * TENTH_OUNCE)
 #define HALF_OUNCE 		(5.0 * TENTH_OUNCE)
 #define OUNCE 			(10.0 * TENTH_OUNCE)
 
 #define MOTOR1_OFFSET	15
-#define MOTOR2_OFFSET	20
-#define MOTOR3_OFFSET	50
-#define MOTOR4_OFFSET	15
+#define MOTOR2_OFFSET	40
+#define MOTOR3_OFFSET	70
+#define MOTOR4_OFFSET	0
 
 
 /* Prototypes */
