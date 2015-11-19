@@ -46,7 +46,7 @@ void adc_enable_int(void) {
 
 /* Takes integer as input and sets desired ADC reference voltage */
 void set_reference(unsigned int ref) {
-	ADMUX &= ~(1<<REFS1) | ~(1<<REFS0);			// Clear bits before setting ( AREF, Internal Vref turned off)
+	ADMUX &= ~(1<<REFS1) | ~(1<<REFS0);			// Clear bits before setting (AREF, Internal Vref turned off)
 
 	/* Set reference voltage */
 	if (ref == 1)
@@ -103,6 +103,4 @@ void init_adc(unsigned int ref, unsigned int prescaler) {
 	set_prescaler(prescaler);		// Set the prescaler
 
 	ADCSRA |= (1<<ADEN);			// Enable the ADC for conversions
-	
-	DDRB = 0x01;					// Set PB0 as output for controlling Peltier module
 }

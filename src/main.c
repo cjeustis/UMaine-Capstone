@@ -28,33 +28,78 @@
 
 /* Timer/Counter 1 Overflow Interrupt (16-bit timer) */
 ISR(TIMER1_OVF_vect) {
-	motors_overflow_count++;			// Increase overflow count for the motor that is on
+	motors_overflow_count++;				// Increase overflow count for the motor that is on
+}
+
+/* Check if temperature is in range so it won't toggle on/off all the time */
+bool is_temp_in_range(void) {
+	if ((temps.tempFinal >= temps.user_defined_temp-1.5) && (temps.tempFinal <= temps.user_defined_temp+1.5)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+/* Check if temperature has been reached */
+bool is_temp_reached(void) {
+	if (temps.tempFinal <= temps.user_defined_temp-1.0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 /* Timer/Counter 3 Overflow Interrupt (16-bit timer) */
 ISR(TIMER3_OVF_vect) {
-	temp_overflow_count++;			// Increase overflow count to track when to read temp
+	temp_overflow_count++;					// Increase overflow count to track when to read temp
 
 	/* Check the temp every ~10 seconds */
 	if (temp_overflow_count >= TEN_SECONDS) {
-		get_internal_temp();			// Get the temp value
-		if (temps.tempFinal > temps.user_defined_temp) {
-			PORTB = 0x01;				// Turn on Peltier module and start cooling it down
+		get_internal_temp();				// Get the temp value
+
+		// temps.is_within_range = is_temp_in_range();
+
+		if (temps.isCooling && !temps.temp_reached) {
+			temps.temp_reached = is_temp_reached();
+		}
+		// if (!temps.isCooling && temps.temp_reached) {
+		// }
+
+		if (!temps.temp_reached) {
+			// turn the cooler on
+			if (!temps.isCooling) {
+				PORTD |= _BV(PD7);
+				temps.isCooling = true;
+				temps.temp_reached = false;
+			}
 		}
 		else {
-			PORTB = 0x00;				// If not to hot, make sure Peltier is off
+			temps.is_within_range = is_temp_in_range();
+			if (temps.is_within_range) {
+				if (temps.isCooling) {
+					PORTD &= ~_BV(PD7);
+					temps.isCooling = false;
+				}
+			}
+			else {
+				PORTD |= _BV(PD7);
+				temps.isCooling = true;
+				temps.temp_reached = false;
+			}
 		}
-		temp_overflow_count = 0;		// Reset overflow count
+		temp_overflow_count = 0;			// Reset overflow count
 	}
 }
 
 /* ADC Conversion Interrupt */
 ISR(ADC_vect) {
 	if (temps.channel == 0) {
-		temps.temp0F = convert_adc_to_fahrenheit(ADC+TEMP_OFFSET);		// Get temp of sensor 1
+		temps.temp0F = eval_temp(ADC);
 	}
 	else if (temps.channel == 1) {
-		temps.temp1F = convert_adc_to_fahrenheit(ADC+TEMP_OFFSET);		// Get temp of sensor 2
+		temps.temp1F = eval_temp(ADC);
 
 		temps.tempFinal = (temps.temp0F + temps.temp1F) / 2.0;			// Average the temp of both sensors
 	}
@@ -87,19 +132,19 @@ void pour_recipe(int recipe) {
 		printf("%d...", i);
 	}
 	printf("\n\nPouring %1.2f ounces of %s\n", recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
-	pouring_length = (recipes[recipe]->AmountOne * OUNCE);			// Pour first ingredient
+	pouring_length = (recipes[recipe]->AmountOne * OUNCE + MOTOR1_OFFSET);			// Pour first ingredient
 	enable_motor_timer(1);											// Enable timer for motor 1
 
 	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountTwo, recipes[recipe]->IngredientTwo);
-	pouring_length = (recipes[recipe]->AmountTwo * OUNCE);			// Pour second ingredient
+	pouring_length = (recipes[recipe]->AmountTwo * OUNCE + MOTOR2_OFFSET);			// Pour second ingredient
 	enable_motor_timer(2);											// Enable timer for motor 2
 
 	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountThree, recipes[recipe]->IngredientThree);
-	pouring_length = (recipes[recipe]->AmountThree * OUNCE);		// Pour third ingredient
+	pouring_length = (recipes[recipe]->AmountThree * OUNCE + MOTOR3_OFFSET);		// Pour third ingredient
 	enable_motor_timer(3);											// Enable timer for motor 3
 	
 	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountFour, recipes[recipe]->IngredientFour);
-	pouring_length = (recipes[recipe]->AmountFour * OUNCE);			// Pour fourth ingredient
+	pouring_length = (recipes[recipe]->AmountFour * OUNCE + MOTOR4_OFFSET);			// Pour fourth ingredient
 	enable_motor_timer(4);											// Enable timer for motor 4
 }
 
@@ -123,7 +168,7 @@ void manage_recipe(int recipe) {
 		printf("8. Back\n");
 		printf("\nSelect an option (1-8): ");
 
-		scanf("%c", &choice);							// Get user input
+		scanf("%2c", &choice);							// Get user input
 
 		if (choice == '0') {
 			printf("\n--------------------\n");
@@ -168,7 +213,7 @@ void display_recipes(void) {
 	}
 	while(1) {
 		printf("\nPick a recipe (1-5) or type 'b' to return home: ");
-		scanf("%c", &choice);
+		scanf("%2c", &choice);
 
 		/* Manage the info of a chosen recipe */
 		switch(choice) {
@@ -207,7 +252,7 @@ void welcome_screen(void) {
 	printf("Please select any option above by entering the item number: ");
 
 	while (1) {
-		scanf("%c", &choice);
+		scanf("%1c", &choice);
 		// fgets(&choice, 1, stdin);
 
 		if (choice == '1') {
@@ -217,13 +262,19 @@ void welcome_screen(void) {
 			set_temperature();				// Manage the internal temperature
 		}
 		else {
-			printf("Invalid value. Please select any option above by entering the item number: ");
+			printf("\nInvalid value. Please select any option above by entering the item number: ");
 		}
 	}
 }
 
+void init_peltier_port(void) {
+	DDRD = _BV(PD7);
+	PORTD &= ~_BV(PD7);
+}
+
 /* Main function */
 int main(void) {
+	init_peltier_port();
 	init_motors();							// Initialize motors - ensure they are not on
 	init_motors_timer();					// Set up timer for controlling liquids
 	init_usart(BAUDRATE, TRANSMIT_RATE, DATA_BITS, STOP_BITS, PARITY_BITS);			// Initialize usart
@@ -233,6 +284,7 @@ int main(void) {
 	stdin = stdout = &usart0_str;			// Set standard streams to serial
 
 	temps.user_defined_temp = 50;			// Start off with internal temp set to 50 F
+	temps.isCooling = false;				// Start off with cooler off
 
 	sei();									// Enable global interrupts
 

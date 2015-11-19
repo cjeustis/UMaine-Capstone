@@ -187,7 +187,7 @@ void update_recipe_ingredient(int recipe, int ingredient) {
 	printf("\n----------\nUpdate Recipe Ingredient\n----------\n");
 	printf("Enter the name of the ingredient: ");
 	fgets(temp_name, USER_NAME_LENGTH, stdin);					// Read in data from the terminal for ingredient name
-	printf("Enter amount of ingredient (0-8 ounces): ");
+	printf("\nEnter amount of ingredient (0-8 ounces): ");
 	fgets(temp_amnt, USER_AMOUNT_LENGTH, stdin);				// Read in data from the terminal for ingredient amount
 
 	/* Save data to recipe struct, depending on which recipe it is */
