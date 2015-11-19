@@ -1,24 +1,5 @@
-#include "motors.h"							// Prototypes
+#include "motors.h"
 
-/* Motor Information */
-#define MOTOR1A_ON ~(1<<PC0)
-#define MOTOR1B_ON (1<<PC1)
-#define MOTOR2A_ON ~(1<<PC2)
-#define MOTOR2B_ON (1<<PC3)
-#define MOTOR3A_ON ~(1<<PC4)
-#define MOTOR3B_ON (1<<PC5)
-#define MOTOR4A_ON ~(1<<PC6)
-#define MOTOR4B_ON (1<<PC7)
-
-/* Define port to use for motors */
-#define MOTORS_PORT PORTC
-#define MOTORS_PORT_DIR DDRC
-
-/* Pouring measurements - used for timing */
-#define TENTH_OUNCE 490
-#define QUARTER_OUNCE (2.5 * TENTH_OUNCE)
-#define HALF_OUNCE (5.0 * TENTH_OUNCE)
-#define OUNCE (10.0 * TENTH_OUNCE)
 
 /* Some useful tidbits about the timing of the pumps 
 /   3.3814 ounces / minute
