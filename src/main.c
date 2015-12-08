@@ -19,6 +19,7 @@
 #include "lib/motors/motors.c"
 #include "lib/timers/timer_helper.c"
 #include "lib/temp/temp_helper.c"
+#include "lib/pwm/pwm.c"
 
 /* INTERRUPT PRIORITY:
 /  16. Timer/Counter1 Overflow
@@ -59,18 +60,13 @@ ISR(TIMER3_OVF_vect) {
 	if (temp_overflow_count >= TEN_SECONDS) {
 		get_internal_temp();				// Get the temp value
 
-		// temps.is_within_range = is_temp_in_range();
-
 		if (temps.isCooling && !temps.temp_reached) {
 			temps.temp_reached = is_temp_reached();
 		}
-		// if (!temps.isCooling && temps.temp_reached) {
-		// }
-
 		if (!temps.temp_reached) {
 			// turn the cooler on
 			if (!temps.isCooling) {
-				PORTD |= _BV(PD7);
+				enable_port_pwm(1);
 				temps.isCooling = true;
 				temps.temp_reached = false;
 			}
@@ -79,12 +75,12 @@ ISR(TIMER3_OVF_vect) {
 			temps.is_within_range = is_temp_in_range();
 			if (temps.is_within_range) {
 				if (temps.isCooling) {
-					PORTD &= ~_BV(PD7);
+					disable_port_pwm(1);
 					temps.isCooling = false;
 				}
 			}
 			else {
-				PORTD |= _BV(PD7);
+				enable_port_pwm(1);
 				temps.isCooling = true;
 				temps.temp_reached = false;
 			}
@@ -103,7 +99,6 @@ ISR(ADC_vect) {
 
 		temps.tempFinal = (temps.temp0F + temps.temp1F) / 2.0;			// Average the temp of both sensors
 	}
-
 	adc_disable_int();													// Disable ADC Conversion Complete interrupt
 }
 
@@ -267,14 +262,9 @@ void welcome_screen(void) {
 	}
 }
 
-void init_peltier_port(void) {
-	DDRD = _BV(PD7);
-	PORTD &= ~_BV(PD7);
-}
-
 /* Main function */
 int main(void) {
-	init_peltier_port();
+	init_pwm();								// Set up PWM used to increase/decrase pins gradually
 	init_motors();							// Initialize motors - ensure they are not on
 	init_motors_timer();					// Set up timer for controlling liquids
 	init_usart(BAUDRATE, TRANSMIT_RATE, DATA_BITS, STOP_BITS, PARITY_BITS);			// Initialize usart
