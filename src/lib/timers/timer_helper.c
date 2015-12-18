@@ -9,7 +9,7 @@ static float pouring_length;
 
 /* Initializes both Timer/Counter1 and Timer/Counter2
    - Timer/Counter1 is used for controlling how long motors remain on for dispensing liquids
-   - Timer/Counter2 is used to check internal temperature every so often to ensure internal temperature is being maintaned
+   - Timer/Counter3 is used to check internal temperature every so often to ensure internal temperature is being maintaned
 */
 void init_motors_timer(void) {
 	/* Normal operation of timers */

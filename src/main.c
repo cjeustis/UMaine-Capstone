@@ -9,6 +9,7 @@
 #include <util/delay.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 
 /* Helper files */
 #include "lib/main.h"
@@ -26,11 +27,6 @@
 /  25. ADC Convertsion Complete
 /  35. Timer/Counter3 Overflow
 */
-
-/* Timer/Counter 1 Overflow Interrupt (16-bit timer) */
-ISR(TIMER1_OVF_vect) {
-	motors_overflow_count++;				// Increase overflow count for the motor that is on
-}
 
 /* Check if temperature is in range so it won't toggle on/off all the time */
 bool is_temp_in_range(void) {
@@ -52,6 +48,41 @@ bool is_temp_reached(void) {
 	}
 }
 
+int check_string_alnum(char *string) {
+	int i = 0;
+	for (i = 0; i < sizeof string; i++) {
+		if (!isalnum(string[i])) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
+/* Clean up the string from terminal to rid of return chars */
+char* clean_string(int size, char string[]) {
+	int i;
+	for (i = 0; i < size; i++ )
+	{
+	    if ( string[i] == '\n' )
+	    {
+	        string[i] = '\0';
+	        break;
+	    }
+	}
+	return string;
+}
+
+/* Clears the input buffer when taking input from user */
+void clear_input_buffer(void) {
+  int ch;
+  while ((ch=getchar()) != EOF && ch != '\n');
+}
+
+/* Timer/Counter 1 Overflow Interrupt (16-bit timer) */
+ISR(TIMER1_OVF_vect) {
+	motors_overflow_count++;				// Increase overflow count for the motor that is on
+}
+
 /* Timer/Counter 3 Overflow Interrupt (16-bit timer) */
 ISR(TIMER3_OVF_vect) {
 	temp_overflow_count++;					// Increase overflow count to track when to read temp
@@ -66,7 +97,8 @@ ISR(TIMER3_OVF_vect) {
 		if (!temps.temp_reached) {
 			// turn the cooler on
 			if (!temps.isCooling) {
-				enable_port_pwm(1);
+				// enable_port_pwm(1);
+				PORTD |= _BV(PD7);
 				temps.isCooling = true;
 				temps.temp_reached = false;
 			}
@@ -75,12 +107,14 @@ ISR(TIMER3_OVF_vect) {
 			temps.is_within_range = is_temp_in_range();
 			if (temps.is_within_range) {
 				if (temps.isCooling) {
-					disable_port_pwm(1);
+					// disable_port_pwm(1);
+					PORTD &= ~_BV(PD7);
 					temps.isCooling = false;
 				}
 			}
 			else {
-				enable_port_pwm(1);
+				// enable_port_pwm(1);
+				PORTD |= _BV(PD7);
 				temps.isCooling = true;
 				temps.temp_reached = false;
 			}
@@ -102,20 +136,6 @@ ISR(ADC_vect) {
 	adc_disable_int();													// Disable ADC Conversion Complete interrupt
 }
 
-/* Clean up the string from terminal to rid of return chars */
-char* clean_string(int size, char string[]) {
-	int i;
-	for (i = 0; i < size; i++ )
-	{
-	    if ( string[i] == '\n' )
-	    {
-	        string[i] = '\0';
-	        break;
-	    }
-	}
-	return string;
-}
-
 /* Pour a given recipe */
 void pour_recipe(int recipe) {
 	int i;
@@ -127,28 +147,35 @@ void pour_recipe(int recipe) {
 		printf("%d...", i);
 	}
 	printf("\n\nPouring %1.2f ounces of %s\n", recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
-	pouring_length = (recipes[recipe]->AmountOne * OUNCE + MOTOR1_OFFSET);			// Pour first ingredient
-	enable_motor_timer(1);											// Enable timer for motor 1
+	// Pour first ingredient and enable timer for motor 1
+	pouring_length = (recipes[recipe]->AmountOne * OUNCE + MOTOR1_OFFSET);
+	enable_motor_timer(1);
 
+	// Pour first ingredient and enable timer for motor 1
 	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountTwo, recipes[recipe]->IngredientTwo);
-	pouring_length = (recipes[recipe]->AmountTwo * OUNCE + MOTOR2_OFFSET);			// Pour second ingredient
-	enable_motor_timer(2);											// Enable timer for motor 2
+	pouring_length = (recipes[recipe]->AmountTwo * OUNCE + MOTOR2_OFFSET);
+	enable_motor_timer(2);
 
+	// Pour first ingredient and enable timer for motor 1
 	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountThree, recipes[recipe]->IngredientThree);
-	pouring_length = (recipes[recipe]->AmountThree * OUNCE + MOTOR3_OFFSET);		// Pour third ingredient
-	enable_motor_timer(3);											// Enable timer for motor 3
+	pouring_length = (recipes[recipe]->AmountThree * OUNCE + MOTOR3_OFFSET);
+	enable_motor_timer(3);
 	
+	// Pour first ingredient and enable timer for motor 1
 	printf("Pouring %1.2f ounces of %s\n", recipes[recipe]->AmountFour, recipes[recipe]->IngredientFour);
-	pouring_length = (recipes[recipe]->AmountFour * OUNCE + MOTOR4_OFFSET);			// Pour fourth ingredient
-	enable_motor_timer(4);											// Enable timer for motor 4
+	pouring_length = (recipes[recipe]->AmountFour * OUNCE + MOTOR4_OFFSET);
+	enable_motor_timer(4);
 }
 
 /* Let user manage the recipe and update information pertaining to it */
 void manage_recipe(int recipe) {
-	unsigned char choice;
+	char input[2];
 
 	printf("\n--------------------\n");
-	dumpRecipeState(recipes[recipe]);
+	if (dumpRecipeState(recipes[recipe]) != 1) {
+		printf("\nError: Unable to display recipe information");
+		welcome_screen();			// Can't display recipe info, so return to main screen
+	}
 	printf("\n--------------------\n");
 
 	while (1) {
@@ -163,81 +190,103 @@ void manage_recipe(int recipe) {
 		printf("8. Back\n");
 		printf("\nSelect an option (1-8): ");
 
-		scanf("%2c", &choice);							// Get user input
-
-		if (choice == '0') {
-			printf("\n--------------------\n");
-			dumpRecipeState(recipes[recipe]);			// Show recipe info
-			printf("\n--------------------\n");
+	    if ((!fgets(input, sizeof input, stdin))) {
+			printf("\nUnexpected response. Please try again.");
+	    }
+	    else if (isalpha(input[0])) {
+			switch(input[0]) {
+				case '0':
+					printf("\n--------------------\n");
+					if (dumpRecipeState(recipes[recipe]) != 1) {// Show recipe info
+						printf("\nError: Unable to display recipe information.");
+					}
+					printf("\n--------------------\n");
+					break;
+				case '1':
+					update_recipe_name(recipe);					// Go update the name of the recipe
+					break;
+				case '2':
+					update_recipe_ingredient(recipe, 1);		// Go update ingredient 1 of the recipe
+					break;
+				case '3':
+					update_recipe_ingredient(recipe, 2);		// Go update ingredient 1 of the recipe
+					break;
+				case '4':
+					update_recipe_ingredient(recipe, 3);		// Go update ingredient 1 of the recipe
+					break;
+				case '5':
+					update_recipe_ingredient(recipe, 4);		// Go update ingredient 1 of the recipe
+					break;
+				case '6':
+					update_recipe_glass(recipe);				// Go update the glass type of the recipe
+					break;
+				case '7':
+					pour_recipe(recipe);						// Pour the chosen recipe
+					break;
+				case '8':
+					if (display_recipes() != 1) {				// Go back and display all recipes again
+						printf("\nError: Unable to display recipe information.");
+						welcome_screen();						// Can't display recipes, so return to main screen
+					}
+				default:
+					printf("\nUnexpected response. Please try again.");
+			}
 		}
-		else if (choice == '1') {
-			update_recipe_name(recipe);					// Go update the name of the recipe
-		}
-		else if (choice == '2') {
-			update_recipe_ingredient(recipe, 1);		// Go update ingredient 1 of the recipe
-		}
-		else if (choice == '3') {
-			update_recipe_ingredient(recipe, 2);		// Go update ingredient 2 of the recipe
-		}
-		else if (choice == '4') {
-			update_recipe_ingredient(recipe, 3);		// Go update ingredient 3 of the recipe
-		}
-		else if (choice == '5') {
-			update_recipe_ingredient(recipe, 4);		// Go update ingredient 4 of the recipe
-		}
-		else if (choice == '6') {
-			update_recipe_glass(recipe);				// Go update the glass type of the recipe
-		}
-		else if (choice == '7') {
-			pour_recipe(recipe);						// Pour the chosen recipe
-		}
-		else if (choice == '8') {
-			display_recipes();							// Go back and display all recipes again
+		else {
+			printf("\nUnexpected response. Please try again.");
 		}
 	}
 }
 
 /* Display all available recipes */
-void display_recipes(void) {
+int display_recipes(void) {
 	int i;
-	unsigned char choice;
+	char input[2];
 	/* Show info for each recipe */
 	for (i = 0; i < NUMBER_OF_RECIPES; i++) {
 		printf("--------------------\nRecipe %d\n--------------------\n", i+1);
-		dumpRecipeState(recipes[i]);
+		if (dumpRecipeState(recipes[i]) != 1) {			// Show recipe info
+			return -1;
+		}
 	}
 	while(1) {
 		printf("\nPick a recipe (1-5) or type 'b' to return home: ");
-		scanf("%2c", &choice);
-
-		/* Manage the info of a chosen recipe */
-		switch(choice) {
-			case '1':
-				manage_recipe(0);
-				break;
-			case '2':
-				manage_recipe(1);
-				break;
-			case '3':
-				manage_recipe(2);
-				break;
-			case '4':
-				manage_recipe(3);
-				break;
-			case '5':
-				manage_recipe(4);
-				break;
-			case 'b':
-				welcome_screen();
-			default:
-				printf("\nInvalid option!");
+	    if ((!fgets(input, sizeof input, stdin))) {
+			printf("\nUnexpected response. Please try again.");
+	    }
+	    else if (isalpha(input[0])) {
+			/* Manage the info of a chosen recipe */
+			switch(input[0]) {
+				case '1':
+					manage_recipe(0);
+					break;
+				case '2':
+					manage_recipe(1);
+					break;
+				case '3':
+					manage_recipe(2);
+					break;
+				case '4':
+					manage_recipe(3);
+					break;
+				case '5':
+					manage_recipe(4);
+					break;
+				case 'b':
+					welcome_screen();
+				default:
+					printf("\nUnexpected response. Please try again.");
+			}
+		}
+		else {
+			printf("\nUnexpected response. Please try again.");
 		}
 	}
 }
 
 /* Starting page presented to the user */
 void welcome_screen(void) {
-	char choice = '0';
+	char input[2];
 
 	printf("\n\nMr. Pour!  The automated beverage creator!\n--------------------\n\n");
 	printf("Created by: Chris Eustis\n            Slater Claudel\n\n");
@@ -247,24 +296,37 @@ void welcome_screen(void) {
 	printf("Please select any option above by entering the item number: ");
 
 	while (1) {
-		scanf("%1c", &choice);
-		// fgets(&choice, 1, stdin);
-
-		if (choice == '1') {
-			display_recipes();				// Show all recipes available
-		}
-		else if (choice == '2') {
-			set_temperature();				// Manage the internal temperature
+		// scanf("%2c", &choice);
+	    if ((!fgets(input, sizeof input, stdin))) {
+	      printf("Error: Invalid input.\n");
+	      welcome_screen();
+	    }
+	    else if (isalpha(input[0])) {
+	    	if (input[0] == '1') {
+				if (display_recipes() != 1) {	// Show all recipes available
+					printf("\nError: Unable to display recipe information.");
+					welcome_screen();
+				}
+			}
+			else if (input[0] == '2') {
+				set_temperature();				// Manage the internal temperature
+			}
 		}
 		else {
-			printf("\nInvalid value. Please select any option above by entering the item number: ");
+			printf("\nError: Unexpected value. Please select any option above by entering the item number: ");
 		}
 	}
 }
 
+void init_peltier_port(void) {
+	DDRD = _BV(PD7);
+	PORTD &= ~_BV(PD7);
+}
+
 /* Main function */
 int main(void) {
-	init_pwm();								// Set up PWM used to increase/decrase pins gradually
+	init_peltier_port();
+	// init_pwm();								// Set up PWM used to increase/decrase pins gradually
 	init_motors();							// Initialize motors - ensure they are not on
 	init_motors_timer();					// Set up timer for controlling liquids
 	init_usart(BAUDRATE, TRANSMIT_RATE, DATA_BITS, STOP_BITS, PARITY_BITS);			// Initialize usart

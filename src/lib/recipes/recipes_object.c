@@ -29,23 +29,30 @@ Recipes newRecipes(){
 }
 
 /* Prints out all info about recipe */
-void dumpRecipeState(Recipes recipe){
-	if(recipe==NULL) return;
-	printf("Recipe name: %s\n", recipe->RecipeName);
-	printf("Ingredient One: %s\n", recipe->IngredientOne);
-	printf("Ingredient One Amount: %f\n", recipe->AmountOne);
-	printf("Ingredient Two: %s\n", recipe->IngredientTwo);
-	printf("Ingredient Two Amount: %f\n", recipe->AmountTwo);
-	printf("Ingredient Three: %s\n", recipe->IngredientThree);
-	printf("Ingredient Three Amount: %f\n", recipe->AmountThree);
-	printf("Ingredient Four: %s\n", recipe->IngredientFour);
-	printf("Ingredient Four Amount: %f\n", recipe->AmountFour);
-	printf("Glass Type: %s\n", recipe->GlassType);
+int dumpRecipeState(Recipes recipe){
+	if(recipe != NULL) {
+		printf("Recipe name: %s\n", recipe->RecipeName);
+		printf("Ingredient One: %s\n", recipe->IngredientOne);
+		printf("Ingredient One Amount: %f\n", recipe->AmountOne);
+		printf("Ingredient Two: %s\n", recipe->IngredientTwo);
+		printf("Ingredient Two Amount: %f\n", recipe->AmountTwo);
+		printf("Ingredient Three: %s\n", recipe->IngredientThree);
+		printf("Ingredient Three Amount: %f\n", recipe->AmountThree);
+		printf("Ingredient Four: %s\n", recipe->IngredientFour);
+		printf("Ingredient Four Amount: %f\n", recipe->AmountFour);
+		printf("Glass Type: %s\n", recipe->GlassType);
+		return 1;
+	}
+	return -1;
 }
 
 /* Frees memory allocated for recipe */
-void deleteRecipe(Recipes recipe){
-	free(recipe);
+int deleteRecipe(Recipes recipe){
+	if (recipe != NULL) {
+		free(recipe);
+		return 1;
+	}
+	return -1;
 }
 
 /* Set location of eeprom to look at for specific recipe */
@@ -142,54 +149,80 @@ void save_recipe_to_eeprom(int recipe) {
 }
 
 /* Update a given recipe's name, saving to EEPROM and displaying the updated recipe back to screen */
-void update_recipe_name(int recipe) {
+int update_recipe_name(int recipe) {
 	char temp[USER_NAME_LENGTH];
 
 	printf("\n----------\nUpdate Recipe Name\n----------\n");
 	printf("Current name of the recipe: %s\n", recipes[recipe]->RecipeName);
 	printf("New name of the recipe: ");
-	fgets(temp, USER_NAME_LENGTH, stdin);				// Read in data from the terminal
+
+	if (!fgets(temp, sizeof USER_NAME_LENGTH, stdin)) {			// Read in data from the terminal
+		return -1;
+	}
+	if (!check_string_alnum(temp)) {
+		return -1;
+	}
+
 	memcpy(recipes[recipe]->RecipeName, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);					// Save user input to recipe struct
 
 	save_recipe_to_eeprom(recipe);						// Save recipe to EEPROM
-	deleteRecipe(recipes[recipe]);						// Delete (free) the recipe from memory
+	if (deleteRecipe(recipes[recipe]) != 1) {			// Delete (free) the recipe from memory
+		return -1;
+	}
 	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));									// Get the updated recipe from EEPROM
 	convert_amount_to_float(recipe);					// Convert amounts to float values
 
 	printf("\n--------------------\nRecipe updated\n--------------------\n");
-	dumpRecipeState(recipes[recipe]);
+	return dumpRecipeState(recipes[recipe]);
 }
 
 /* Update a recipe's glass type, saving to EEPROM and displaying the updated recipe back to screen */
-void update_recipe_glass(int recipe) {
+int update_recipe_glass(int recipe) {
 	char temp[USER_NAME_LENGTH];
 
 	printf("\n----------\nUpdate Glass Type\n----------\n");
 	printf("Current type of glass: %s\n", recipes[recipe]->GlassType);
 	printf("New glass type: ");
-	fgets(temp, USER_NAME_LENGTH, stdin);				// Read in data from the terminal
+
+	if (!fgets(temp, sizeof USER_NAME_LENGTH, stdin)) {			// Read in data from the terminal
+		return -1;
+	}
+	if (!check_string_alnum(temp)) {
+		return -1;
+	}
 	memcpy(recipes[recipe]->GlassType, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);						// Save user input to recipe struct
 
 	save_recipe_to_eeprom(recipe);						// Save recipe to EEPROM
-	deleteRecipe(recipes[recipe]);						// Delete (free) the recipe from memory
+	if (deleteRecipe(recipes[recipe]) != 1) {			// Delete (free) the recipe from memory
+		return -1;
+	}
 	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));									// Get the updated recipe from EEPROM
 	convert_amount_to_float(recipe);					// Convert amounts to float values
 
 	printf("\n--------------------\nRecipe updated\n--------------------\n");
-	dumpRecipeState(recipes[recipe]);
+	return dumpRecipeState(recipes[recipe]);
 }
 
 /* Update a recipe's ingredient information, saving to EEPROM and displaying the udpated recipe back to screen */
-void update_recipe_ingredient(int recipe, int ingredient) {
+int update_recipe_ingredient(int recipe, int ingredient) {
 	char temp_name[USER_NAME_LENGTH];
 	char temp_amnt[USER_AMOUNT_LENGTH];
 
 	printf("\n----------\nUpdate Recipe Ingredient\n----------\n");
 	printf("Enter the name of the ingredient: ");
-	fgets(temp_name, USER_NAME_LENGTH, stdin);					// Read in data from the terminal for ingredient name
+	if (!fgets(temp_name, sizeof USER_NAME_LENGTH, stdin)) {			// Read in data from the terminal
+		return -1;
+	}
+	if (!check_string_alnum(temp_name)) {
+		return -1;
+	}
 	printf("\nEnter amount of ingredient (0-8 ounces): ");
-	fgets(temp_amnt, USER_AMOUNT_LENGTH, stdin);				// Read in data from the terminal for ingredient amount
-
+	if (!fgets(temp_amnt, sizeof USER_NAME_LENGTH, stdin)) {			// Read in data from the terminal
+		return -1;
+	}
+	if (!check_string_alnum(temp_amnt)) {
+		return -1;
+	}
 	/* Save data to recipe struct, depending on which recipe it is */
 	if (ingredient == 1) {
 		memcpy(recipes[recipe]->IngredientOne, clean_string(USER_NAME_LENGTH, temp_name), USER_NAME_LENGTH);
@@ -209,10 +242,12 @@ void update_recipe_ingredient(int recipe, int ingredient) {
 	}
 
 	save_recipe_to_eeprom(recipe);						// Save updated recipe to EEPROM
-	deleteRecipe(recipes[recipe]);						// Delete (free) the recipe from memory
+	if (deleteRecipe(recipes[recipe]) != 1) {			// Delete (free) the recipe from memory
+		return -1;
+	}
 	recipes[recipe] = get_recipe_from_eeprom(set_recipe_eeprom_address(recipe));									// Get the updated recipe from EEPROM
 	convert_amount_to_float(recipe);					// Convert amounts to float values
 
 	printf("\n--------------------\nRecipe updated\n--------------------\n");
-	dumpRecipeState(recipes[recipe]);
+	return dumpRecipeState(recipes[recipe]);
 }

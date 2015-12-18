@@ -25,7 +25,7 @@ int uart_getchar(FILE *stream) {
     if(data == '\r') {
         data = '\n';                            // Convert for terminal to understand
     }
-    // stream_printf(data, stream);                // Send to console what has been received, so we can see when typing
+    stream_printf(data, stream);                // Send to console what has been received, so we can see when typing
     return data;        
 }
 

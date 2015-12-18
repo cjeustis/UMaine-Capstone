@@ -60,17 +60,23 @@ void get_temp_reading(void) {
 
 /* Let user change desired internal temperature */
 void update_temperature(void) {
-	int value;
+	char value[3];
 
 	printf("\n\nThe temperature is currently set to: %d\n", temps.user_defined_temp);
 	printf("Enter a value between 35 F and 55 F that you would like the internal temperature to be maintaned at: ");
 
-	scanf("%3d", &value);
+    if ((!fgets(value, sizeof value, stdin))) {
+		printf("\nUnexpected response. Please try again.");
+    }
+    else if ((isdigit(value[0])) && (isdigit(value[1]))) {
+
+	// scanf("%3d", &value);
 	// fgets(&value, 3, stdin);					// Read in user temp
 	// value -= '0';								// Convert to integer value
-	if ((value >= TEMP_LOWER) && (value <= TEMP_UPPER)) {
-		temps.user_defined_temp = value;		// Set new value, if within range
-		printf("\n\nThe desired internal temperature has been updated to %d F.\n", temps.user_defined_temp);
+		if (((int)value >= TEMP_LOWER) && ((int)value <= TEMP_UPPER)) {
+			temps.user_defined_temp = (int)&value;		// Set new value, if within range
+			printf("\n\nThe desired internal temperature has been updated to %d F.\n", temps.user_defined_temp);
+		}
 	}
 	else {
 		printf("\n\nInvalid value. Returning...\n");
@@ -79,7 +85,7 @@ void update_temperature(void) {
 
 /* Check to see if the user wants to change the internal temperature value */
 void set_temperature(void) {
-	char choice;
+	char choice[2];
 
 	printf("\n\nMr. Pour: Temperature Control!\n--------------------\n\n");
 
@@ -88,15 +94,21 @@ void set_temperature(void) {
 	printf("Current temperature: %1.2f\n", temps.tempFinal);
 	printf("\nWould you like to change the internal temperature? (y = yes, n = no): ");
 
-	scanf("%1c", &choice);
-	if (choice == 'y') {
-		update_temperature();					// Let user update temp
-	}
-	else if (choice == 'n') {
-		welcome_screen();
+    if ((!fgets(choice, sizeof choice, stdin))) {
+		printf("\nUnexpected response. Please try again.");
+    }
+    else if (isalpha(choice[0])) {
+
+	// scanf("%1c", &choice);
+		if (choice[0] == 'y') {
+			update_temperature();					// Let user update temp
+		}
+		else if (choice[0] == 'n') {
+			welcome_screen();
+		}
 	}
 	else {
 		printf("\n\nInvalid value. Returning...\n");
-		welcome_screen();								// Go back to start of program
+		set_temperature();							// Try again...
 	}
 }

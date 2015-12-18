@@ -4,7 +4,8 @@
 #include <fcntl.h>
 #include <string.h>
 
-#define SERIAL_PORT "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AI025XIU-if00-port0"
+// #define SERIAL_PORT "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AI025XIU-if00-port0"
+#define SERIAL_PORT "/dev/ttyUSB0"
 #define BAUD_RATE B9600
 
 /* Prototypes */
@@ -17,7 +18,19 @@ void setup_stdin(void) {
   struct termios term_struct;
   
   tcgetattr(0, &term_struct);
-  term_struct.c_lflag = ICANON | ECHO | ECHOE | VEOF | VINTR | VKILL;
+  /* lflag meanings:
+      - ISIG    - generate corresponding signal for INTR, QUIT
+      - ICANON  - canonical mode
+      - ECHO    - echo input characters
+      - ECHOE   - ERASE character erases preceding input character, WERASE erases preceding word
+      - VEOF    - End-of-file character; causes pending tty buffer to be sent to the waiting user program without waiting for end-of-line
+      - VEOL    - Additional end-of-line character
+      - VERASE  - Erase character; erases previous, not yet erased character, but doesn't erase past EOF or beginning of line
+      - VINTR   - Interrupt character; send a SIGINT (need ISIG set)
+      - VKILL   - kill character; erases input since last EOF or beginning of line
+      - VQUIT   - quit character; send SIGQUIT (need ISIG set)
+  */
+  term_struct.c_lflag = ISIG | ICANON | ECHO | ECHOE | VEOF | VERASE | VINTR | VKILL | VQUIT;
   tcsetattr(0, TCSANOW, &term_struct);
 }
 

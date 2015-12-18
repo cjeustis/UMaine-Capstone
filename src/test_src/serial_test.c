@@ -5,8 +5,11 @@
 #include <math.h>
 #include <avr/io.h>
 #include <avr/pgmspace.h>
-#include "../Library/usart.c"
-#include "../Library/serial.c"
+#include "../lib/usart/usart.c"
+#include "../lib/serial/serial.c"
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 // Set baud for serial communication
 #define BAUD 9600
@@ -31,16 +34,31 @@ int main(void) {
 	
 	//assign our stream to standart I/O streams
 	stdin=stdout=&usart0_str;
-	uint8_t u8Data;
+	char input[3];
 
 	while(1) {
-		printf("THIS IS A TEST\n\n");
-	    printf_P(PSTR("\nPress any key:"));
-	    //scan standard stream (USART)
-	    scanf("%c",&u8Data);
-	    printf_P(PSTR("\nYou pressed: "));
-	    //print scaned character and its code
-	    printf("%c; Key code: %u",u8Data, u8Data);
+	    printf_P(PSTR("Press: a, b, 1, or 2: "));
+	    if (!fgets(input, sizeof input, stdin)) {
+	    	printf("ERROR!\n");
+	    }
+	    else if (isalnum((int)input) == 0) {
+	    	printf("Invalid input\n");
+	    }
+	    else if (strcmp("a", input) == 0) {
+	    	printf("You pressed 'a'\n");
+	    }
+	    else if (strcmp("b", input) == 0) {
+	    	printf("You pressed 'b'\n");
+	    }
+	    else if (strcmp("1", input) == 0) {
+	    	printf("You pressed '1'\n");
+	    }
+	    else if (strcmp("2", input) == 0) {
+	    	printf("You pressed '2'\n");
+	    }
+	    else {
+	    	printf("You entered invalid shit, fool\n");
+	    }
 	}
 
 	return 0;
