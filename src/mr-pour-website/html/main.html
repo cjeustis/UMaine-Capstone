@@ -1,0 +1,126 @@
+<!-- NavBar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#/">Mr. Pour</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a class="nav-button" ng-click="scrollTo('about')">ABOUT</a></li>
+			<li><a class="nav-button" ng-click="scrollTo('services')">SERVICES</a></li>
+			<li><a class="nav-button" ng-click="scrollTo('contact')">CONTACT</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#/registration"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			<li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		</ul>
+
+	</div>
+</nav>
+
+<!-- Main Content-->
+<div id="home" class="jumbotron text-center">
+	<div>
+		<img class="logo-img" src="img/mr-pour-logo.png" />
+	</div>
+	<p>The automated beverage creation system</p>
+</div>
+
+<div id="about" class="container-fluid text-center">
+	<div class="row">
+		<div class="col-sm-8">
+			<h2>About The Project</h2>
+			<p>This will be an overview of the project and who we are. The buttons below might
+				allow you to shoot an email to either of us. That would be pretty cool.</p>
+			<button class="btn btn-default btn-lg">E-mail number 1</button>
+			<button class="btn btn-default btn-lg">E-mail number 2</button>
+		</div>
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-leaf logo"></span>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid bg-grey text-center">
+	<div class="row">
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-wrench logo"></span>
+		</div>
+		<div class="col-sm-8 ">
+			<h2>Our Contract Specs</h2>
+			<p>Maybe we will put some contract specs here?</p>
+		</div>
+	</div>
+</div>
+<div id="services" class="container-fluid text-center">
+	<h2>SERVICES</h2>
+	<h4>What we offer</h4>
+	<br>
+	<div class="row">
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-off"></span>
+			<h4>POWER</h4>
+			<p>Lorem ipsum dolor sit amet..</p>
+		</div>
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-heart"></span>
+			<h4>LOVE</h4>
+			<p>Lorem ipsum dolor sit amet..</p>
+		</div>
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-lock"></span>
+			<h4>JOB DONE</h4>
+			<p>Lorem ipsum dolor sit amet..</p>
+		</div>
+	</div>
+	<br><br>
+	<div class="row">
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-leaf"></span>
+			<h4>GREEN</h4>
+			<p>Lorem ipsum dolor sit amet..</p>
+		</div>
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-certificate"></span>
+			<h4>CERTIFIED</h4>
+			<p>Lorem ipsum dolor sit amet..</p>
+		</div>
+		<div class="col-sm-4">
+			<span class="glyphicon glyphicon-wrench"></span>
+			<h4>HARD WORK</h4>
+			<p>Lorem ipsum dolor sit amet..</p>
+		</div>
+	</div>
+</div>
+
+<div id="contact" class="container-fluid bg-grey">
+	<h2 class="text-center">CONTACT</h2>
+	<div class="row text-center">
+		<div class="col-sm-4">
+			<p>Contact us and we'll get back to you within 24 hours.</p>
+			<p><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>
+			<p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
+			<p><span class="glyphicon glyphicon-envelope"></span> myemail@something.com</p>
+		</div>
+		<div class="col-sm-7">
+			<div class="row">
+				<div class="col-sm-6 form-group">
+					<input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+				</div>
+				<div class="col-sm-6 form-group">
+					<input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+				</div>
+			</div>
+			<textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+			<div class="row">
+				<div class="col-sm-12 form-group">
+					<button class="btn btn-default pull-right" type="submit">Send</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="container-fluid text-center">
+	<a href="#myPage" title="To Top">
+		<span class="glyphicon glyphicon-chevron-up"></span>
+	</a>
+</footer>

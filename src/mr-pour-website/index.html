@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="mrPour">
+<head lang="en">
+	
+    <meta charset="UTF-8">
+    <title>Mr. Pour Beverage Creation</title>
+
+    <!-- Bootstrap/jQuery -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+	<!-- AngularJS -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-route.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+    <!-- angular-jwt and angular-storage -->
+    <script type="text/javascript" src="//cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.0/ui-bootstrap-tpls.min.js"></script>
+
+    <!-- load ngmessages -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+
+    <!-- graph tools -->
+    <script src="js/smoothie.js"></script>
+
+    <script type="text/javascript" src="js/ag-grid.min.js"></script>
+    <link href="css/ag-grid.min.css" rel="stylesheet" type="text/css">
+    <link href="css/theme-fresh.min.css" rel="stylesheet" type="text/css">
+    <link href="css/theme-blue.min.css" rel="stylesheet" type="text/css">
+
+
+    <!--<script src="js/ui-grid.min.js"></script>-->
+    <!--<link href="css/ui-grid.min.css" rel="stylesheet" type="text/css">-->
+
+
+    <!-- Setting the right viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Our stuff -->
+    <script src="js/main.js"></script>
+    <script src="js/sha256.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--<base href="/">-->
+</head>
+
+<body>
+        <!-- This is used for routing to other pages - responsive! -->
+        <div ng-view></div>
+
+</body>
+
+</html>

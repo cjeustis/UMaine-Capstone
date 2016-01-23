@@ -1,0 +1,35 @@
+<!-- NavBar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/dashboard">Mr. Pour</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-button" href="#/dashboard/recipes">Recipes</a></li>
+            <li><a class="nav-button" href="#/dashboard/temperature">Temperature</a></li>
+        </ul>
+        <ul ng-hide="isAuthenticated" class="nav navbar-nav navbar-right">
+            <li><a><span class="glyphicon glyphicon-user"></span> {{ userData.user_name }}</a></li>
+            <li><a class="nav-button" id="logout-id" ng-click="logout()"><span
+                    class="glyphicon glyphicon-log-in"></span>
+                Logout</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="grid-wrapper">
+        <div id="myGrid" class="ag-blue grid-align"></div>
+    </div>
+
+    <div>
+        <button class="btn btn-success formCreate" id="save" ng-click="createNewRecipe()">New
+            Recipe</button>
+        <button class="btn btn-danger modal-button pull-right formDelete" id="deleteRecipe"
+                ng-click="deleteRecipe()">Delete
+            selected recipe</button>
+        <button class="btn btn-primary modal-button formUpdate" id="updateRecipe"
+                ng-click="updateRecipe()">Update
+            selected recipe</button>
+    </div>
+
+</div>

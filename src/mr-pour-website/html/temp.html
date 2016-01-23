@@ -1,0 +1,46 @@
+<!-- NavBar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/dashboard">Mr. Pour</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-button" href="#/dashboard/recipes">Recipes</a></li>
+            <li><a class="nav-button" href="#/dashboard/temperature">Temperature</a></li>
+        </ul>
+        <ul ng-hide="isAuthenticated" class="nav navbar-nav navbar-right">
+            <li><a><span class="glyphicon glyphicon-user"></span> {{ userData.user_name }}</a></li>
+            <li><a class="nav-button" id="logout-id" ng-click="logout()"><span
+                    class="glyphicon glyphicon-log-in"></span>
+                Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="graphWrapper">
+    <span class="graphTitle">Current Internal Temperature</span>
+    <canvas id="smoothie-chart" width="1200" height="400"></canvas>
+    <div>
+        <span class="desiredTempTitle">Desired Internal Temperature</span>
+        <span class="desiredTempTitle pull-right">Current Internal Temperature</span>
+    </div>
+    <div>
+        <span class="currentSetTemp" id="currentlySetTemp"></span>
+        <span class="currentRealTemp pull-right" id="currentTempSpan">50.00</span>
+    </div>
+    <div>
+        <button class="btn btn-primary" id="decreaseTemp" ng-click="decreaseTemp()">
+            <span class="glyphicon glyphicon-arrow-down">
+                Decrease
+            </span>
+        </button>
+        <button class="btn btn-primary" id="increaseTemp" ng-click="increaseTemp()">
+            <span class="glyphicon glyphicon-arrow-up">
+                Increase
+            </span>
+        </button>
+    </div>
+</div>
+
+<div>
+</div>

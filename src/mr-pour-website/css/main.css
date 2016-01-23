@@ -1,0 +1,222 @@
+.jumbotron {
+    font-family: Montserrat, sans-serif;
+    background-color: #FEA564;
+    color: #fff;
+    padding: 100px 25px;
+}
+
+.container-fluid {
+    padding: 60px 50px;
+}
+
+.logo-img {
+     max-width: 400px;
+ }
+
+@media screen and (max-width: 768px) {
+    .col-sm-4 {
+        text-align: center;
+        margin: 25px 0;
+    }
+}
+
+/* Add an orange color to all icons and set the font-size */
+.logo-small {
+    color: #0082d5;
+    font-size: 50px;
+}
+
+.logo {
+    color: #678899;
+    font-size: 200px;
+}
+.carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: #FEA564;
+}
+
+.carousel-indicators li {
+    border-color: #FEA564;
+}
+
+.carousel-indicators li.active {
+    background-color: #FEA564;
+}
+
+.item h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 70px 0;
+}
+
+.item span {
+    font-style: normal;
+}
+.navbar {
+    font-family: Montserrat, sans-serif;
+    margin-bottom: 0;
+    background-color: #FEA564;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+}
+
+.navbar li a {
+    color: #fff !important;
+}
+
+.navbar .navbar-brand {
+    color: #678899;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #678899 !important;
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.nav-button {
+    cursor: pointer;
+    cursor: hand;
+}
+
+footer .glyphicon {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #FEA564;
+}
+
+body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: #818181;
+}
+h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #303030;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #303030;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.myGrid {
+    position: absolute;
+    /*width: 40%;  *//* Default */
+    /*height: 60%;*/
+
+    /* Center the dialog */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+}
+
+.grid-align {
+    text-align: center;
+    height: 400px;
+}
+
+.ag-body {
+    font-size: 20px;
+}
+
+.ag-header {
+    font-size: 15px;
+}
+
+.grid-wrapper {
+    margin: 40px;
+}
+
+.recipeFormWrapper {
+    margin-top: 100px;
+    width: 50%;
+}
+
+.recipeFormHeader {
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.formCreate {
+    margin-left: 20px;
+}
+
+.formUpdate {
+    margin-left: 10px;
+}
+
+.formDelete {
+    margin-right: 20px;
+}
+
+.graphWrapper {
+    margin-top: 45px;
+    position: absolute;
+    /*width: 40%;  *//* Default */
+    /*height: 60%;*/
+
+    /* Center the dialog */
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+}
+
+.graphTitle {
+    margin-top: -30px;
+    font-size: 30px;
+    position: absolute;
+    /*width: 40%;  *//* Default */
+    /*height: 60%;*/
+
+    /* Center the dialog */
+    /*top: 40%;*/
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+}
+
+.currentSetTemp {
+    font-size: 30px;
+    margin-left: 85px;
+    color: red;
+}
+
+.currentRealTemp {
+    font-size: 30px;
+    margin-right: 55px;
+    color: red;
+}
+
+.desiredTempTitle {
+    margin-left: 6px;
+    font-size: 15px;
+    color: black;
+}
+
+.form-signin {
+    background-color: #eeeeee;
+    border: ridge;
+}

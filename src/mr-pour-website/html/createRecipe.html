@@ -1,0 +1,185 @@
+<!-- NavBar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/dashboard">Mr. Pour</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-button" href="#/dashboard/recipes">Recipes</a></li>
+            <li><a class="nav-button" href="#/dashboard/temperature">Temperature</a></li>
+        </ul>
+        <ul ng-hide="isAuthenticated" class="nav navbar-nav navbar-right">
+            <li><a><span class="glyphicon glyphicon-user"></span> {{ userData.user_name }}</a></li>
+            <li><a class="nav-button" id="logout-id" ng-click="logout()"><span
+                    class="glyphicon glyphicon-log-in"></span>
+                Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container recipeFormWrapper">
+
+    <form name="newRecipeForm" ng-submit="saveRecipe(recipe)">
+
+        <div class="form-group"
+             ng-class="{ 'has-error': newRecipeForm.recipe_name.$touched && newRecipeForm.recipe_name.$invalid }">
+            <label>Recipe Name</label>
+            <input type="text" name="recipe_name" class="form-control"
+                   ng-model="recipe.recipe_name"
+                   ng-minlength="1"
+                   ng-maxlength="16"
+                   placeholder="Recipe Name"
+                   required>
+            <div class="help-block" ng-messages="newRecipeForm.recipe_name.$error" ng-if="newRecipeForm.recipe_name.$touched">
+                <div ng-messages-include="html/formStringErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': newRecipeForm.ing_1.$touched && newRecipeForm.ing_1.$invalid }">
+            <label>Ingredient One</label>
+            <input type="text" name="ing_1" class="form-control"
+                   ng-model="recipe.ing_1"
+                   ng-minlength="1"
+                   ng-maxlength="16"
+                   placeholder="Name of Ingredient One"
+                   required>
+            <div class="help-block" ng-messages="newRecipeForm.ing_1.$error" ng-if="newRecipeForm.ing_1.$touched">
+                <div ng-messages-include="html/formStringErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{ 'has-error': newRecipeForm.amt_1.$touched && newRecipeForm.amt_1.$invalid }">
+            <label>Amount One</label>
+
+            <input type="number" name="amt_1" class="form-control"
+                   step="0.1"
+                   min="0.0"
+                   max="8.0"
+                   ng-maxlength="3"
+                   ng-model="recipe.amt_1"
+                   placeholder="Amount of Ingredient One"
+                    required />
+
+            <div class="help-block" ng-messages="newRecipeForm.amt_1.$error" ng-if="newRecipeForm.amt_1.$touched">
+                <div ng-messages-include="html/formNumberErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': newRecipeForm.ing_2.$touched && newRecipeForm.ing_2.$invalid }">
+            <label>Ingredient Two</label>
+            <input type="text" name="ing_2" class="form-control"
+                   ng-model="recipe.ing_2"
+                   ng-minlength="1"
+                   ng-maxlength="16"
+                   placeholder="Name of Ingredient Two"
+                   required>
+            <div class="help-block" ng-messages="newRecipeForm.ing_2.$error" ng-if="newRecipeForm.ing_2.$touched">
+                <div ng-messages-include="html/formStringErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{ 'has-error': newRecipeForm.amt_2.$touched && newRecipeForm.amt_2.$invalid }">
+            <label>Amount Two</label>
+
+            <input type="number" name="amt_2" class="form-control"
+                   step="0.1"
+                   min="0.0"
+                   max="8.0"
+                   ng-maxlength="3"
+                   ng-model="recipe.amt_2"
+                   placeholder="Amount of Ingredient Two"
+                   required />
+
+            <div class="help-block" ng-messages="newRecipeForm.amt_2.$error" ng-if="newRecipeForm.amt_2.$touched">
+                <div ng-messages-include="html/formNumberErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': newRecipeForm.ing_3.$touched && newRecipeForm.ing_3.$invalid }">
+            <label>Ingredient Three</label>
+            <input type="text" name="ing_3" class="form-control"
+                   ng-model="recipe.ing_3"
+                   ng-minlength="1"
+                   ng-maxlength="16"
+                   placeholder="Name of Ingredient Three"
+                   required>
+            <div class="help-block" ng-messages="newRecipeForm.ing_3.$error" ng-if="newRecipeForm.ing_3.$touched">
+                <div ng-messages-include="html/formStringErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{ 'has-error': newRecipeForm.amt_3.$touched && newRecipeForm.amt_3.$invalid }">
+            <label>Amount Three</label>
+
+            <input type="number" name="amt_3" class="form-control"
+                   step="0.1"
+                   min="0.0"
+                   max="8.0"
+                   ng-maxlength="3"
+                   ng-model="recipe.amt_3"
+                   placeholder="Amount of Ingredient Three"
+                   required />
+
+            <div class="help-block" ng-messages="newRecipeForm.amt_3.$error" ng-if="newRecipeForm.amt_3.$touched">
+                <div ng-messages-include="html/formNumberErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{ 'has-error': newRecipeForm.ing_4.$touched && newRecipeForm.ing_4.$invalid }">
+            <label>Ingredient Four</label>
+            <input type="text" name="ing_4" class="form-control"
+                   ng-model="recipe.ing_4"
+                   ng-minlength="1"
+                   ng-maxlength="16"
+                   placeholder="Name of Ingredient Four"
+                   required>
+            <div class="help-block" ng-messages="newRecipeForm.ing_4.$error" ng-if="newRecipeForm.ing_4.$touched">
+                <div ng-messages-include="html/formStringErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{ 'has-error': newRecipeForm.amt_4.$touched && newRecipeForm.amt_4.$invalid }">
+            <label>Amount Four</label>
+
+            <input type="number" name="amt_4" class="form-control"
+                   step="0.1"
+                   min="0.0"
+                   max="8.0"
+                   ng-maxlength="3"
+                   ng-model="recipe.amt_4"
+                   placeholder="Amount of Ingredient Four"
+                   required />
+
+            <div class="help-block" ng-messages="newRecipeForm.amt_4.$error" ng-if="newRecipeForm.amt_4.$touched">
+                <div ng-messages-include="html/formNumberErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{ 'has-error': newRecipeForm.glass_type.$touched && newRecipeForm.glass_type.$invalid }">
+            <label>Glass Type</label>
+            <input type="text" name="glass_type" class="form-control"
+                   ng-model="recipe.glass_type"
+                   ng-minlength="1"
+                   ng-maxlength="16"
+                   placeholder="Name of Glass Type"
+                   required>
+            <div class="help-block" ng-messages="newRecipeForm.glass_type.$error" ng-if="newRecipeForm.glass_type.$touched">
+                <div ng-messages-include="html/formStringErrorMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group pull-right">
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            <button type="submit" class="btn btn-success" name="btn-saveRecipe"
+            id="btn-saveRecipe">Save
+            </button>
+        </div>
+
+    </form>
+</div>
