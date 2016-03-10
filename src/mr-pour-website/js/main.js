@@ -412,6 +412,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
 
     $('#updateRecipe').hide();
     $('#deleteRecipe').hide();
+    $('#pourRecipe').hide();
 
     $scope._userRecipes = '';
 
@@ -446,12 +447,14 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     function rowSelectedFunc (event) {
         $('#updateRecipe').show();
         $('#deleteRecipe').show();
-        $scope.rowData = event.node.data;
+       	$('#pourRecipe').show();
+	 $scope.rowData = event.node.data;
     }
 
     function rowDeslectedFunc (event) {
         $('#updateRecipe').hide();
         $('#deleteRecipe').hide();
+	$('#pourRecipe').hide();
         $scope.rowData = event.node.data;
     }
 
@@ -462,6 +465,10 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     $scope.updateRecipe = function() {
         $rootScope.recipeData = $scope.rowData;
         $location.path('/dashboard/recipes/update');
+    };
+
+    $scope.pourRecipe = function() {
+	console.log('Send recipe to AVR to pour');
     };
 
     $scope.deleteRecipe = function() {
@@ -582,6 +589,7 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 });
 
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
+
     $scope.logout = function() {
 
         $.ajax({
@@ -603,18 +611,34 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.currentlySetTemp = 50;
     $('#currentlySetTemp').text($scope.currentlySetTemp);
-
+    $('#currentTempSpan').text('n/a');
 
     // Randomly add a data point every 500ms
     var random = new TimeSeries();
     setInterval(function() {
         random.append(new Date().getTime(), getTempData());
-    }, 1000);
+    }, 500);
 
     function getTempData () {
-        var currentTemp =((Math.random() * 40) + 30).toFixed(2);
-        $('#currentTempSpan').text(currentTemp);
-        return currentTemp;
+	var t = this;
+	var temp = '';
+	$.ajax({
+            type: 'post',
+            url: 'php/getTemp.php',
+            success: function( data ) {
+		var d = JSON.parse(data);
+                t.temp = ((d.Temp * 9) / 5 + 32);
+            }
+        });
+       	$('#currentTempSpan').text(t.temp);
+	if (t.temp > $scope.currentlySetTemp) {
+		
+		//console.log('Temp too high - tell AVR to cool down');
+	}
+	else if (t.temp < $scope.currentlySetTemp) {
+		//console.log('Temp below - stop cooling');
+	}
+	return t.temp;
     }
 
     $scope.decreaseTemp = function() {
@@ -632,13 +656,25 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     };
 
     var chart = new SmoothieChart({
-        minValue: 0,
+	horizontalLines: [
+		{
+			color:'#B20000',
+			lineWidth:2,
+			value:55
+		},
+		{	
+			color:'#59C3D8',
+			lineWidth:2,
+			value:35
+		}
+	],
+	minValue: 20,
         maxValue: 70,
-        millisPerPixel: 45,
+        millisPerPixel: 100,
         grid: {
             fillStyle: '#eeeeee',
-            millisPerLine: 6000,
-            verticalSections: 14
+            millisPerLine: 10000,
+            verticalSections: 12
         },
         labels: {
             fillStyle: '#000000',
@@ -651,7 +687,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     chart.addTimeSeries(random, {
         lineWidth: 2.0,
-        strokeStyle: '#000080'
+        strokeStyle: '#000000'
     });
 
     chart.streamTo(canvas, 500);

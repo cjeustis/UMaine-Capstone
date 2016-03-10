@@ -2,14 +2,9 @@
 
 // Library files
 #include <stdio.h>
-#include <math.h>
 #include <avr/io.h>
-#include <avr/pgmspace.h>
 #include "../lib/usart/usart.c"
 #include "../lib/serial/serial.c"
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
 
 // Set baud for serial communication
 #define BAUD 9600
@@ -21,11 +16,6 @@
 #define STOP_BITS 1
 #define PARITY_BITS 0
 
-// Define recipe information
-#define RECIPE_TOTAL_LENGTH 117
-#define RECIPE_NAME_LENGTH 17
-#define RECIPE_AMOUNT_LENGTH 4
-
 
 int main(void) {
 
@@ -34,31 +24,30 @@ int main(void) {
 	
 	//assign our stream to standart I/O streams
 	stdin=stdout=&usart0_str;
-	char input[3];
 
-	while(1) {
-	    printf_P(PSTR("Press: a, b, 1, or 2: "));
-	    if (!fgets(input, sizeof input, stdin)) {
-	    	printf("ERROR!\n");
-	    }
-	    else if (isalnum((int)input) == 0) {
-	    	printf("Invalid input\n");
-	    }
-	    else if (strcmp("a", input) == 0) {
-	    	printf("You pressed 'a'\n");
-	    }
-	    else if (strcmp("b", input) == 0) {
-	    	printf("You pressed 'b'\n");
-	    }
-	    else if (strcmp("1", input) == 0) {
-	    	printf("You pressed '1'\n");
-	    }
-	    else if (strcmp("2", input) == 0) {
-	    	printf("You pressed '2'\n");
-	    }
-	    else {
-	    	printf("You entered invalid shit, fool\n");
-	    }
+	printf("\e[1;1H\e[2J");
+
+	char choice[1];
+	printf("Mr. Pour!  The automated beverage creator!\n\n");
+	printf("Created by: Chris Eustis\n            Slater Claudel\n\n");
+	printf("             Menu:\n");
+	printf("1. View available recipes\n");
+	printf("2. Set internal temperature\n\n");
+
+	while (1) {
+		fgets(choice, 2, stdin);
+		// scanf(" %1c", &choice);
+		// getchar();
+
+		if (choice[0] == '1') {
+			printf("You entered '%c'\n", choice[0]);
+		}
+		else if (choice [0]== '2') {
+			printf("You entered '%c'\n", choice[0]);
+		}
+		else {
+			printf("You entered '%c', which is invalid\n", choice[0]);
+		}
 	}
 
 	return 0;

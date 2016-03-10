@@ -2,9 +2,7 @@
 	session_start();
 	require_once 'dbconfig.php';
 
-	if((isset($_POST['table_name'])) && (isset($_POST['recipe_name'])) && (isset($_POST['ing_1'])) && (isset
-	($_POST['amt_1'])) && (isset($_POST['ing_2'])) && (isset($_POST['amt_2'])) && (isset($_POST['ing_3'])) && (isset($_POST['amt_3'])) && (isset($_POST['ing_4'])) && (isset($_POST['amt_4'])) &&
-	(isset($_POST['glass_type']))) {
+//	if((isset($_POST['table_name'])) && (isset($_POST['recipe_name'])) && (isset($_POST['ing_1'])) && (isset($_POST['amt_1'])) && (isset($_POST['ing_2'])) && (isset($_POST['amt_2'])) && (isset($_POST['ing_3'])) && (isset($_POST['amt_3'])) && (isset($_POST['ing_4'])) && (isset($_POST['amt_4'])) && (isset($_POST['glass_type']))) {
 
 		$id = $_POST['id'];
 		$tableName = $_POST['table_name'];
@@ -29,5 +27,5 @@
 		{
 			echo $sql . "<br>" . $e->getMessage();
 		}
-	}
+//	}
 ?>

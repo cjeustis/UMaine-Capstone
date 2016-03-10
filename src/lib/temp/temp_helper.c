@@ -15,7 +15,7 @@ struct TempSensors {
 
 double eval_temp(uint16_t adc) {
 	double temp;
-  	// Assuming a 10k Thermistor.  Calculation is actually: Resistance = (1024/ADC)
+  	// Assuming a 10k Thermistor.  Calculation is (actually): Resistance = (1024/ADC)
 	double resistance = ((10240000/adc) - 10000);
 
 	/******************************************************************/
@@ -33,15 +33,15 @@ double eval_temp(uint16_t adc) {
 
 /* With no interrupt, read temp sensors and get temperature of inside */
 void get_internal_temp(void) {
-	temps.channel = 0;											// Set ADC Channel to 0
-	float adc1 = start_adc_and_wait(0);							// Read ADC value
+	temps.channel = 0;
+	float adc1 = start_adc_and_wait(0);
 	temps.temp0F = eval_temp(adc1);
 
-	temps.channel = 1;											// Set ADC Channel to 1
-	float adc2 = start_adc_and_wait(1);							// Read ADC value
+	temps.channel = 1;
+	float adc2 = start_adc_and_wait(1);
 	temps.temp1F = eval_temp(adc2);
 
-	temps.tempFinal = (temps.temp0F + temps.temp1F) / 2.0;		// Get average between the two sensors
+	temps.tempFinal = (temps.temp0F + temps.temp1F) / 2.0;
 }
 
 /* Use ADC interrupt to read temp sensors */
@@ -60,55 +60,47 @@ void get_temp_reading(void) {
 
 /* Let user change desired internal temperature */
 void update_temperature(void) {
-	char value[3];
+	int value;
 
 	printf("\n\nThe temperature is currently set to: %d\n", temps.user_defined_temp);
-	printf("Enter a value between 35 F and 55 F that you would like the internal temperature to be maintaned at: ");
 
-    if ((!fgets(value, sizeof value, stdin))) {
-		printf("\nUnexpected response. Please try again.");
-    }
-    else if ((isdigit(value[0])) && (isdigit(value[1]))) {
-
-	// scanf("%3d", &value);
-	// fgets(&value, 3, stdin);					// Read in user temp
-	// value -= '0';								// Convert to integer value
-		if (((int)value >= TEMP_LOWER) && ((int)value <= TEMP_UPPER)) {
-			temps.user_defined_temp = (int)&value;		// Set new value, if within range
+	while(1) {
+		printf("Enter a value between 35 F and 55 F that you would like the internal temperature to be maintaned at: ");
+		scanf("%2d", &value);
+		if ((value >= TEMP_LOWER) && (value <= TEMP_UPPER)) {
+			temps.user_defined_temp = value;
 			printf("\n\nThe desired internal temperature has been updated to %d F.\n", temps.user_defined_temp);
+			break;
+		}
+		else {
+			printf("\n\nInvalid value.\n");
 		}
 	}
-	else {
-		printf("\n\nInvalid value. Returning...\n");
-	}
+	welcome_screen();
 }
 
 /* Check to see if the user wants to change the internal temperature value */
 void set_temperature(void) {
-	char choice[2];
+	char choice[1];
 
 	printf("\n\nMr. Pour: Temperature Control!\n--------------------\n\n");
 
-	get_temp_reading();								// Get temp value
+	get_temp_reading();
+	get_temp_reading();
 
-	printf("Current temperature: %1.2f\n", temps.tempFinal);
-	printf("\nWould you like to change the internal temperature? (y = yes, n = no): ");
+	printf("Current temperature: %1.2f\n", (double)temps.tempFinal);
 
-    if ((!fgets(choice, sizeof choice, stdin))) {
-		printf("\nUnexpected response. Please try again.");
-    }
-    else if (isalpha(choice[0])) {
-
-	// scanf("%1c", &choice);
+	while(1) {
+		printf("\nWould you like to change the internal temperature? (y = yes, n = no): ");
+		fgets(choice, 2, stdin);
 		if (choice[0] == 'y') {
-			update_temperature();					// Let user update temp
+			update_temperature();	
 		}
 		else if (choice[0] == 'n') {
 			welcome_screen();
 		}
-	}
-	else {
-		printf("\n\nInvalid value. Returning...\n");
-		set_temperature();							// Try again...
+		else {
+			printf("\n\nInvalid value.\n");
+		}
 	}
 }

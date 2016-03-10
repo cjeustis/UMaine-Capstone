@@ -6,12 +6,14 @@
 volatile float motors_overflow_count;
 volatile int temp_overflow_count;
 static float pouring_length;
+static int percent;
 
 /* Initializes both Timer/Counter1 and Timer/Counter2
    - Timer/Counter1 is used for controlling how long motors remain on for dispensing liquids
-   - Timer/Counter3 is used to check internal temperature every so often to ensure internal temperature is being maintaned
+   - Timer/Counter2 is used to check internal temperature every so often to ensure internal temperature is being maintaned
 */
-void init_motors_timer(void) {
+void init_motors_timer(void)
+{
 	/* Normal operation of timers */
 	TCCR1A = 0x00;						// Timer/Counter1
 	TCCR3A = 0x00;						// Timer/Counter3
@@ -33,39 +35,51 @@ void init_motors_timer(void) {
 }
 
 /* Enables the given motor to start dispensing liquid - sets time and waits unil complete */
-void enable_motor_timer(int motor) {
-	/* Only proceed if the ingredient actually has any amount needed to be poured */
+void enable_motor_timer(int motor)
+{
 	if(pouring_length != 0) {
-		motor_on(motor);						// Enable the motor per the ingredient
+		motor_on(motor);
 
-		enable_motors_timer_interrupt();		// Enable Timer/Counter1 Overflow interrupt to start timing how long motor is on
+		enable_motors_timer_interrupt();
 
-		// Wait to be done pouring liquid
-		while (motors_overflow_count < pouring_length);
+		while (motors_overflow_count < pouring_length) {	
+			if (percent != (motors_overflow_count / pouring_length) * 100) {
+				percent = (motors_overflow_count / pouring_length) * 100;
+				printf("\rPouring: %d%%", percent);
+				fflush(stdout);
+			}
+		}
 
-		motor_off(motor);						// Turn off the motor when finished
-		motors_overflow_count = 0.0;			// Reset the overflow counter
+		motor_off(motor);
+		motors_overflow_count = 0.0;
 
-		disable_motors_timer_interrupt();		// Disable interrupts for Timer/Counter1 so they don't interfere with anything
+		disable_motors_timer_interrupt();
+
+		printf("\rPouring: 100%%");
+		fflush(stdout);
 	}
 }
 
 /* Enable the Timer/Counter3 Overflow interrupt */
-void enable_temp_sensor_timer_interrupt(void) {
+void enable_temp_sensor_timer_interrupt(void)
+{
 	TIMSK3 = (1<<TOIE3);
 }
 
 /* Disable the Timer/Counter3 Overflow interrupt */
-void disable_temp_sensor_timer_interrupt(void) {
+void disable_temp_sensor_timer_interrupt(void)
+{
 	TIMSK1 &= ~(1<<TOIE1);
 }
 
 /* Enable the Timer/Counter1 Overflow interrupt */
-void enable_motors_timer_interrupt(void) {
+void enable_motors_timer_interrupt(void)
+{
 	TIMSK1 = (1<<TOIE1);
 }
 
 /* Disable the Timer/Counter1 Overflow interrupt */
-void disable_motors_timer_interrupt(void) {
+void disable_motors_timer_interrupt(void)
+{
 	TIMSK1 &= ~(1<<TOIE1);
 }

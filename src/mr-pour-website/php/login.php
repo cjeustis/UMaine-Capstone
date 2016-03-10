@@ -1,5 +1,6 @@
 <?php
 	session_start();
+
 	require_once 'dbconfig.php';
 
 //	if(isset($_POST['btn-login'])) {

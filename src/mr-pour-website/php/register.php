@@ -1,5 +1,4 @@
 <?php
-
 	require_once 'dbconfig.php';
 
 	if($_POST) {

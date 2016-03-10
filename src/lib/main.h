@@ -1,6 +1,3 @@
-#ifndef MAIN_H
-#define MAIN_H
-
 /* Defines */
 #define BAUD 		9600								// Set baud for serial communication
 #define BAUDRATE 	((F_CPU) / (BAUD * 16UL) - 1)		// ----------------------------------
@@ -36,23 +33,27 @@
 #define MOTORS_PORT 	PORTC
 #define MOTORS_PORT_DIR DDRC
 
-#define TENTH_OUNCE 	555.0							// Pouring Measurements for liquid timing
+#define TENTH_OUNCE 	277.5							// Pouring Measurements for liquid timing
 #define QUARTER_OUNCE 	(2.5 * TENTH_OUNCE)
 #define HALF_OUNCE 		(5.0 * TENTH_OUNCE)
-#define OUNCE 			(10.0 * TENTH_OUNCE)
+#define OUNCE 		(10.0 * TENTH_OUNCE)
 
-#define MOTOR1_OFFSET	15
-#define MOTOR2_OFFSET	40
-#define MOTOR3_OFFSET	70
+#define MOTOR1_OFFSET	0
+#define MOTOR2_OFFSET	0
+#define MOTOR3_OFFSET	0
 #define MOTOR4_OFFSET	0
+
 
 /* Prototypes */
 void init_timer(void);
 void begin_pouring(int motor);
-int check_string_alnum(char *string);
 char* clean_string(int size, char string[]);
+void pour_recipe(int recipe);
+void update_recipe_name(int recipe);
+void update_recipe_glass(int recipe);
+void update_recipe_ingredient(int recipe, int ingredient);
 void manage_recipe(int recipe);
-int display_recipes(void);
+void display_recipes(void);
 void set_temperature(void);
 void welcome_screen(void);
 void enable_timer_interrupt(void);
@@ -60,5 +61,3 @@ void disable_timer_interrupt(void);
 float convert_adc_to_fahrenheit(uint16_t adc);
 void get_temp_reading(void);
 void update_temperature(void);
-
-#endif
