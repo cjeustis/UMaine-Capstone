@@ -40,14 +40,14 @@ int main(void)
 				break;
 			case 'p':
 				// read the four ingredient amounts
-				scanf(" %f", &ing1)
-				scanf(" %f", &ing2)
-				scanf(" %f", &ing3)
-				scanf(" %f", &ing4)
-				printf("Ingredient 1: %f\n", ing1);
-				printf("Ingredient 2: %f\n", ing2);
-				printf("Ingredient 3: %f\n", ing3);
-				printf("Ingredient 4: %f\n", ing4);
+				scanf(" %f", &ing1);
+				scanf(" %f", &ing2);
+				scanf(" %f", &ing3);
+				scanf(" %f", &ing4);
+				printf("Ingredient 1: %f\n", (double)ing1);
+				printf("Ingredient 2: %f\n", (double)ing2);
+				printf("Ingredient 3: %f\n", (double)ing3);
+				printf("Ingredient 4: %f\n", (double)ing4);
 				break;
 			// default:
 		}

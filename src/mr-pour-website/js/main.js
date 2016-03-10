@@ -480,7 +480,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
 
         $.ajax({
             type: 'post',
-            url: 'php/updateCoolingStatus.php',
+            url: 'php/sendIngredientAmounts.php',
             data: $scope.val,
             success: function ( data ) {
                 console.log("Sent values to avr");
