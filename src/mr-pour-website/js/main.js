@@ -588,6 +588,9 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
+    $scope.val = {};
+    $scope.val['control'] = 't';
+
     $scope.logout = function() {
 
         $.ajax({
@@ -607,7 +610,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         $scope.$apply();
     }
 
-    $scope.currentlySetTemp = 50;
+    $scope.currentlySetTemp = 35;
     $('#currentlySetTemp').text($scope.currentlySetTemp);
     $('#currentTempSpan').text('n/a');
 
@@ -629,24 +632,6 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             }
         });
        	$('#currentTempSpan').text(t.temp);
-	if (t.temp > $scope.currentlySetTemp) {
-        $.ajax({
-            type: 'post',
-            url: 'php/updateCoolingStatus.php',
-            data: '1',
-            success: function ( data ) {
-            }
-        });
-	}
-	else if (t.temp < $scope.currentlySetTemp) {
-        $.ajax({
-            type: 'post',
-            url: 'php/updateCoolingStatus.php',
-            data: '0',
-            success: function ( data ) {
-            }
-        });
-	}
 	return t.temp;
     }
 
@@ -655,6 +640,8 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
         }
+
+        sendUpdatedTemp();
     };
 
     $scope.increaseTemp = function() {
@@ -662,7 +649,21 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
         }
+
+        sendUpdatedTemp();
     };
+
+    function sendUpdatedTemp() {
+        $scope.val['status'] = $scope.currentlySetTemp;
+        // Send updated temp to the avr
+        $.ajax({
+            type: 'post',
+            url: 'php/updateCoolingStatus.php',
+            data: $scope.val,
+            success: function ( data ) {
+            }
+        });
+    }
 
     var chart = new SmoothieChart({
 	horizontalLines: [

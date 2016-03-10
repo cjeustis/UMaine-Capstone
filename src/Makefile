@@ -2,7 +2,7 @@ CC=avr-gcc -O3 -mmcu=atmega1284p -Wl,-u,vfprintf -lprintf_flt -lm
 CFLAGS=-g -Os -Wall -mcall-prologues
 OBJ2HEX=avr-objcopy
 #UISP=/usr/local/bin/uisp
-TARGET=main
+TARGET=test
 #ADFLAGS=-p m8 -c FT232 -P /dev/tty.usbserial-A8003POq 
 ADFLAGS=-p m1284p -c FT232 -P /dev/ttyUSB0
 # ADFLAGS=-p m1284p -c avrispmkii -P usb
