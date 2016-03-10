@@ -20,8 +20,12 @@ int main(void)
 	stdin = stdout = &usart0_str;
 
 	char c;
-	char motor;
+	float ing1;
+	float ing2;
+	float ing3;
+	float ing4;
 	int pouring_amount;
+	int temp;
 
 	int isCooling = 1;
 
@@ -30,32 +34,20 @@ int main(void)
 		scanf(" %1c", &c);
 
 		switch(c) {
-			case '0':
-				printf("Received a '0'\n");
-				if (isCooling) {
-					printf("Turned cooler off\n");
-					isCooling = 0;
-				} else {
-					printf("Cooler is already off\n");
-				}
-				break;
-			case '1':
-				printf("Received a '1'\n");
-				if (!isCooling)
-					printf("Turned cooler on\n");
-					isCooling = 1;
-				} else {
-					printf("Cooler is already on\n");
-				}
+			case 't':
+				scanf(" %d", &temp);
+				printf("Updated temp to: %d\n", temp);
 				break;
 			case 'p':
-				printf("Received a 'p' - Begin process of pouring a recipe\n");
-				while (1) {
-					scanf(" %1c", &motor);
-					scanf(" %d", &pouring_amount);
-					printf("Pouring motor %c for %d ounces\n", motor, pouring_amount);
-					break;
-				}
+				// read the four ingredient amounts
+				scanf(" %f", &ing1)
+				scanf(" %f", &ing2)
+				scanf(" %f", &ing3)
+				scanf(" %f", &ing4)
+				printf("Ingredient 1: %f\n", ing1);
+				printf("Ingredient 2: %f\n", ing2);
+				printf("Ingredient 3: %f\n", ing3);
+				printf("Ingredient 4: %f\n", ing4);
 				break;
 			// default:
 		}

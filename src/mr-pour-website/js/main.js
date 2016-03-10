@@ -391,6 +391,10 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
 });
 
 mrPour.controller('recipeController', function ($scope, $rootScope, $http, store, $location, $timeout, $anchorScroll) {
+
+    $scope.val = {};
+    $scope.val['control'] = 'p';
+
     $scope.logout = function() {
 
         $.ajax({
@@ -454,7 +458,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     function rowDeslectedFunc (event) {
         $('#updateRecipe').hide();
         $('#deleteRecipe').hide();
-	$('#pourRecipe').hide();
+	    $('#pourRecipe').hide();
         $scope.rowData = event.node.data;
     }
 
@@ -468,7 +472,20 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     };
 
     $scope.pourRecipe = function() {
-	console.log('Send recipe to AVR to pour');
+        // Send ingredient amounts to avr
+        $scope.val['ing_1'] = $scope.rowData['amount_1'];
+        $scope.val['ing_2'] = $scope.rowData['amount_2'];
+        $scope.val['ing_3'] = $scope.rowData['amount_3'];
+        $scope.val['ing_4'] = $scope.rowData['amount_4'];
+
+        $.ajax({
+            type: 'post',
+            url: 'php/updateCoolingStatus.php',
+            data: $scope.val,
+            success: function ( data ) {
+                console.log("Sent values to avr");
+            }
+        });
     };
 
     $scope.deleteRecipe = function() {
@@ -639,18 +656,16 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         if ($scope.currentlySetTemp > 35) {
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
+            sendUpdatedTemp();
         }
-
-        sendUpdatedTemp();
     };
 
     $scope.increaseTemp = function() {
         if ($scope.currentlySetTemp < 55) {
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
+            sendUpdatedTemp();
         }
-
-        sendUpdatedTemp();
     };
 
     function sendUpdatedTemp() {
