@@ -392,9 +392,6 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
 
 mrPour.controller('recipeController', function ($scope, $rootScope, $http, store, $location, $timeout, $anchorScroll) {
 
-    $scope.val = {};
-    $scope.val['control'] = 'p';
-
     $scope.logout = function() {
 
         $.ajax({
@@ -473,15 +470,13 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
 
     $scope.pourRecipe = function() {
         // Send ingredient amounts to avr
-        $scope.val['ing_1'] = $scope.rowData['amount_1'];
-        $scope.val['ing_2'] = $scope.rowData['amount_2'];
-        $scope.val['ing_3'] = $scope.rowData['amount_3'];
-        $scope.val['ing_4'] = $scope.rowData['amount_4'];
+        $scope.rowData['control'] = 'p';
+        console.log($scope.rowData);
 
         $.ajax({
             type: 'post',
             url: 'php/sendIngredientAmounts.php',
-            data: $scope.val,
+            data: $scope.rowData,
             success: function ( data ) {
                 console.log("Sent values to avr");
             }
