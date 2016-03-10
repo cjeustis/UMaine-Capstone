@@ -149,7 +149,7 @@ void update_recipe_name(int recipe) {
 	printf("\n----------\nUpdate Recipe Name\n----------\n");
 	printf("Current name of the recipe: %s\n", recipes[recipe]->RecipeName);
 	printf("New name of the recipe: ");
-	fgets(temp, USER_NAME_LENGTH, stdin);				// Read in data from the terminal
+	fgets(temp, USER_NAME_LENGTH, stdin);
 	memcpy(recipes[recipe]->RecipeName, clean_string(USER_NAME_LENGTH, temp), USER_NAME_LENGTH);					// Save user input to recipe struct
 
 	save_recipe_to_eeprom(recipe);						// Save recipe to EEPROM

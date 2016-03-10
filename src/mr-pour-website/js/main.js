@@ -581,8 +581,6 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
             data: recipe,
             success: function ( data ) {
                 console.log(data);
-                //$location.path('/dashboard/recipes');
-                //$scope.$apply();
             }
         });
     }
@@ -632,11 +630,22 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         });
        	$('#currentTempSpan').text(t.temp);
 	if (t.temp > $scope.currentlySetTemp) {
-		
-		//console.log('Temp too high - tell AVR to cool down');
+        $.ajax({
+            type: 'post',
+            url: 'php/updateCoolingStatus.php',
+            data: '1',
+            success: function ( data ) {
+            }
+        });
 	}
 	else if (t.temp < $scope.currentlySetTemp) {
-		//console.log('Temp below - stop cooling');
+        $.ajax({
+            type: 'post',
+            url: 'php/updateCoolingStatus.php',
+            data: '0',
+            success: function ( data ) {
+            }
+        });
 	}
 	return t.temp;
     }
