@@ -76,17 +76,15 @@ mrPour.run(function($rootScope, store, $location) {
     }
 
     function getTempData () {
-        var temp = {};
-        temp['control'] = 'c';
-        var t = this;
-        var temp = '';
+        $scope.temp = {};
+        $scope.temp['control'] = 'c';
         // read temp value
         $.ajax({
             type: 'post',
             url: 'php/getTemp.php',
             success: function( data ) {
                 var d = JSON.parse(data);
-                t.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                $scope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
             }
         });
 
@@ -94,7 +92,7 @@ mrPour.run(function($rootScope, store, $location) {
         $.ajax({
             type: 'post',
             url: 'php/sendTempData.php',
-            data: temp,
+            data: $scope.temp,
             success: function ( data ) {
                 console.log("Temp read: " + temp['temp']);
                 console.log("Sent temp to avr");
