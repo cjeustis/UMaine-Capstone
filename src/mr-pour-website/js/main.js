@@ -75,16 +75,16 @@ mrPour.run(function($rootScope, store, $location) {
         document.onkeypress = resetTimer;
     }
 
+    $rootScope.temp = {};
+    $rootScope.temp['control'] = 'c';
     function getTempData () {
-        $scope.temp = {};
-        $scope.temp['control'] = 'c';
         // read temp value
         $.ajax({
             type: 'post',
             url: 'php/getTemp.php',
             success: function( data ) {
                 var d = JSON.parse(data);
-                $scope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
             }
         });
 
@@ -92,7 +92,7 @@ mrPour.run(function($rootScope, store, $location) {
         $.ajax({
             type: 'post',
             url: 'php/sendTempData.php',
-            data: $scope.temp,
+            data: $rootScope.temp,
             success: function ( data ) {
                 console.log("Temp read: " + temp['temp']);
                 console.log("Sent temp to avr");
