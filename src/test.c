@@ -20,10 +20,10 @@ int main(void)
 	stdin = stdout = &usart0_str;
 
 	char c;
-	float ing1;
-	float ing2;
-	float ing3;
-	float ing4;
+	char *ing1 = malloc(3 * sizeof(char));
+	char *ing2 = malloc(3 * sizeof(char));
+	char *ing3 = malloc(3 * sizeof(char));
+	char *ing4 = malloc(3 * sizeof(char));
 	int pouring_amount;
 	int temp;
 
@@ -40,17 +40,21 @@ int main(void)
 				break;
 			case 'p':
 				// read the four ingredient amounts
-				scanf(" %f", &ing1);
-				scanf(" %f", &ing2);
-				scanf(" %f", &ing3);
-				scanf(" %f", &ing4);
-				printf("Ingredient 1: %f\n", (double)ing1);
-				printf("Ingredient 2: %f\n", (double)ing2);
-				printf("Ingredient 3: %f\n", (double)ing3);
-				printf("Ingredient 4: %f\n", (double)ing4);
+				scanf(" %s", ing1);
+				scanf(" %s", ing2);
+				scanf(" %s", ing3);
+				scanf(" %s", ing4);
+				printf("Ingredient 1: %s\n", ing1);
+				printf("Ingredient 2: %s\n", ing2);
+				printf("Ingredient 3: %s\n", ing3);
+				printf("Ingredient 4: %s\n", ing4);
 				break;
 			// default:
 		}
 	}
+	free(ing1);
+	free(ing2);
+	free(ing3);
+	free(ing4);
 	return 0;
 }

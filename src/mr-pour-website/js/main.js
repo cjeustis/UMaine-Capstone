@@ -60,7 +60,12 @@ mrPour.config(function ($routeProvider) {
 });
 
 mrPour.run(function($rootScope, store, $location) {
-    var urlPath = window.location.href;
+    var urlPath = window.location.href
+
+    (function(){
+        // do some stuff
+        setTimeout(getTempData(), 10000);
+    })();
 
     /* Inactivty timer to remove authentication */
     var t;
@@ -68,6 +73,37 @@ mrPour.run(function($rootScope, store, $location) {
         window.onload = resetTimer;
         document.onmousemove = resetTimer;
         document.onkeypress = resetTimer;
+    }
+
+    function getTempData () {
+        var temp = {};
+        temp['control'] = 'c';
+        var t = this;
+        var temp = '';
+        // read temp value
+        $.ajax({
+            type: 'post',
+            url: 'php/getTemp.php',
+            success: function( data ) {
+                var d = JSON.parse(data);
+                t.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+            }
+        });
+
+        // send temp value to avr
+        $.ajax({
+            type: 'post',
+            url: 'php/sendTempData.php',
+            data: temp,
+            success: function ( data ) {
+                console.log("Temp read: " + temp['temp']);
+                console.log("Sent temp to avr");
+            }
+        });
+
+
+        //$('#currentTempSpan').text(t.temp);
+        return t.temp;
     }
 
     function logout() {

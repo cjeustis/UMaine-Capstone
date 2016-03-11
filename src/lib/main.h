@@ -17,12 +17,12 @@
 #define USER_NAME_LENGTH 		17
 #define USER_AMOUNT_LENGTH 		4
 
-#define TEMP_LOWER 		35								// Temperature info
-#define TEMP_UPPER 		55								// -----------------
+#define TEMP_LOWER 		35
+#define TEMP_UPPER 		55
 #define TEMP_OFFSET 	4.5
 
-#define MOTOR1A_ON 		~(1<<PC0)						// Motor info
-#define MOTOR1B_ON 		(1<<PC1)						// -----------
+#define MOTOR1A_ON 		~(1<<PC0)
+#define MOTOR1B_ON 		(1<<PC1)
 #define MOTOR2A_ON 		~(1<<PC2)
 #define MOTOR2B_ON 		(1<<PC3)
 #define MOTOR3A_ON 		~(1<<PC4)
@@ -31,9 +31,9 @@
 #define MOTOR4B_ON 		(1<<PC7)
 
 #define MOTORS_PORT 	PORTC
-#define MOTORS_PORT_DIR DDRC
+#define MOTORS_PORT_DIR 	DDRC
 
-#define TENTH_OUNCE 	277.5							// Pouring Measurements for liquid timing
+#define TENTH_OUNCE 	277.5
 #define QUARTER_OUNCE 	(2.5 * TENTH_OUNCE)
 #define HALF_OUNCE 		(5.0 * TENTH_OUNCE)
 #define OUNCE 		(10.0 * TENTH_OUNCE)

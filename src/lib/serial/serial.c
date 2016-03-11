@@ -34,7 +34,7 @@ int USART0ReceiveByte(FILE *stream) {
     while(!(UCSR0A&(1<<RXC0))){};               // Wait for byte to be received
     unsigned char data = UDR0;
 
-    stream_printf(data, stream);              // Send to console what has been received, so we can see when typing
+    // stream_printf(data, stream);              // Send to console what has been received, so we can see when typing
     return data;
 }
 

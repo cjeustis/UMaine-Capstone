@@ -55,7 +55,7 @@ void enable_motor_timer(int motor)
 
 		disable_motors_timer_interrupt();
 
-		printf("\rPouring: 100%%");
+		printf("\rPouring: 100%%\n");
 		fflush(stdout);
 	}
 }

@@ -21,31 +21,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41921398">
-              <caret line="482" column="43" selection-start-line="482" selection-start-column="43" selection-end-line="482" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="99" column="45" selection-start-line="99" selection-start-column="45" selection-end-line="99" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sendIngredientAmounts.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sendTempData.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/sendTempData.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="5" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sendIngredientAmounts.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/php/sendIngredientAmounts.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="updateCoolingStatus.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/php/updateCoolingStatus.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.14519651">
+              <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -56,7 +56,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/php/Dbconfig.php" />
         <option value="$PROJECT_DIR$/js/sha256.js" />
         <option value="$PROJECT_DIR$/js/login-script.js" />
         <option value="$PROJECT_DIR$/js/login.js" />
@@ -107,6 +106,7 @@
         <option value="$PROJECT_DIR$/php/updateCoolingStatus.php" />
         <option value="$PROJECT_DIR$/php/sendIngredientAmounts.php" />
         <option value="$PROJECT_DIR$/js/main.js" />
+        <option value="$PROJECT_DIR$/php/sendTempData.php" />
       </list>
     </option>
   </component>
@@ -598,26 +598,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5790068">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/php/getTemp.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/deleteRecipe.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="53" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="2" />
           <folding />
         </state>
       </provider>
@@ -646,26 +630,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/updateCoolingStatus.php">
+    <entry file="file://$PROJECT_DIR$/php/login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.5600437">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/sendIngredientAmounts.php">
+    <entry file="file://$PROJECT_DIR$/php/deleteRecipe.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14519651">
+          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/updateCoolingStatus.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+          <caret line="5" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41921398">
-          <caret line="482" column="43" selection-start-line="482" selection-start-column="43" selection-end-line="482" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="99" column="45" selection-start-line="99" selection-start-column="45" selection-end-line="99" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/sendTempData.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="5" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/sendIngredientAmounts.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14519651">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
           <folding />
         </state>
       </provider>
