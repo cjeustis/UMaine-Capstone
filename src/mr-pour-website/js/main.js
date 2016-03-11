@@ -60,7 +60,7 @@ mrPour.config(function ($routeProvider) {
 });
 
 mrPour.run(function($rootScope, store, $location) {
-    var urlPath = window.location.href
+    var urlPath = window.location.href;
 
     (function(){
         // do some stuff
