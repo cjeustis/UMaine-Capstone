@@ -94,7 +94,7 @@ mrPour.run(function($rootScope, store, $location) {
             url: 'php/sendTempData.php',
             data: $rootScope.temp,
             success: function ( data ) {
-                console.log("Temp read: " + temp['temp']);
+                console.log("Temp read: " + $rootScope.temp['temp']);
                 console.log("Sent temp to avr");
             }
         });
