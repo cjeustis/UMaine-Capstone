@@ -62,10 +62,29 @@ mrPour.config(function ($routeProvider) {
 mrPour.run(function($rootScope, store, $location) {
     var urlPath = window.location.href;
 
-    (function(){
-        // do some stuff
-        setTimeout(getTempData(), 10000);
-    })();
+    setInterval(function() {
+
+            // read temp value
+            $.ajax({
+                type: 'post',
+                url: 'php/getTemp.php',
+                success: function (data) {
+                    var d = JSON.parse(data);
+                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                }
+            });
+
+            // send temp value to avr
+            $.ajax({
+                type: 'post',
+                url: 'php/sendTempData.php',
+                data: $rootScope.temp,
+                success: function (data) {
+                    console.log("Temp read: " + $rootScope.temp['temp']);
+                    console.log("Sent temp to avr");
+                }
+            })
+        }, 10000);
 
     /* Inactivty timer to remove authentication */
     var t;
@@ -78,26 +97,6 @@ mrPour.run(function($rootScope, store, $location) {
     $rootScope.temp = {};
     $rootScope.temp['control'] = 'c';
     function getTempData () {
-        // read temp value
-        $.ajax({
-            type: 'post',
-            url: 'php/getTemp.php',
-            success: function( data ) {
-                var d = JSON.parse(data);
-                $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
-            }
-        });
-
-        // send temp value to avr
-        $.ajax({
-            type: 'post',
-            url: 'php/sendTempData.php',
-            data: $rootScope.temp,
-            success: function ( data ) {
-                console.log("Temp read: " + $rootScope.temp['temp']);
-                console.log("Sent temp to avr");
-            }
-        });
     }
 
     function logout() {
