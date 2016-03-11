@@ -98,10 +98,6 @@ mrPour.run(function($rootScope, store, $location) {
                 console.log("Sent temp to avr");
             }
         });
-
-
-        //$('#currentTempSpan').text(t.temp);
-        return t.temp;
     }
 
     function logout() {
