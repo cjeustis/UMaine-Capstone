@@ -228,3 +228,7 @@ h4 {
 .loading-gif {
     display: none;
 }
+
+.loading {
+    background-color: #4d4d4d;
+}
