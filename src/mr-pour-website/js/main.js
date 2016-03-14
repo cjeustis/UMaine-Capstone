@@ -1,6 +1,6 @@
 var mrPour = angular.module('mrPour', ['ngAnimate', 'ngRoute', 'angular-storage', 'ui.bootstrap', 'agGrid', 'ngMessages']);
 
-mrPour.config(function ($routeProvider) {
+mrPour.config(function ($httpProvider, $routeProvider) {
 
     $httpProvider.interceptors.push(function($q, $rootScope) {
         return {
@@ -14,7 +14,7 @@ mrPour.config(function ($routeProvider) {
             }
         };
     });
-    
+
     $routeProvider
     .when('/index.html', {
         templateUrl: 'html/main.html',
