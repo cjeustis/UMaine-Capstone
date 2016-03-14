@@ -659,7 +659,7 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
     }
 });
 
-mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
+mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, modalDialog, $anchorScroll) {
 
     $scope.modalShown = false;
 

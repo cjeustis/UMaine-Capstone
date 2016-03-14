@@ -1,4 +1,4 @@
-app.directive('modalDialog', function() {
+mrPour.directive('modalDialog', function() {
     return {
         restrict: 'E',
         scope: {
