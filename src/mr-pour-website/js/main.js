@@ -629,6 +629,15 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
+    $('#target').loadingOverlay({
+        loadingClass: 'loading',            // Class added to `target` while loading
+        overlayClass: 'loading-overlay',    // Class added to loading overlay (to be styled in CSS)
+        spinnerClass: 'loading-spinner',    // Class added to loading overlay spinner
+        iconClass: 'loading-icon',          // Class added to loading overlay spinner
+        textClass: 'loading-text',          // Class added to loading overlay spinner
+        loadingText: 'loading'              // Text within loading overlay
+    });
+
     $.ajaxSetup({
 
         beforeSend:function(){
@@ -640,6 +649,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             $('#loader').loadingOverlay('remove');
         }
     });
+
 
     $scope.val = {};
     $scope.val['control'] = 't';
