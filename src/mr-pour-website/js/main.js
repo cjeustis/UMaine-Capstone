@@ -61,22 +61,20 @@ mrPour.config(function ($routeProvider) {
 mrPour.run(function($rootScope, store, $location) {
     var urlPath = window.location.href;
 
-    // show the '#loading' element when ajaxStart, and hide it when ajaxComplete
-    $("#loading").bind("ajaxStart", function(){
-        $(this).show();
-    }).bind("ajaxComplete", function(){
-        $(this).hide();
-    });
-
     setInterval(function() {
 
             // read temp value
             $.ajax({
                 type: 'post',
                 url: 'php/getTemp.php',
+                beforeSend: function() {
+                    alert("Loading!");
+                    $('#loading').show();
+                },
                 success: function (data) {
                     var d = JSON.parse(data);
-                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32)
+                    $('#loading').hide();
                 }
             });
 
