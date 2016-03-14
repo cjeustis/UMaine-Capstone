@@ -547,9 +547,12 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
                 $scope.modalShown = true;
             },
             success: function ( data ) {
+                var totalAmount = $scope.roData['amount_1'] + $scope.roData['amount_2'] + $scope.roData['amount_3'] + $scope.roData['amount_4'];
+                var pouringTime = totalAmount * 1700;
                 setInterval(function() {
                     $scope.modalShown = false;
-                }, 1000);
+                    $scope.$apply();
+                }, pouringTime);
                 console.log("Sent values to avr");
             }
         });
@@ -780,8 +783,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
                 setInterval(function() {
                     $scope.modalShown = false;
                     $scope.$apply();
-                    console.log("Successfully sent temp to avr");
-                }, 1000);
+                }, 1500);
             }
         });
     };
