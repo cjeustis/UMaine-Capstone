@@ -159,38 +159,37 @@ int main(void)
 	char *defined_temp = malloc(2 * sizeof(char));
 
 	while(1) {
-		printf("Beginning of loop!\n");
-		scanf(" %c", &c);
+		// Waiting for signal from website
+		printf("Waiting for control value...\n");
+		scanf(" %1c", &c);
 
 		switch(c) {
 			case 'c':
 			// get value from temp sensor
 			// compare with set temp
 			// decide whether cooler is on/off
-				printf("Get temp sensor data\n");
-				scanf(" %s", sensor_temp);
+				scanf(" %4s", sensor_temp);
 				convert_temp_to_float(temps, sensor_temp, 0);
-				if (temps->sensor_temp != 0.)
+				if (temps->sensor_temp >= 20 || temps->sensor_temp <= 90 )
 					compare_temps(temps);
-				else
-					printf("Invalid temp - not doing anything\n");
 				break;
 			case 'p':
 			// read the four ingredient amounts
 			// turn each motor on to pour the ingredients
-				printf("Getting ingredient amounts\n");
 				scanf(" %s", ing1);
 				scanf(" %s", ing2);
 				scanf(" %s", ing3);
 				scanf(" %s", ing4);
 				convert_recipe_to_float(recipe, ing1, ing2, ing3, ing4);
-				pour_recipe(recipe);
+				if ((recipe->ing1 >= 0. || recipe->ing1 <= 8.) && (recipe->ing2 >= 0. || recipe->ing2 <= 8.)  && (recipe->ing3 >= 0. || recipe->ing3 <= 8.)  && (recipe->ing4 >= 0. || recipe->ing4 <= 8.)  )
+					pour_recipe(recipe);
 				break;
 			case 't':
 			// grab updated internal temp from site
-				scanf(" %s", defined_temp);
+				scanf(" %2s", defined_temp);
 				convert_temp_to_float(temps, defined_temp, 1);
-				printf("Updated temp to: %d\n", (int)temps->defined_temp);
+				break;
+			default:
 				break;
 		}
 	}

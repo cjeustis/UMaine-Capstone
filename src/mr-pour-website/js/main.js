@@ -629,6 +629,18 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
+    $.ajaxSetup({
+
+        beforeSend:function(){
+            // show gif here, eg:
+            $('#loader').loadingOverlay();
+        },
+        complete:function(){
+            // hide gif here, eg:
+            $('#loader').loadingOverlay('remove');
+        }
+    });
+
     $scope.val = {};
     $scope.val['control'] = 't';
 
@@ -658,23 +670,9 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     // Randomly add a data point every 500ms
     var random = new TimeSeries();
     setInterval(function() {
-        random.append(new Date().getTime(), getTempData());
+        random.append(new Date().getTime(), $rootScope.temp['temp']);
+        $('#currentTempSpan').text($rootScope.temp['temp']);
     }, 500);
-
-    function getTempData () {
-	var t = this;
-	var temp = '';
-	$.ajax({
-            type: 'post',
-            url: 'php/getTemp.php',
-            success: function( data ) {
-		var d = JSON.parse(data);
-                t.temp = ((d.Temp * 9) / 5 + 32);
-            }
-        });
-       	$('#currentTempSpan').text(t.temp);
-	return t.temp;
-    }
 
     $scope.decreaseTemp = function() {
         if ($scope.currentlySetTemp > 35) {
