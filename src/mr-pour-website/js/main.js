@@ -781,7 +781,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             }
         });
         $scope.modalShown = false;
-        $scope.apply();
+        $scope.$apply();
     };
 
     var chart = new SmoothieChart({
