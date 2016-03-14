@@ -781,11 +781,12 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
                 $scope.modalShown = true;
             },
             success: function ( data ) {
-                setInterval(function() {
-                    $scope.modalShown = false;
-                }, 1000);
+                console.log("Successly sent data");
             }
         });
+        setInterval(function() {
+            $scope.modalShown = false;
+        }, 1000);
     }
 
     var chart = new SmoothieChart({
