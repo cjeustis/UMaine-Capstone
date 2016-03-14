@@ -415,17 +415,21 @@ mrPour.controller('loginController', function ($scope, $rootScope, $location, st
 
 mrPour.controller('dashboardController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
+    $scope.modalShown = false;
+
     $scope.logout = function() {
 
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success :  function(response) {
-                $('#loading').hide();
-                setTimeout(doLogout(), 4000);
+                setInterval(function() {
+                    $scope.modalShown = false;
+                    doLogout();
+                }, 1000);
             }
         });
     };
@@ -446,18 +450,22 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
 
 mrPour.controller('recipeController', function ($scope, $rootScope, $http, store, $location, $timeout, $anchorScroll) {
 
+    $scope.modalShown = false;
+
     $scope.logout = function() {
 
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success :  function(response)
             {
-                $('#loading').hide();
-                setTimeout(doLogout(), 4000);
+                setInterval(function() {
+                    $scope.modalShown = false;
+                    doLogout();
+                }, 1000);
             }
         });
     };
@@ -536,10 +544,12 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             url: 'php/sendIngredientAmounts.php',
             data: $scope.rowData,
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success: function ( data ) {
-                $('#loading').hide();
+                setInterval(function() {
+                    $scope.modalShown = false;
+                }, 1000);
                 console.log("Sent values to avr");
             }
         });
@@ -553,10 +563,12 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             url: 'php/deleteRecipe.php',
             data: $scope.rowData,
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success: function ( data ) {
-                $('#loading').hide();
+                setInterval(function() {
+                    $scope.modalShown = false;
+                }, 1000);
                 $timeout(location.reload(true), 1000);
             }
         });
@@ -573,17 +585,21 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
 
 mrPour.controller('createController', function ($scope, $rootScope, $http, store, $location) {
 
+    $scope.modalShown = false;
+
     $scope.logout = function() {
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success :  function(response)
             {
-                $('#loading').hide();
-                setTimeout(doLogout(), 4000);
+                setInterval(function() {
+                    $scope.modalShown = false;
+                    doLogout();
+                }, 1000);
             }
         });
     };
@@ -610,10 +626,12 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, store
             url: 'php/saveRecipe.php',
             data: recipe,
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success: function ( data ) {
-                $('#loading').hide();
+                setInterval(function() {
+                    $scope.modalShown = false;
+                }, 1000);
                 $location.path('/dashboard/recipes');
                 $scope.$apply();
             }
@@ -622,6 +640,8 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, store
 });
 
 mrPour.controller('updateController', function ($scope, $rootScope, $http, store, $location) {
+
+    $scope.modalShown = false;
 
     if (!$rootScope.recipeData) {
         $location.path('/dashboard/recipes');
@@ -633,12 +653,14 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success :  function(response)
             {
-                $('#loading').hide();
-                setTimeout(doLogout(), 4000);
+                setInterval(function() {
+                    $scope.modalShown = false;
+                    doLogout();
+                }, 1000);
             }
         });
     };
@@ -670,10 +692,12 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
             url: 'php/updateRecipe.php',
             data: recipe,
             beforeSend: function() {
-                $('#loading').show();
+                $scope.modalShown = true;
             },
             success: function ( data ) {
-                $('#loading').hide();
+                setInterval(function() {
+                    $scope.modalShown = false;
+                }, 1000);
                 console.log(data);
             }
         });
@@ -700,7 +724,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
                 setInterval(function() {
                     $scope.modalShown = false;
                     doLogout();
-                }, 3000);
+                }, 1000);
             }
         });
     };
@@ -755,10 +779,10 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             type: 'post',
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
-            beforeSend: function() {
-            },
             success: function ( data ) {
-                $scope.modalShown = !$scope.modalShown;
+                setInterval(function() {
+                    $scope.modalShown = false;
+                }, 1000);
             }
         });
     }
