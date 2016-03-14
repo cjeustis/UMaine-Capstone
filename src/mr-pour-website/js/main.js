@@ -756,7 +756,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             beforeSend: function() {
             },
             success: function ( data ) {
-                $scope.modalShown = false;
+                $scope.modalShown = !$scope.modalShown;
             }
         });
     }
