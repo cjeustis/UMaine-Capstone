@@ -225,6 +225,7 @@ h4 {
     font-size: 20px;
 }
 .loading {
+    z-index: 10000;
     background: black;
     border-radius: 1em;
     padding: 1em;
