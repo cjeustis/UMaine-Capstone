@@ -33,14 +33,12 @@
     <link href="css/theme-fresh.min.css" rel="stylesheet" type="text/css">
     <link href="css/theme-blue.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Tool for loading indicator -->
-    <script src="js/loading-overlay.min.js"></script>
-
     <!-- Setting the right viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <!-- Our stuff -->
     <script src="js/main.js"></script>
+    <script src="js/routeLoadingIndicator.js"></script>
     <script src="js/sha256.js"></script>
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -49,7 +47,7 @@
 
 <body>
         <!-- This is used for routing to other pages - responsive! -->
-        <div ng-view></div>
+        <div ng-if='!isRouteLoading' ng-view></div>
 
 </body>
 

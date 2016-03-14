@@ -2,6 +2,19 @@ var mrPour = angular.module('mrPour', ['ngAnimate', 'ngRoute', 'angular-storage'
 
 mrPour.config(function ($routeProvider) {
 
+    $httpProvider.interceptors.push(function($q, $rootScope) {
+        return {
+            'request': function(config) {
+                $rootScope.$broadcast('loading-started');
+                return config || $q.when(config);
+            },
+            'response': function(response) {
+                $rootScope.$broadcast('loading-complete');
+                return response || $q.when(response);
+            }
+        };
+    });
+    
     $routeProvider
     .when('/index.html', {
         templateUrl: 'html/main.html',
@@ -629,16 +642,6 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
-    $('#loader').loadingOverlay({
-        loadingClass: 'loading',            // Class added to `target` while loading
-        overlayClass: 'loading-overlay',    // Class added to loading overlay (to be styled in CSS)
-        spinnerClass: 'loading-spinner',    // Class added to loading overlay spinner
-        iconClass: 'loading-icon',          // Class added to loading overlay spinner
-        textClass: 'loading-text',          // Class added to loading overlay spinner
-        loadingText: 'loading'              // Text within loading overlay
-    });
-
-
     $scope.val = {};
     $scope.val['control'] = 't';
 
@@ -673,24 +676,19 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     }, 500);
 
     $scope.decreaseTemp = function() {
-        $('#loader').loadingOverlay();
-
         if ($scope.currentlySetTemp > 35) {
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             sendUpdatedTemp();
         }
-        $('#loader').loadingOverlay('remove');
     };
 
     $scope.increaseTemp = function() {
-        $('#loader').loadingOverlay();
         if ($scope.currentlySetTemp < 55) {
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             sendUpdatedTemp();
         }
-        $('#loader').loadingOverlay('remove');
     };
 
     function sendUpdatedTemp() {
