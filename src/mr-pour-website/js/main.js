@@ -166,7 +166,7 @@ mrPour.directive('modalDialog', function() {
                 scope.show = false;
             };
         },
-        template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideModal()'></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-close' ng-click='hideModal()'>X</div><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
+        templateUrl: "../html/modal.html"
     };
 });
 
@@ -728,6 +728,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.decreaseTemp = function() {
         if ($scope.currentlySetTemp > 35) {
+            $scope.modalShown = true;
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             store.set('currentlySetTemp', $scope.currentlySetTemp);
@@ -737,6 +738,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.increaseTemp = function() {
         if ($scope.currentlySetTemp < 55) {
+            $scope.modalShown = true;
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             store.set('currentlySetTemp', $scope.currentlySetTemp);
@@ -752,7 +754,6 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
             beforeSend: function() {
-                $scope.modalShown = true;
             },
             success: function ( data ) {
                 $scope.modalShown = false;
