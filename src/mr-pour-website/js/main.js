@@ -72,7 +72,7 @@ mrPour.run(function($rootScope, store, $location) {
     setInterval(function() {
 
             // read temp value
-            $.ajax({
+            $(document).ajax({
                 type: 'post',
                 url: 'php/getTemp.php',
                 success: function (data) {
@@ -82,7 +82,7 @@ mrPour.run(function($rootScope, store, $location) {
             });
 
             // send temp value to avr
-            $.ajax({
+            $(document).ajax({
                 type: 'post',
                 url: 'php/sendTempData.php',
                 data: $rootScope.temp,
@@ -234,7 +234,7 @@ mrPour.controller('registrationController', function ($scope, $rootScope, store,
 
         regFormData = $("#register-form").serialize();
 
-        $.ajax({
+        $(document).ajax({
             type : 'POST',
             url  : 'php/register.php',
             data : regFormData,
@@ -280,7 +280,7 @@ mrPour.controller('registrationController', function ($scope, $rootScope, store,
 
     function angularRedirect() {
         // Create sql table to hold user recipes
-        $.ajax({
+        $(document).ajax({
             type: 'post',
             url: 'php/createRecipeTable.php',
             data: {
@@ -291,7 +291,7 @@ mrPour.controller('registrationController', function ($scope, $rootScope, store,
             }
         });
 
-        $.ajax({
+        $(document).ajax({
 
             type : 'POST',
             url  : 'php/login.php',
@@ -358,7 +358,7 @@ mrPour.controller('loginController', function ($scope, $rootScope, $location, st
 
         var data = $("#login-form").serialize();
 
-        $.ajax({
+        $(document).ajax({
 
             type : 'POST',
             url  : 'php/login.php',
@@ -402,7 +402,7 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
 
     $scope.logout = function() {
 
-        $.ajax({
+        $(document).ajax({
             type : 'POST',
             url  : 'php/logout.php',
             success :  function(response)
@@ -430,7 +430,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
 
     $scope.logout = function() {
 
-        $.ajax({
+        $(document).ajax({
             type : 'POST',
             url  : 'php/logout.php',
             success :  function(response)
@@ -522,7 +522,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     $scope.deleteRecipe = function() {
         $scope.rowData['table_name'] = $rootScope.userData.user_name;
         // Delete selected recipe from table
-        $.ajax({
+        $(document).ajax({
             type: 'post',
             url: 'php/deleteRecipe.php',
             data: $scope.rowData,
@@ -544,7 +544,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
 mrPour.controller('createController', function ($scope, $rootScope, $http, store, $location) {
 
     $scope.logout = function() {
-        $.ajax({
+        $(document).ajax({
             type : 'POST',
             url  : 'php/logout.php',
             success :  function(response)
@@ -571,7 +571,7 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, store
     $scope.saveRecipe = function(recipe) {
         recipe['table_name'] = $rootScope.userData.user_name;
         // Create sql table to hold user recipes
-        $.ajax({
+        $(document).ajax({
             type: 'post',
             url: 'php/saveRecipe.php',
             data: recipe,
@@ -591,7 +591,7 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
     $scope.logout = function() {
 
-        $.ajax({
+        $(document).ajax({
             type : 'POST',
             url  : 'php/logout.php',
             success :  function(response)
@@ -623,7 +623,7 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
         recipe['table_name'] = $rootScope.userData.user_name;
         // Create sql table to hold user recipes
-        $.ajax({
+        $(document).ajax({
             type: 'post',
             url: 'php/updateRecipe.php',
             data: recipe,
@@ -641,7 +641,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.logout = function() {
 
-        $.ajax({
+        $(document).ajax({
             type : 'POST',
             url  : 'php/logout.php',
             success :  function(response)
@@ -695,7 +695,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     function sendUpdatedTemp() {
         $scope.val['status'] = $scope.currentlySetTemp;
         // Send updated temp to the avr
-        $.ajax({
+        $(document).ajax({
             type: 'post',
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
