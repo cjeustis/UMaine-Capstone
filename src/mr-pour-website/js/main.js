@@ -780,9 +780,8 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
                 console.log("Successfully sent temp to avr");
             }
         });
-        setInterval(function() {
-            $scope.modalShown = false;
-        }, 1000);
+        $scope.modalShown = false;
+        $scope.apply();
     };
 
     var chart = new SmoothieChart({
