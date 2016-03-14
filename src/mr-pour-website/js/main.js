@@ -706,23 +706,24 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
-    $scope.modalShown = false;
+    var modalShown = false;
 
     $scope.val = {};
     $scope.val['control'] = 't';
 
     $scope.logout = function() {
+        var t = this;
 
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                $scope.modalShown = true;
+                t.modalShown = true;
             },
             success :  function(response)
             {
                 setInterval(function() {
-                    $scope.modalShown = false;
+                    t.modalShown = false;
                     doLogout();
                 }, 1000);
             }
@@ -771,7 +772,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     };
 
     function sendUpdatedTemp() {
-        $scope.modalShown = true;
+        modalShown = true;
         $scope.val['status'] = $scope.currentlySetTemp;
         // Send updated temp to the avr
         $.ajax({
@@ -779,15 +780,15 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
             beforeSend: function() {
-
+                modalShown = true;
             },
             success: function ( data ) {
                 console.log("Successfully sent data");
             }
         });
-        //setInterval(function() {
-            $scope.modalShown = false;
-        //}, 1000);
+        setInterval(function() {
+            modalShown = false;
+        }, 1000);
     }
 
     var chart = new SmoothieChart({
