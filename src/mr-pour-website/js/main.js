@@ -697,8 +697,10 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             },
             success :  function(response)
             {
-                setTimeout($scope.modalShown = false, 4000);
-                setTimeout(doLogout(), 4000);
+                setInterval(function() {
+                    $scope.modalShown = false;
+                    doLogout()(4000);
+                }, 10000);
             }
         });
     };
