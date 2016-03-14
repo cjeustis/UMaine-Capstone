@@ -225,22 +225,12 @@ h4 {
     font-size: 20px;
 }
 
-#loading-gif
-{
+.loading{
     position: fixed;
-    left: 50%;
-    top: 35%;
-    display: none;
-    background-color: transparent url("..img/ajax-loader.gif");
-    z-index: 1000;
-    height: 31px;
-    width: 31px;
-}
-
-#loading
-{
-    background-color: #4d4d4d;
-    background: 75%;
+    left: 0px;
+    top: 0px;
     width: 100%;
     height: 100%;
+    z-index: 9999;
+    background: url('../img/ajax-loader.gif.gif') 50% 50% no-repeat rgb(249,249,249);
 }
