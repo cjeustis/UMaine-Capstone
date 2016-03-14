@@ -675,11 +675,11 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                toggleModal();
+                $scope.toggleModal();
             },
             success :  function(response)
             {
-                toggleModal();
+                $scope.toggleModal();
                 setTimeout(doLogout(), 4000);
             }
         });
@@ -734,10 +734,10 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
             beforeSend: function() {
-                toggleModal();
+                $scope.toggleModal();
             },
             success: function ( data ) {
-                toggleModal();
+                $scope.toggleModal();
             }
         });
     }
