@@ -754,6 +754,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.decreaseTemp = function() {
         if ($scope.currentlySetTemp > 35) {
+            t.modalShown = true;
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             store.set('currentlySetTemp', $scope.currentlySetTemp);
@@ -763,6 +764,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.increaseTemp = function() {
         if ($scope.currentlySetTemp < 55) {
+            t.modalShown = true;
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             store.set('currentlySetTemp', $scope.currentlySetTemp);
@@ -778,9 +780,6 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             type: 'post',
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
-            beforeSend: function() {
-                t.modalShown = true;
-            },
             success: function ( data ) {
                 setInterval(function() {
                     t.modalShown = false;
