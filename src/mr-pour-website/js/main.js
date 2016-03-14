@@ -651,6 +651,11 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     }
 
     $scope.currentlySetTemp = store.get('currentlySetTemp');
+    if ($scope.currentlySetTemp < 35 && $scope.currentlySetTemp > 55) {
+        $scope.currentlySetTemp = 35;
+        store.set('currentlySetTemp', $scope.currentlySetTemp);
+    }
+
     $('#currentlySetTemp').text($scope.currentlySetTemp);
     $('#currentTempSpan').text($rootScope.temp['temp']);
 
@@ -665,7 +670,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         if ($scope.currentlySetTemp > 35) {
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
-            store.save('currentlySetTemp', $scope.currentlySetTemp);
+            store.set('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
     };
@@ -674,7 +679,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         if ($scope.currentlySetTemp < 55) {
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
-            store.save('currentlySetTemp', $scope.currentlySetTemp);
+            store.set('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
     };
