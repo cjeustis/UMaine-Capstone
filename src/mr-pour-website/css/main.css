@@ -227,11 +227,11 @@ h4 {
 
 #loading-gif
 {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 35%;
     display: none;
-    background-color: transparent;
+    background-color: transparent url("..img/ajax-loader.gif");
     z-index: 1000;
     height: 31px;
     width: 31px;
