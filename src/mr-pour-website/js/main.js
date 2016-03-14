@@ -775,7 +775,6 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         setInterval(function() {
             $scope.modalShown = false;
         }, 1000);
-    }
     };
 
     function sendUpdatedTemp() {
