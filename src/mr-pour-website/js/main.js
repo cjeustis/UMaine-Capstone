@@ -61,6 +61,8 @@ mrPour.config(function ($routeProvider) {
 mrPour.run(function($rootScope, store, $location) {
     var urlPath = window.location.href;
 
+    $('#loading').hide();
+
     setInterval(function() {
 
             // read temp value
