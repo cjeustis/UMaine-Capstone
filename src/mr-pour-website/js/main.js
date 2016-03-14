@@ -704,25 +704,24 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
     }
 });
 
-mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
+mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location) {
 
-    var modalShown = false;
+    $scope.modalShown = false;
 
     $scope.val = {};
     $scope.val['control'] = 't';
 
     $scope.logout = function() {
-        var t = this;
 
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                t.modalShown = true;
+                $scope.modalShown = true;
             },
             success :  function(response) {
                 setInterval(function() {
-                    t.modalShown = false;
+                    $scope.modalShown = false;
                     doLogout();
                 }, 1000);
             }
@@ -753,27 +752,33 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     }, 500);
 
     $scope.decreaseTemp = function() {
+        $scope.modalShown = true;
         if ($scope.currentlySetTemp > 35) {
-            modalShown = true;
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             store.set('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
+        setInterval(function() {
+            $scope.modalShown = false;
+        }, 1000);
     };
 
     $scope.increaseTemp = function() {
+        $scope.modalShown = true;
         if ($scope.currentlySetTemp < 55) {
-            modalShown = true;
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             store.set('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
+        setInterval(function() {
+            $scope.modalShown = false;
+        }, 1000);
+    }
     };
 
     function sendUpdatedTemp() {
-        var t = this;
         $scope.val['status'] = $scope.currentlySetTemp;
         // Send updated temp to the avr
         $.ajax({
@@ -782,8 +787,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             data: $scope.val,
             success: function ( data ) {
                 setInterval(function() {
-                    t.modalShown = false;
-                    console.log("Successfully sent data");
+                    console.log(data);
                 }, 1000);
             }
         });
