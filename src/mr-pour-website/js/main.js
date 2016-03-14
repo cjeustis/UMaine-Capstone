@@ -548,7 +548,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             },
             success: function ( data ) {
                 var totalAmount = $scope.roData['amount_1'] + $scope.roData['amount_2'] + $scope.roData['amount_3'] + $scope.roData['amount_4'];
-                var pouringTime = totalAmount * 1700;
+                var pouringTime = totalAmount * 17000;
                 setInterval(function() {
                     $scope.modalShown = false;
                     $scope.$apply();
