@@ -755,7 +755,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         $scope.modalShown = true;
         if ($scope.currentlySetTemp > 35) {
             $scope.currentlySetTemp--;
-            sendUpdatedTemp();
+            $scope.sendUpdatedTemp();
         }
     };
 
@@ -763,11 +763,11 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         $scope.modalShown = true;
         if ($scope.currentlySetTemp < 55) {
             $scope.currentlySetTemp++;
-            sendUpdatedTemp();
+            $scope.sendUpdatedTemp();
         }
     };
 
-    function sendUpdatedTemp() {
+    $scope.sendUpdatedTemp = function() {
         $('#currentlySetTemp').text($scope.currentlySetTemp);
         store.set('currentlySetTemp', $scope.currentlySetTemp);
         $scope.val['status'] = $scope.currentlySetTemp;
