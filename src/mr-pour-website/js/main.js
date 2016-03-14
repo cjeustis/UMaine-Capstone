@@ -771,6 +771,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     };
 
     function sendUpdatedTemp() {
+        $scope.modalShown = true;
         $scope.val['status'] = $scope.currentlySetTemp;
         // Send updated temp to the avr
         $.ajax({
@@ -778,15 +779,15 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
             beforeSend: function() {
-                $scope.modalShown = true;
+
             },
             success: function ( data ) {
-                console.log("Successly sent data");
+                console.log("Successfully sent data");
             }
         });
-        setInterval(function() {
+        //setInterval(function() {
             $scope.modalShown = false;
-        }, 1000);
+        //}, 1000);
     }
 
     var chart = new SmoothieChart({

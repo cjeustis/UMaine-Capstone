@@ -28,7 +28,7 @@
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.84033614">
-              <caret line="788" column="17" selection-start-line="788" selection-start-column="17" selection-end-line="788" selection-end-column="17" />
+              <caret line="788" column="5" selection-start-line="788" selection-start-column="5" selection-end-line="788" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -326,12 +326,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00006" summary="Another attempt to fix it">
-      <created>1457982522416</created>
-      <option name="number" value="00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1457982522416</updated>
-    </task>
     <task id="LOCAL-00007" summary="Add loader to one ajax call...">
       <created>1457982765530</created>
       <option name="number" value="00007" />
@@ -620,7 +614,13 @@
       <option name="project" value="LOCAL" />
       <updated>1457993967188</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Working on the style">
+      <created>1457994128962</created>
+      <option name="number" value="00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1457994128962</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1040,7 +1040,7 @@
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.84033614">
-          <caret line="788" column="17" selection-start-line="788" selection-start-column="17" selection-end-line="788" selection-end-column="17" />
+          <caret line="788" column="5" selection-start-line="788" selection-start-column="5" selection-end-line="788" selection-end-column="5" />
           <folding />
         </state>
       </provider>
