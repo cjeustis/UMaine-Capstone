@@ -755,29 +755,21 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         $scope.modalShown = true;
         if ($scope.currentlySetTemp > 35) {
             $scope.currentlySetTemp--;
-            $('#currentlySetTemp').text($scope.currentlySetTemp);
-            store.set('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
-        setInterval(function() {
-            $scope.modalShown = false;
-        }, 1000);
     };
 
     $scope.increaseTemp = function() {
         $scope.modalShown = true;
         if ($scope.currentlySetTemp < 55) {
             $scope.currentlySetTemp++;
-            $('#currentlySetTemp').text($scope.currentlySetTemp);
-            store.set('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
-        setInterval(function() {
-            $scope.modalShown = false;
-        }, 1000);
     };
 
     function sendUpdatedTemp() {
+        $('#currentlySetTemp').text($scope.currentlySetTemp);
+        store.set('currentlySetTemp', $scope.currentlySetTemp);
         $scope.val['status'] = $scope.currentlySetTemp;
         // Send updated temp to the avr
         $.ajax({
@@ -786,8 +778,9 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             data: $scope.val,
             success: function ( data ) {
                 setInterval(function() {
-                    console.log(data);
+                    $scope.modalShown = false;
                 }, 1000);
+                console.log("Successfully sent temp to avr");
             }
         });
     }
