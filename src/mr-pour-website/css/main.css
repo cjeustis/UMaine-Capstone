@@ -251,11 +251,11 @@ h4 {
 
     background-color: #fff;
     background: transparent url("../img/ajax-loader.gif") no-repeat center top;
-    box-shadow: 4px 4px 80px #000;
+    /*box-shadow: 4px 4px 80px #000;*/
 }
 .ng-modal-dialog-content {
     padding:10px;
-    text-align: left;
+    text-align: center;
 }
 .ng-modal-close {
     position: absolute;
