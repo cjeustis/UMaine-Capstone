@@ -777,11 +777,13 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
             success: function ( data ) {
-                console.log("Successfully sent temp to avr");
+                setInterval(function() {
+                    $scope.modalShown = false;
+                    $scope.$apply();
+                    console.log("Successfully sent temp to avr");
+                }, 1000);
             }
         });
-        $scope.modalShown = false;
-        $scope.$apply();
     };
 
     var chart = new SmoothieChart({
