@@ -720,8 +720,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             beforeSend: function() {
                 t.modalShown = true;
             },
-            success :  function(response)
-            {
+            success :  function(response) {
                 setInterval(function() {
                     t.modalShown = false;
                     doLogout();
@@ -780,11 +779,11 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
             beforeSend: function() {
-                modalShown = true;
+                t.modalShown = true;
             },
             success: function ( data ) {
                 setInterval(function() {
-                    t.modalShown = false
+                    t.modalShown = false;
                     console.log("Successfully sent data");
                 }, 1000);
             }
