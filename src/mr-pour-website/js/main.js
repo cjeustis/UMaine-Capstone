@@ -61,7 +61,7 @@ mrPour.config(function ($routeProvider) {
 mrPour.run(function($rootScope, store, $location) {
     var urlPath = window.location.href;
 
-    $.ajaxStart(function () {
+    $(document).ajaxStart(function () {
         $("#loading").show();
     }).ajaxStop(function () {
         $("#loading").hide();
