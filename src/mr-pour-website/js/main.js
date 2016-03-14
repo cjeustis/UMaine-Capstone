@@ -662,9 +662,6 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
     $scope.modalShown = false;
-    $scope.toggleModal = function() {
-        $scope.modalShown = !$scope.modalShown;
-    };
 
     $scope.val = {};
     $scope.val['control'] = 't';
@@ -675,11 +672,11 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             type : 'POST',
             url  : 'php/logout.php',
             beforeSend: function() {
-                $scope.toggleModal();
+                $scope.modalShown = true;
             },
             success :  function(response)
             {
-                $scope.toggleModal();
+                $scope.modalShown = false;
                 setTimeout(doLogout(), 4000);
             }
         });
@@ -734,10 +731,10 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
             beforeSend: function() {
-                $scope.toggleModal();
+                $scope.modalShown = true;
             },
             success: function ( data ) {
-                $scope.toggleModal();
+                $scope.modalShown = false;
             }
         });
     }
