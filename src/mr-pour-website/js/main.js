@@ -629,25 +629,13 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
 
 mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
 
-    $('#target').loadingOverlay({
+    $('#loader').loadingOverlay({
         loadingClass: 'loading',            // Class added to `target` while loading
         overlayClass: 'loading-overlay',    // Class added to loading overlay (to be styled in CSS)
         spinnerClass: 'loading-spinner',    // Class added to loading overlay spinner
         iconClass: 'loading-icon',          // Class added to loading overlay spinner
         textClass: 'loading-text',          // Class added to loading overlay spinner
         loadingText: 'loading'              // Text within loading overlay
-    });
-
-    $.ajaxSetup({
-
-        beforeSend:function(){
-            // show gif here, eg:
-            $('#loader').loadingOverlay();
-        },
-        complete:function(){
-            // hide gif here, eg:
-            $('#loader').loadingOverlay('remove');
-        }
     });
 
 
@@ -675,7 +663,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.currentlySetTemp = 35;
     $('#currentlySetTemp').text($scope.currentlySetTemp);
-    $('#currentTempSpan').text('n/a');
+    $('#currentTempSpan').text($rootScope.temp['temp']);
 
     // Randomly add a data point every 500ms
     var random = new TimeSeries();
@@ -685,19 +673,24 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     }, 500);
 
     $scope.decreaseTemp = function() {
+        $('#loader').loadingOverlay();
+
         if ($scope.currentlySetTemp > 35) {
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             sendUpdatedTemp();
         }
+        $('#loader').loadingOverlay('remove');
     };
 
     $scope.increaseTemp = function() {
+        $('#loader').loadingOverlay();
         if ($scope.currentlySetTemp < 55) {
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
             sendUpdatedTemp();
         }
+        $('#loader').loadingOverlay('remove');
     };
 
     function sendUpdatedTemp() {
