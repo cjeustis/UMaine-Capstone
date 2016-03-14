@@ -1,20 +1,6 @@
 var mrPour = angular.module('mrPour', ['ngAnimate', 'ngRoute', 'angular-storage', 'ui.bootstrap', 'agGrid', 'ngMessages']);
 
-mrPour.config(function ($httpProvider, $routeProvider) {
-
-    $httpProvider.interceptors.push(function($q, $rootScope) {
-        return {
-            'request': function(config) {
-                $rootScope.$broadcast('loading-started');
-                return config || $q.when(config);
-            },
-            'response': function(response) {
-                $rootScope.$broadcast('loading-complete');
-                return response || $q.when(response);
-            }
-        };
-    });
-
+mrPour.config(function ($routeProvider) {
     $routeProvider
     .when('/index.html', {
         templateUrl: 'html/main.html',
@@ -664,7 +650,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         $scope.$apply();
     }
 
-    $scope.currentlySetTemp = 35;
+    $scope.currentlySetTemp = store.get('currentlySetTemp');
     $('#currentlySetTemp').text($scope.currentlySetTemp);
     $('#currentTempSpan').text($rootScope.temp['temp']);
 
@@ -679,6 +665,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         if ($scope.currentlySetTemp > 35) {
             $scope.currentlySetTemp--;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
+            store.save('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
     };
@@ -687,6 +674,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         if ($scope.currentlySetTemp < 55) {
             $scope.currentlySetTemp++;
             $('#currentlySetTemp').text($scope.currentlySetTemp);
+            store.save('currentlySetTemp', $scope.currentlySetTemp);
             sendUpdatedTemp();
         }
     };

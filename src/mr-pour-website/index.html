@@ -38,7 +38,6 @@
 
     <!-- Our stuff -->
     <script src="js/main.js"></script>
-    <script src="js/routeLoadingIndicator.js"></script>
     <script src="js/sha256.js"></script>
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -47,7 +46,10 @@
 
 <body>
         <!-- This is used for routing to other pages - responsive! -->
-        <div ng-if='!isRouteLoading' ng-view></div>
+        <div ng-view></div>
+        <div id='loading'>
+            <img src='img/ajax-loader.gif'/>
+        </div>
 
 </body>
 
