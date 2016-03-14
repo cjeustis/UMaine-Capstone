@@ -225,10 +225,22 @@ h4 {
     font-size: 20px;
 }
 
-.loading-gif {
+#loading-gif
+{
+    position: absolute;
+    left: 50%;
+    top: 35%;
     display: none;
+    background-color: transparent;
+    z-index: 1000;
+    height: 31px;
+    width: 31px;
 }
 
-.loading {
+#loading
+{
     background-color: #4d4d4d;
+    background: 75%;
+    width: 100%;
+    height: 100%;
 }

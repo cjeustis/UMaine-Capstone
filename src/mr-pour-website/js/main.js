@@ -67,14 +67,9 @@ mrPour.run(function($rootScope, store, $location) {
             $.ajax({
                 type: 'post',
                 url: 'php/getTemp.php',
-                beforeSend: function() {
-                    alert("Loading!");
-                    $('#loading').show();
-                },
                 success: function (data) {
                     var d = JSON.parse(data);
-                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32)
-                    $('#loading').hide();
+                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
                 }
             });
 
@@ -402,8 +397,11 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
-            success :  function(response)
-            {
+            beforeSend: function() {
+                $('#loading').show();
+            },
+            success :  function(response) {
+                $('#loading').hide();
                 setTimeout(doLogout(), 4000);
             }
         });
@@ -430,8 +428,12 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success :  function(response)
             {
+                $('#loading').hide();
                 setTimeout(doLogout(), 4000);
             }
         });
@@ -510,7 +512,11 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             type: 'post',
             url: 'php/sendIngredientAmounts.php',
             data: $scope.rowData,
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success: function ( data ) {
+                $('#loading').hide();
                 console.log("Sent values to avr");
             }
         });
@@ -523,7 +529,11 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             type: 'post',
             url: 'php/deleteRecipe.php',
             data: $scope.rowData,
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success: function ( data ) {
+                $('#loading').hide();
                 $timeout(location.reload(true), 1000);
             }
         });
@@ -544,8 +554,12 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, store
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success :  function(response)
             {
+                $('#loading').hide();
                 setTimeout(doLogout(), 4000);
             }
         });
@@ -572,7 +586,11 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, store
             type: 'post',
             url: 'php/saveRecipe.php',
             data: recipe,
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success: function ( data ) {
+                $('#loading').hide();
                 $location.path('/dashboard/recipes');
                 $scope.$apply();
             }
@@ -591,8 +609,12 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success :  function(response)
             {
+                $('#loading').hide();
                 setTimeout(doLogout(), 4000);
             }
         });
@@ -624,7 +646,11 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
             type: 'post',
             url: 'php/updateRecipe.php',
             data: recipe,
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success: function ( data ) {
+                $('#loading').hide();
                 console.log(data);
             }
         });
@@ -641,8 +667,12 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success :  function(response)
             {
+                $('#loading').hide();
                 setTimeout(doLogout(), 4000);
             }
         });
@@ -696,7 +726,11 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             type: 'post',
             url: 'php/updateCoolingStatus.php',
             data: $scope.val,
+            beforeSend: function() {
+                $('#loading').show();
+            },
             success: function ( data ) {
+                $('#loading').hide();
             }
         });
     }
