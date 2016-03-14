@@ -250,7 +250,7 @@ h4 {
     -moz-transform: translate(-50%, -50%);
 
     background-color: #fff;
-    background: url("../img/ajax-loader.gif") no-repeat center top;
+    background: transparent url("../img/ajax-loader.gif") no-repeat center top;
     box-shadow: 4px 4px 80px #000;
 }
 .ng-modal-dialog-content {
@@ -267,4 +267,8 @@ h4 {
     display: inline-block;
     font-weight: bold;
     font-family: 'arial', 'sans-serif';
+}
+
+.loading-text {
+    margin-top: 25px;
 }
