@@ -61,10 +61,11 @@ mrPour.config(function ($routeProvider) {
 mrPour.run(function($rootScope, store, $location) {
     var urlPath = window.location.href;
 
-    $(document).ajaxStart(function () {
-        $("#loading").show();
-    }).ajaxStop(function () {
-        $("#loading").hide();
+    // show the '#loading' element when ajaxStart, and hide it when ajaxComplete
+    $("#loading").bind("ajaxStart", function(){
+        $(this).show();
+    }).bind("ajaxComplete", function(){
+        $(this).hide();
     });
 
     setInterval(function() {
