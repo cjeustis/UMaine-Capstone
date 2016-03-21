@@ -27,8 +27,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.61869746">
-              <caret line="559" column="49" selection-start-line="559" selection-start-column="49" selection-end-line="559" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.4012605">
+              <caret line="758" column="37" selection-start-line="758" selection-start-column="37" selection-end-line="758" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -326,12 +326,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00025" summary="Working on the style">
-      <created>1457987279752</created>
-      <option name="number" value="00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1457987279752</updated>
-    </task>
     <task id="LOCAL-00026" summary="Working on the style">
       <created>1457987527426</created>
       <option name="number" value="00026" />
@@ -620,7 +614,13 @@
       <option name="project" value="LOCAL" />
       <updated>1458578604736</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Attempt to set loading indicator for pouring length">
+      <created>1458578936003</created>
+      <option name="number" value="00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1458578936004</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -671,7 +671,8 @@
     <MESSAGE value="Should have a working indiciator. May need to adjust styling" />
     <MESSAGE value="Working on the style" />
     <MESSAGE value="Ony send temp every 10 seconds if not sending other info" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ony send temp every 10 seconds if not sending other info" />
+    <MESSAGE value="Attempt to set loading indicator for pouring length" />
+    <option name="LAST_COMMIT_MESSAGE" value="Attempt to set loading indicator for pouring length" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1016,8 +1017,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61869746">
-          <caret line="559" column="49" selection-start-line="559" selection-start-column="49" selection-end-line="559" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.4012605">
+          <caret line="758" column="37" selection-start-line="758" selection-start-column="37" selection-end-line="758" selection-end-column="37" />
           <folding />
         </state>
       </provider>
