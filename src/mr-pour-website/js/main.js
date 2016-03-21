@@ -86,16 +86,20 @@ mrPour.run(function($rootScope, localStorageService, $location) {
                     }
                 });
 
-                // send temp value to avr
-                $.ajax({
-                    type: 'post',
-                    url: 'php/sendTempData.php',
-                    data: $rootScope.temp,
-                    success: function (data) {
-                        console.log("Temp read: " + $rootScope.temp['temp']);
-                        console.log("Sent temp to avr");
-                    }
-                })
+                // Don't update anything if 32 - means db just got reset
+                if ($rootscope.temp['temp'] != 32) {
+                    // send temp value to avr
+                    $.ajax({
+                        type: 'post',
+                        url: 'php/sendTempData.php',
+                        data: $rootScope.temp,
+                        success: function (data) {
+                            console.log("Temp read: " + $rootScope.temp['temp']);
+                            console.log("Sent temp to avr");
+                        }
+                    })
+                }
+
                 $rootScope.isBusy = false;
             }
         }, 5000);
