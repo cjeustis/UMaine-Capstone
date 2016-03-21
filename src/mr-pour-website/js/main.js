@@ -582,12 +582,6 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }, pouringTime);
-                $scope.percentage = 0;
-                var val = 0;
-                while($scope.percentage != 100) {
-                    $scope.percentage = val / pouringTime;
-                    val++;
-                }
             }
         });
     };
