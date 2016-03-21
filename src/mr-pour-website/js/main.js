@@ -76,18 +76,20 @@ mrPour.run(function($rootScope, localStorageService, $location) {
             // Only read and send temp if doing nothing else
             if (!$rootScope.isBusy) {
                 $rootScope.isBusy = true;
-                // read temp value
-                $.ajax({
-                    type: 'post',
-                    url: 'php/getTemp.php',
-                    success: function (data) {
-                        var d = JSON.parse(data);
-                        $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
-                    }
-                });
 
-                // Don't update anything if 32 - means db just got reset
-                if ($rootScope.temp['temp'] != 32) {
+                // Read temp until not 32 - means db just got reset
+                while ($rootScope.temp['temp'] == 32) {
+                    // read temp value
+                    $.ajax({
+                        type: 'post',
+                        url: 'php/getTemp.php',
+                        success: function (data) {
+                            var d = JSON.parse(data);
+                            $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                        }
+                    });
+                }
+
                     // send temp value to avr
                     $.ajax({
                         type: 'post',
@@ -98,7 +100,6 @@ mrPour.run(function($rootScope, localStorageService, $location) {
                             console.log("Sent temp to avr");
                         }
                     })
-                }
 
                 $rootScope.isBusy = false;
             }
