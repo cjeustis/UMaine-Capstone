@@ -72,38 +72,46 @@ mrPour.run(function($rootScope, localStorageService, $location) {
     $rootScope.isBusy = false;
 
     setInterval(function() {
+        // Only read and send temp if doing nothing else
+        if (!$rootScope.isBusy) {
+            $rootScope.isBusy = true;
 
-            // Only read and send temp if doing nothing else
-            if (!$rootScope.isBusy) {
-                $rootScope.isBusy = true;
-
-                // Read temp until not 32 - means db just got reset
-                while ($rootScope.temp['temp'] == 32) {
-                    // read temp value
-                    $.ajax({
-                        type: 'post',
-                        url: 'php/getTemp.php',
-                        success: function (data) {
-                            var d = JSON.parse(data);
-                            $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
-                        }
-                    });
+            // read temp value
+            $.ajax({
+                type: 'post',
+                url: 'php/getTemp.php',
+                success: function (data) {
+                    var d = JSON.parse(data);
+                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
                 }
+            });
 
-                    // send temp value to avr
-                    $.ajax({
-                        type: 'post',
-                        url: 'php/sendTempData.php',
-                        data: $rootScope.temp,
-                        success: function (data) {
-                            console.log("Temp read: " + $rootScope.temp['temp']);
-                            console.log("Sent temp to avr");
-                        }
-                    })
-
-                $rootScope.isBusy = false;
+            if ($rootScope.temp['temp'] == 32) {
+                // read temp value again
+                $.ajax({
+                    type: 'post',
+                    url: 'php/getTemp.php',
+                    success: function (data) {
+                        var d = JSON.parse(data);
+                        $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                    }
+                });
             }
-        }, 5000);
+
+            // send temp value to avr
+            $.ajax({
+                type: 'post',
+                url: 'php/sendTempData.php',
+                data: $rootScope.temp,
+                success: function (data) {
+                    console.log("Temp read: " + $rootScope.temp['temp']);
+                    console.log("Sent temp to avr");
+                }
+            });
+
+            $rootScope.isBusy = false;
+        }
+    }, 5000);
 
     /* Inactivty timer to remove authentication */
     var t;
