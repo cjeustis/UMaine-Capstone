@@ -1,4 +1,4 @@
-var mrPour = angular.module('mrPour', ['ngAnimate', 'ngRoute', 'ngCookies', 'angular-storage', 'ui.bootstrap', 'agGrid', 'ngMessages']);
+var mrPour = angular.module('mrPour', ['ngAnimate', 'ngRoute', 'angular-storage', 'ui.bootstrap', 'agGrid', 'ngMessages']);
 
 mrPour.config(function ($routeProvider) {
     $routeProvider
