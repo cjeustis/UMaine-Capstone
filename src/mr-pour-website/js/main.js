@@ -450,7 +450,7 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
 
 });
 
-mrPour.controller('recipeController', function ($scope, $rootScope, $http, store, $location, $timeout, $anchorScroll) {
+mrPour.controller('recipeController', function ($scope, $rootScope, $http, store, $location, $timeout) {
 
     $scope.modalShown = false;
 
