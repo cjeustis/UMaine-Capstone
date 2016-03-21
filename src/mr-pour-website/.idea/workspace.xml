@@ -27,8 +27,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.5105042">
-              <caret line="98" column="37" selection-start-line="98" selection-start-column="37" selection-end-line="98" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="792" column="46" selection-start-line="792" selection-start-column="46" selection-end-line="792" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -336,12 +336,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00033" summary="Working on the style">
-      <created>1457990007360</created>
-      <option name="number" value="00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1457990007360</updated>
-    </task>
     <task id="LOCAL-00034" summary="Working on the style">
       <created>1457990114506</created>
       <option name="number" value="00034" />
@@ -630,7 +624,13 @@
       <option name="project" value="LOCAL" />
       <updated>1458579891728</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="Attempt to set loading indicator for pouring length">
+      <created>1458580110566</created>
+      <option name="number" value="00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1458580110566</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1043,8 +1043,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.5105042">
-          <caret line="98" column="37" selection-start-line="98" selection-start-column="37" selection-end-line="98" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="792" column="46" selection-start-line="792" selection-start-column="46" selection-end-line="792" selection-end-column="46" />
           <folding />
         </state>
       </provider>

@@ -62,30 +62,34 @@ mrPour.run(function($rootScope, store, $location) {
     var urlPath = window.location.href;
 
     $('#loading').hide();
+    $rootScope.isBusy = false;
 
     setInterval(function() {
 
-            // read temp value
-            $.ajax({
-                type: 'post',
-                url: 'php/getTemp.php',
-                success: function (data) {
-                    var d = JSON.parse(data);
-                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
-                }
-            });
+            // Only read and send temp if doing nothing else
+            if (!$rootScope.isBusy) {
+                // read temp value
+                $.ajax({
+                    type: 'post',
+                    url: 'php/getTemp.php',
+                    success: function (data) {
+                        var d = JSON.parse(data);
+                        $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                    }
+                });
 
-            // send temp value to avr
-            $.ajax({
-                type: 'post',
-                url: 'php/sendTempData.php',
-                data: $rootScope.temp,
-                success: function (data) {
-                    console.log("Temp read: " + $rootScope.temp['temp']);
-                    console.log("Sent temp to avr");
-                }
-            })
-        }, 10000);
+                // send temp value to avr
+                $.ajax({
+                    type: 'post',
+                    url: 'php/sendTempData.php',
+                    data: $rootScope.temp,
+                    success: function (data) {
+                        console.log("Temp read: " + $rootScope.temp['temp']);
+                        console.log("Sent temp to avr");
+                    }
+                })
+            }
+        }, 5000);
 
     /* Inactivty timer to remove authentication */
     var t;
@@ -533,6 +537,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     };
 
     $scope.pourRecipe = function() {
+        $rootScope.isBusy = true;
         // Send ingredient amounts to avr
         $scope.rowData['control'] = 'p';
         console.log($scope.rowData);
@@ -547,9 +552,13 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             success: function ( data ) {
                 var totalAmount = $scope.rowData['amount_1'] + $scope.rowData['amount_2'] + $scope.rowData['amount_3'] + $scope.rowData['amount_4'];
                 var pouringTime = totalAmount * 17000;
+                console.log("Total Amount: " + totalAmount);
+                console.log("Pouring time: " + pouringTime);
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $rootScope.isBusy = false;
                     $scope.$apply();
+                    console.log("Done pouring!");
                 }, pouringTime);
                 console.log("Sent values to avr");
             }
@@ -753,16 +762,18 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     }, 500);
 
     $scope.decreaseTemp = function() {
-        $scope.modalShown = true;
         if ($scope.currentlySetTemp > 35) {
+            $scope.modalShown = true;
+            $rootScope.isBusy = true;
             $scope.currentlySetTemp--;
             $scope.sendUpdatedTemp();
         }
     };
 
     $scope.increaseTemp = function() {
-        $scope.modalShown = true;
         if ($scope.currentlySetTemp < 55) {
+            $scope.modalShown = true;
+            $rootScope.isBusy = true;
             $scope.currentlySetTemp++;
             $scope.sendUpdatedTemp();
         }
@@ -779,6 +790,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             data: $scope.val,
             success: function ( data ) {
                 setInterval(function() {
+                    $rootScope.isBusy = false;
                     $scope.modalShown = false;
                     $scope.$apply();
                 }, 1500);
