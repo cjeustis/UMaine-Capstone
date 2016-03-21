@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/ajax-loader.gif" afterPath="$PROJECT_DIR$/img/ajax-loader.gif" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html/recipes.html" afterPath="$PROJECT_DIR$/html/recipes.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
     </list>
     <ignored path="mr-pour.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -347,12 +346,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00041" summary="Working on the style">
-      <created>1457991307302</created>
-      <option name="number" value="00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1457991307303</updated>
-    </task>
     <task id="LOCAL-00042" summary="Working on the style">
       <created>1457991564115</created>
       <option name="number" value="00042" />
@@ -641,7 +634,13 @@
       <option name="project" value="LOCAL" />
       <updated>1458584580763</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="Conigure timing for pouring dialog">
+      <created>1458585052693</created>
+      <option name="number" value="00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1458585052693</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="ToolWindowManager">
