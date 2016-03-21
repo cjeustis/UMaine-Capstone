@@ -1,6 +1,13 @@
-var mrPour = angular.module('mrPour', ['ngAnimate', 'ngRoute', 'angular-storage', 'ui.bootstrap', 'agGrid', 'ngMessages']);
+var mrPour = angular.module('mrPour', ['ngAnimate', 'ngRoute', 'LocalStorageModule', 'ui.bootstrap', 'agGrid', 'ngMessages']);
 
-mrPour.config(function ($routeProvider) {
+mrPour.config(function ($routeProvider, localStorageServiceProvider) {
+
+    localStorageServiceProvider
+        .setPrefix('mrPour')
+        .setStorageType('localStorage')
+        .setNotify(true, true);
+
+
     $routeProvider
     .when('/index.html', {
         templateUrl: 'html/main.html',
@@ -8,7 +15,7 @@ mrPour.config(function ($routeProvider) {
         resolve: function($q, $location) {
             var deferred = $q.defer();
             deferred.resolve();
-            if (!store.get('auth')) {
+            if (!localStorageService.get('auth')) {
                $location.path('/login');
             }
             return deferred.promise;
@@ -58,7 +65,7 @@ mrPour.config(function ($routeProvider) {
     //$locationProvider.html5Mode(true);
 });
 
-mrPour.run(function($rootScope, store, $location) {
+mrPour.run(function($rootScope, localStorageService, $location) {
     var urlPath = window.location.href;
 
     $('#loading').hide();
@@ -93,7 +100,7 @@ mrPour.run(function($rootScope, store, $location) {
 
     /* Inactivty timer to remove authentication */
     var t;
-    if (store.get('auth')){
+    if (localStorageService.get('auth')) {
         window.onload = resetTimer;
         document.onmousemove = resetTimer;
         document.onkeypress = resetTimer;
@@ -103,7 +110,7 @@ mrPour.run(function($rootScope, store, $location) {
     $rootScope.temp['control'] = 'c';
 
     function logout() {
-        store.set('auth', false);
+        localStorageService.set('auth', false);
         $location.path('/login');
         $rootScope.$apply();
     }
@@ -112,27 +119,27 @@ mrPour.run(function($rootScope, store, $location) {
         clearTimeout(t);
         var now = Date.now();
         var expires = now + 3600000;
-        store.set('expires', expires);
+        localStorageService.set('expires', expires);
         t = setTimeout(logout, 1200000);    // 20 minutes for inactivity
     }
     /* End of inactivity timer logic */
 
     $rootScope.$on('$locationChangeStart', function() {
-        $rootScope.isAuth = store.get('auth');
+        $rootScope.isAuth = localStorageService.get('auth');
         // not authorized
-        if (!store.get('auth')) {
+        if (!localStorageService.get('auth')) {
             if(urlPath.indexOf("dashboard") > -1) {
                 $location.path('/login');
             }
         }
         // authorized
         else {
-            var expires = store.get('expires');
+            var expires = localStorageService.get('expires');
             // if token is expired
             if (expires <= Date.now()) {
                 $rootScope.expires = expires;
                 $rootScope.isAuth = false;
-                store.set('auth', false);
+                localStorageService.set('auth', false);
                 $location.path('/login');
             }
             else {
@@ -190,9 +197,9 @@ mrPour.controller('mainController', function ($scope, $rootScope, $location, $an
     };
 });
 
-mrPour.controller('registrationController', function ($scope, $rootScope, store, $location) {
+mrPour.controller('registrationController', function ($scope, $rootScope, localStorageService, $location) {
 
-    if (store.get('auth')) {
+    if (localStorageService.get('auth')) {
         $location.path('/dashboard');
         $scope.$apply();
     }
@@ -323,8 +330,8 @@ mrPour.controller('registrationController', function ($scope, $rootScope, store,
                 var now = Date.now();
                 var expires = now + 3600000;
                 //console.log('Authentication expires in: ' + ((expires - now)/60)/1000 + ' minutes');
-                store.set('auth', true);
-                store.set('expires', expires);
+                localStorageService.set('auth', true);
+                localStorageService.set('expires', expires);
                 $location.path('/dashboard');
                 $scope.$apply();
             }
@@ -332,9 +339,9 @@ mrPour.controller('registrationController', function ($scope, $rootScope, store,
     }
 });
 
-mrPour.controller('loginController', function ($scope, $rootScope, $location, store) {
+mrPour.controller('loginController', function ($scope, $rootScope, $location, localStorageService) {
 
-    if (store.get('auth')) {
+    if (localStorageService.get('auth')) {
         $location.path('/dashboard');
         $scope.$apply();
     }
@@ -407,15 +414,15 @@ mrPour.controller('loginController', function ($scope, $rootScope, $location, st
         var now = Date.now();
         var expires = now + 3600000;
         //console.log('Authentication expires in: ' + ((expires - now)/60)/1000 + ' minutes');
-        store.set('auth', true);
-        store.set('expires', expires);
+        localStorageService.set('auth', true);
+        localStorageService.set('expires', expires);
         $location.path('/dashboard');
         $scope.$apply();
     }
 
 });
 
-mrPour.controller('dashboardController', function ($scope, $rootScope, $http, store, $location, $anchorScroll) {
+mrPour.controller('dashboardController', function ($scope, $rootScope, $http, localStorageService, $location, $anchorScroll) {
 
     $scope.modalShown = false;
 
@@ -437,8 +444,8 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
     };
 
     function doLogout () {
-        store.set('auth', false);
-        store.set('expires', (Date.now() + 120000));
+        localStorageService.set('auth', false);
+        localStorageService.set('expires', (Date.now() + 120000));
         $location.path('#/');
         $scope.$apply();
     }
@@ -450,7 +457,7 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, st
 
 });
 
-mrPour.controller('recipeController', function ($scope, $rootScope, $http, store, $location, $timeout) {
+mrPour.controller('recipeController', function ($scope, $rootScope, $http, localStorageService, $location, $timeout) {
 
     $scope.modalShown = false;
 
@@ -473,8 +480,8 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     };
 
     function doLogout () {
-        store.set('auth', false);
-        store.set('expires', (Date.now() + 120000));
+        localStorageService.set('auth', false);
+        localStorageService.set('expires', (Date.now() + 120000));
         $location.path('#/');
         $scope.$apply();
     }
@@ -593,7 +600,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     }).error(function() { console.log('No recipes exist!'); $scope.hasRecipes = false; });
 });
 
-mrPour.controller('createController', function ($scope, $rootScope, $http, store, $location) {
+mrPour.controller('createController', function ($scope, $rootScope, $http, localStorageService, $location) {
 
     $scope.modalShown = false;
 
@@ -615,8 +622,8 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, store
     };
 
     function doLogout () {
-        store.set('auth', false);
-        store.set('expires', (Date.now() + 120000));
+        localStorageService.set('auth', false);
+        localStorageService.set('expires', (Date.now() + 120000));
         $location.path('#/');
         $scope.$apply();
     }
@@ -649,7 +656,7 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, store
     }
 });
 
-mrPour.controller('updateController', function ($scope, $rootScope, $http, store, $location) {
+mrPour.controller('updateController', function ($scope, $rootScope, $http, localStorageService, $location) {
 
     $scope.modalShown = false;
 
@@ -676,8 +683,8 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
     };
 
     function doLogout () {
-        store.set('auth', false);
-        store.set('expires', (Date.now() + 120000));
+        localStorageService.set('auth', false);
+        localStorageService.set('expires', (Date.now() + 120000));
         $location.path('#/');
         $scope.$apply();
     }
@@ -714,7 +721,7 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, store
     }
 });
 
-mrPour.controller('tempController', function ($scope, $rootScope, $http, store, $location) {
+mrPour.controller('tempController', function ($scope, $rootScope, $http, localStorageService, $location) {
 
     $scope.modalShown = false;
 
@@ -739,16 +746,16 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     };
 
     function doLogout () {
-        store.set('auth', false);
-        store.set('expires', (Date.now() + 120000));
+        localStorageService.set('auth', false);
+        localStorageService.set('expires', (Date.now() + 120000));
         $location.path('#/');
         $scope.$apply();
     }
 
-    $scope.currentlySetTemp = store.get('currentlySetTemp');
+    $scope.currentlySetTemp = localStorageService.get('currentlySetTemp');
     if ($scope.currentlySetTemp < 35 && $scope.currentlySetTemp > 55) {
         $scope.currentlySetTemp = 35;
-        store.set('currentlySetTemp', $scope.currentlySetTemp);
+        localStorageService.set('currentlySetTemp', $scope.currentlySetTemp);
     }
 
     $('#currentlySetTemp').text($scope.currentlySetTemp);
@@ -781,7 +788,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
 
     $scope.sendUpdatedTemp = function() {
         $('#currentlySetTemp').text($scope.currentlySetTemp);
-        store.set('currentlySetTemp', $scope.currentlySetTemp);
+        localStorageService.set('currentlySetTemp', $scope.currentlySetTemp);
         $scope.val['status'] = $scope.currentlySetTemp;
         // Send updated temp to the avr
         $.ajax({
