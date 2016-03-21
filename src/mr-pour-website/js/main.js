@@ -73,8 +73,6 @@ mrPour.run(function($rootScope, localStorageService, $location) {
 
     setInterval(function() {
 
-        // wait if already doing something
-        while($rootScope.isBusy);
             // Only read and send temp if doing nothing else
             if (!$rootScope.isBusy) {
                 $rootScope.isBusy = true;
