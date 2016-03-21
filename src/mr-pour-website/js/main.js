@@ -550,11 +550,14 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             data: $scope.rowData,
             success: function ( data ) {
                 var totalAmount = $scope.rowData['amount_1'] + $scope.rowData['amount_2'] + $scope.rowData['amount_3'] + $scope.rowData['amount_4'];
+                console.log('Total amount: ' + totalAmount);
                 var pouringTime = totalAmount * 17000;
+                console.log('Pouring time: ' + pouringTime);
                 setInterval(function() {
                     $scope.modalShown = false;
                     $rootScope.isBusy = false;
                     $scope.$apply();
+                    console.log("Finished pouring");
                 }, pouringTime);
                 console.log("Sent values to avr");
             }
