@@ -553,21 +553,19 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
             data: $scope.rowData,
             beforeSend: function () {
                 $scope.modalShown = true;
-                $scope.$apply();
             },
             success: function () {
                 var totalAmount = parseFloat($scope.rowData['amount_1'])
                                     + parseFloat($scope.rowData['amount_2'])
                                     + parseFloat($scope.rowData['amount_3'])
                                     + parseFloat($scope.rowData['amount_4']);
-                var pouringTime = totalAmount * 17700;
+                var pouringTime = totalAmount * 24000;
                 console.log("Total Amount: " + totalAmount);
                 console.log("Pouring time: " + pouringTime);
                 setInterval(function() {
                     $scope.modalShown = false;
                     $rootScope.isBusy = false;
                     $scope.$apply();
-                    console.log("Done pouring!");
                 }, pouringTime);
             }
         });
@@ -581,12 +579,9 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
             url: 'php/deleteRecipe.php',
             data: $scope.rowData,
             beforeSend: function() {
-                $scope.modalShown = true;
+
             },
             success: function ( data ) {
-                setInterval(function() {
-                    $scope.modalShown = false;
-                }, 1000);
                 $timeout(location.reload(true), 1000);
             }
         });

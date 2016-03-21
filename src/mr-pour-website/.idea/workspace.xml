@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html/recipes.html" afterPath="$PROJECT_DIR$/html/recipes.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
     </list>
     <ignored path="mr-pour.iws" />
@@ -27,8 +28,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38130254">
-              <caret line="546" column="33" selection-start-line="546" selection-start-column="33" selection-end-line="546" selection-end-column="33" />
+            <state vertical-scroll-proportion="-1.375">
+              <caret line="476" column="25" selection-start-line="476" selection-start-column="25" selection-end-line="476" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -37,8 +38,8 @@
       <file leaf-file-name="recipes.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/recipes.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-27.142857">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+            <state vertical-scroll-proportion="-28.25">
+              <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -131,7 +132,6 @@
         <option value="$PROJECT_DIR$/html/registration-page.html" />
         <option value="$PROJECT_DIR$/js/modal-directive.js" />
         <option value="$PROJECT_DIR$/html/modal.html" />
-        <option value="$PROJECT_DIR$/html/recipes.html" />
         <option value="$PROJECT_DIR$/html/createRecipe.html" />
         <option value="$PROJECT_DIR$/html/dash.html" />
         <option value="$PROJECT_DIR$/html/main.html" />
@@ -140,6 +140,7 @@
         <option value="$PROJECT_DIR$/css/main.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/angular-local-storage.min.js" />
+        <option value="$PROJECT_DIR$/html/recipes.html" />
         <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
@@ -345,12 +346,6 @@
       <created>1452464390972</created>
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Working on the style">
-      <created>1457991157443</created>
-      <option name="number" value="00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1457991157443</updated>
     </task>
     <task id="LOCAL-00041" summary="Working on the style">
       <created>1457991307302</created>
@@ -640,7 +635,13 @@
       <option name="project" value="LOCAL" />
       <updated>1458584444319</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="Conigure timing for pouring dialog">
+      <created>1458584580763</created>
+      <option name="number" value="00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1458584580763</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1058,16 +1059,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/html/recipes.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.142857">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state vertical-scroll-proportion="-28.25">
+          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38130254">
-          <caret line="546" column="33" selection-start-line="546" selection-start-column="33" selection-end-line="546" selection-end-column="33" />
+        <state vertical-scroll-proportion="-1.375">
+          <caret line="476" column="25" selection-start-line="476" selection-start-column="25" selection-end-line="476" selection-end-column="25" />
           <folding />
         </state>
       </provider>
