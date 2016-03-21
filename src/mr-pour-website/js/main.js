@@ -86,7 +86,7 @@ mrPour.run(function($rootScope, localStorageService, $location) {
                 }
             });
 
-            if ($rootScope.temp['temp'] == 32) {
+            while ($rootScope.temp['temp'] == 32) {
                 // read temp value again
                 $.ajax({
                     type: 'post',
@@ -582,6 +582,12 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }, pouringTime);
+                $scope.percentage = 0;
+                var val = 0;
+                while($scope.percentage != 100) {
+                    $scope.percentage = val / pouringTime;
+                    val++;
+                }
             }
         });
     };
