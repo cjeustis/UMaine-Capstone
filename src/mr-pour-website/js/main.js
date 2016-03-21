@@ -65,7 +65,7 @@ mrPour.run(function($rootScope, store, $location) {
 
     setInterval(function() {
         // Only send if doing nothing else
-        if (!$rootScope.isBusy) {
+        //if (!$rootScope.isBusy) {
             // read temp value
             $.ajax({
                 type: 'post',
@@ -86,7 +86,7 @@ mrPour.run(function($rootScope, store, $location) {
                     console.log("Sent temp to avr");
                 }
             })
-        }
+        //}
     }, 10000);
 
     /* Inactivty timer to remove authentication */
