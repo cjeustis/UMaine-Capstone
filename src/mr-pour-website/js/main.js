@@ -544,8 +544,9 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
     };
 
     $scope.pourRecipe = function() {
-        $scope.modalShown = true;
         $rootScope.isBusy = true;
+        $scope.modalShown = true;
+        $scope.$apply();
 
         $scope.rowData['control'] = 'p';
         $.ajax({
@@ -565,7 +566,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
                     $rootScope.isBusy = false;
                     $scope.$apply();
                     console.log("Done pouring!");
-                }, 10000);
+                }, pouringTime);
                 console.log("Sent values to avr");
             }
         });
