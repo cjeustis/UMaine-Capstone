@@ -555,13 +555,12 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
                 $scope.modalShown = true;
             },
             success: function () {
+                // Show pouring dialog until finished
                 var totalAmount = parseFloat($scope.rowData['amount_1'])
                                     + parseFloat($scope.rowData['amount_2'])
                                     + parseFloat($scope.rowData['amount_3'])
                                     + parseFloat($scope.rowData['amount_4']);
-                var pouringTime = totalAmount * 24000;
-                console.log("Total Amount: " + totalAmount);
-                console.log("Pouring time: " + pouringTime);
+                var pouringTime = totalAmount * 26000;  // Guess/check with little buffer
                 setInterval(function() {
                     $scope.modalShown = false;
                     $rootScope.isBusy = false;
