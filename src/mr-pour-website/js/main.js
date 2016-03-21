@@ -97,8 +97,6 @@ mrPour.run(function($rootScope, store, $location) {
 
     $rootScope.temp = {};
     $rootScope.temp['control'] = 'c';
-    function getTempData () {
-    }
 
     function logout() {
         store.set('auth', false);
