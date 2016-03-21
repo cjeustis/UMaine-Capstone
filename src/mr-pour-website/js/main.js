@@ -60,11 +60,13 @@ mrPour.config(function ($routeProvider) {
 
 mrPour.run(function($rootScope, store, $location) {
     var urlPath = window.location.href;
+    $rootScope.isBusy = false;
 
     $('#loading').hide();
 
     setInterval(function() {
-
+        // Only send if doing nothing else
+        if (!$rootScope.isBusy) {
             // read temp value
             $.ajax({
                 type: 'post',
@@ -85,7 +87,8 @@ mrPour.run(function($rootScope, store, $location) {
                     console.log("Sent temp to avr");
                 }
             })
-        }, 10000);
+        }
+    }, 10000);
 
     /* Inactivty timer to remove authentication */
     var t;
@@ -535,6 +538,8 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
     };
 
     $scope.pourRecipe = function() {
+        $scope.modalShown = true;
+        $rootScope.isBusy = true;
         // Send ingredient amounts to avr
         $scope.rowData['control'] = 'p';
         console.log($scope.rowData);
@@ -543,14 +548,12 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, store
             type: 'post',
             url: 'php/sendIngredientAmounts.php',
             data: $scope.rowData,
-            beforeSend: function() {
-                $scope.modalShown = true;
-            },
             success: function ( data ) {
                 var totalAmount = $scope.rowData['amount_1'] + $scope.rowData['amount_2'] + $scope.rowData['amount_3'] + $scope.rowData['amount_4'];
                 var pouringTime = totalAmount * 17000;
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $rootScope.isBusy = false;
                     $scope.$apply();
                 }, pouringTime);
                 console.log("Sent values to avr");
@@ -715,7 +718,6 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     $scope.val['control'] = 't';
 
     $scope.logout = function() {
-
         $.ajax({
             type : 'POST',
             url  : 'php/logout.php',
@@ -755,16 +757,18 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
     }, 500);
 
     $scope.decreaseTemp = function() {
-        $scope.modalShown = true;
         if ($scope.currentlySetTemp > 35) {
+            $scope.modalShown = true;
+            $rootScope.isBusy = true;
             $scope.currentlySetTemp--;
             $scope.sendUpdatedTemp();
         }
     };
 
     $scope.increaseTemp = function() {
-        $scope.modalShown = true;
         if ($scope.currentlySetTemp < 55) {
+            $scope.modalShown = true;
+            $rootScope.isBusy = true;
             $scope.currentlySetTemp++;
             $scope.sendUpdatedTemp();
         }
@@ -782,6 +786,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, store, 
             success: function ( data ) {
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $rootScope.isBusy = false;
                     $scope.$apply();
                 }, 1500);
             }
