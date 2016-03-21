@@ -75,6 +75,7 @@ mrPour.run(function($rootScope, localStorageService, $location) {
 
             // Only read and send temp if doing nothing else
             if (!$rootScope.isBusy) {
+                $rootScope.isBusy = true;
                 // read temp value
                 $.ajax({
                     type: 'post',
@@ -95,6 +96,7 @@ mrPour.run(function($rootScope, localStorageService, $location) {
                         console.log("Sent temp to avr");
                     }
                 })
+                $rootScope.isBusy = false;
             }
         }, 5000);
 
@@ -544,6 +546,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
     };
 
     $scope.pourRecipe = function() {
+        while($rootScope.isBusy);
         $rootScope.isBusy = true;
 
         $scope.rowData['control'] = 'p';
@@ -765,6 +768,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, localSt
 
     $scope.decreaseTemp = function() {
         if ($scope.currentlySetTemp > 35) {
+            while($rootScope.isBusy);
             $scope.modalShown = true;
             $rootScope.isBusy = true;
             $scope.currentlySetTemp--;
@@ -774,6 +778,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, localSt
 
     $scope.increaseTemp = function() {
         if ($scope.currentlySetTemp < 55) {
+            while($rootScope.isBusy);
             $scope.modalShown = true;
             $rootScope.isBusy = true;
             $scope.currentlySetTemp++;
