@@ -27,8 +27,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5987395">
-              <caret line="780" column="37" selection-start-line="780" selection-start-column="37" selection-end-line="780" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.22584033">
+              <caret line="75" column="42" selection-start-line="75" selection-start-column="42" selection-end-line="75" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -356,12 +356,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00048" summary="Working on the style">
-      <created>1457992490268</created>
-      <option name="number" value="00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1457992490268</updated>
-    </task>
     <task id="LOCAL-00049" summary="Working on the style">
       <created>1457992657530</created>
       <option name="number" value="00049" />
@@ -650,7 +644,13 @@
       <option name="project" value="LOCAL" />
       <updated>1458586231324</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="Added checks to make sure no two things happen simultaneously">
+      <created>1458586371048</created>
+      <option name="number" value="00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1458586371048</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -705,7 +705,8 @@
     <MESSAGE value="Get rid of angular-storage and use angular-local-storage instead. (CDN causing problems?)" />
     <MESSAGE value="Conigure timing for pouring dialog" />
     <MESSAGE value="New loading indicator" />
-    <option name="LAST_COMMIT_MESSAGE" value="New loading indicator" />
+    <MESSAGE value="Added checks to make sure no two things happen simultaneously" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added checks to make sure no two things happen simultaneously" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1078,8 +1079,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5987395">
-          <caret line="780" column="37" selection-start-line="780" selection-start-column="37" selection-end-line="780" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.22584033">
+          <caret line="75" column="42" selection-start-line="75" selection-start-column="42" selection-end-line="75" selection-end-column="42" />
           <folding />
         </state>
       </provider>
