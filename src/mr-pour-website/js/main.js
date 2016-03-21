@@ -544,21 +544,20 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
     };
 
     $scope.pourRecipe = function() {
+        $scope.modalShown = true;
         $rootScope.isBusy = true;
-        // Send ingredient amounts to avr
-        $scope.rowData['control'] = 'p';
-        console.log($scope.rowData);
 
+        $scope.rowData['control'] = 'p';
         $.ajax({
             type: 'post',
             url: 'php/sendIngredientAmounts.php',
             data: $scope.rowData,
-            beforeSend: function() {
-                $scope.modalShown = true;
-            },
-            success: function ( data ) {
-                var totalAmount = $scope.rowData['amount_1'] + $scope.rowData['amount_2'] + $scope.rowData['amount_3'] + $scope.rowData['amount_4'];
-                var pouringTime = totalAmount * 17000;
+            success: function () {
+                var totalAmount = parseFloat($scope.rowData['amount_1'])
+                                + parseFloat($scope.rowData['amount_2'])
+                                + parseFloat($scope.rowData['amount_3'])
+                                + parseFloat($scope.rowData['amount_4']);
+                var pouringTime = totalAmount * 17700;
                 console.log("Total Amount: " + totalAmount);
                 console.log("Pouring time: " + pouringTime);
                 setInterval(function() {
@@ -566,7 +565,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
                     $rootScope.isBusy = false;
                     $scope.$apply();
                     console.log("Done pouring!");
-                }, pouringTime);
+                }, 10000);
                 console.log("Sent values to avr");
             }
         });
