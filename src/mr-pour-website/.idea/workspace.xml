@@ -1,25 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/create-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/dashboard-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/login-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/main-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/recipe-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/registration-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/temp-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/update-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/directives/modal-directive.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Makefile" afterPath="$PROJECT_DIR$/../Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../lib/timers/timer_helper.c" afterPath="$PROJECT_DIR$/../lib/timers/timer_helper.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../main.c" afterPath="$PROJECT_DIR$/../main.c" />
+    <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="Move controllers and everything into separate files for better understanding things">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../test_src/lcd_test.c" afterPath="$PROJECT_DIR$/../test_src/lcd_test.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../w_main.c" afterPath="$PROJECT_DIR$/../w_main.c" />
     </list>
     <ignored path="mr-pour.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -307,12 +290,6 @@
       <created>1452464390972</created>
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Working on the style">
-      <created>1457995137256</created>
-      <option name="number" value="00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1457995137256</updated>
     </task>
     <task id="LOCAL-00063" summary="Working on the style">
       <created>1457995166760</created>
@@ -602,7 +579,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459110786825</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="Move controllers and everything into separate files for better understanding things">
+      <created>1459111528364</created>
+      <option name="number" value="00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1459111528364</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -665,7 +648,8 @@
     <MESSAGE value="Try and show percentage while pouring" />
     <MESSAGE value="Scratch the percentage thing" />
     <MESSAGE value="Update temp values to match multimeter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update temp values to match multimeter" />
+    <MESSAGE value="Move controllers and everything into separate files for better understanding things" />
+    <option name="LAST_COMMIT_MESSAGE" value="Move controllers and everything into separate files for better understanding things" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
