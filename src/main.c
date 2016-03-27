@@ -106,7 +106,7 @@ void pour_recipe(int recipe)
 	}
 
 	pouring_length = (recipes[recipe]->AmountOne * OUNCE);
-	if (pouring_length != 0) {
+	if (pouring_length != 0) {	
 		pouring_length += MOTOR1_OFFSET;
 		printf("\n\nPouring %1.2f ounces of %s\n\n", (double)recipes[recipe]->AmountOne, recipes[recipe]->IngredientOne);
 		enable_motor_timer(1);

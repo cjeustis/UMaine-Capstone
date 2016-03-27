@@ -28,5 +28,5 @@ erase :   # this target will just erase avr
 clean :  # this target will remove all non-source files (will cause a complete re-build on next make)
 	rm -f *.hex *.obj *.o
 
-fuses: # program the fuses (NOT done by regular make)
+fuses: # program the fuses (NOT done by regulaaker make)
 	avrdude $(ADFLAGS) -U lfuse:w:0xC2:m -U hfuse:w:0xD1:m -U efuse:w:0xFF:m #www.engbedded.com/fusecalc

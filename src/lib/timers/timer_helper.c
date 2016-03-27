@@ -10,7 +10,7 @@ static int percent;
 
 /* Initializes both Timer/Counter1 and Timer/Counter2
    - Timer/Counter1 is used for controlling how long motors remain on for dispensing liquids
-   - Timer/Counter2 is used to check internal temperature every so often to ensure internal temperature is being maintaned
+   - Timer/Counter2 is used to check internal temperature every so often to ensure internal temperature is being maintained
 */
 void init_motors_timer(void)
 {
@@ -37,26 +37,34 @@ void init_motors_timer(void)
 /* Enables the given motor to start dispensing liquid - sets time and waits unil complete */
 void enable_motor_timer(int motor)
 {
+	char lcd_string[17];
+	int temp;
 	if(pouring_length != 0) {
+		LCDClear();
 		motor_on(motor);
-
 		enable_motors_timer_interrupt();
 
 		while (motors_overflow_count < pouring_length) {	
-			if (percent != (motors_overflow_count / pouring_length) * 100) {
+			temp = (motors_overflow_count / pouring_length) * 100;
+			if (percent != temp) {
 				percent = (motors_overflow_count / pouring_length) * 100;
-				printf("\rPouring: %d%%", percent);
-				fflush(stdout);
+				sprintf(lcd_string, "Complete:   %d%%", percent);
+				LCDWriteString("Pouring recipe..");
+				LCDWriteStringXY(0, 1, lcd_string);
+				// printf("\rPouring: %d%%", percent);
+				// fflush(stdout);
 			}
 		}
-
 		motor_off(motor);
+		disable_motors_timer_interrupt();
 		motors_overflow_count = 0.0;
 
-		disable_motors_timer_interrupt();
+		LCDClear();
+		LCDWriteString("Pouring recipe..");
+		LCDWriteStringXY(0, 1, "Complete:   100%%");
 
-		printf("\rPouring: 100%%\n");
-		fflush(stdout);
+		// printf("\rPouring: 100%%\n");
+		// fflush(stdout);
 	}
 }
 
