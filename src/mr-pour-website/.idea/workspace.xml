@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/update-recipe/update-controller.js" afterPath="$PROJECT_DIR$/update-recipe/update-controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temperature/temp-controller.js" afterPath="$PROJECT_DIR$/temperature/temp-controller.js" />
     </list>
     <ignored path="mr-pour.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,6 +54,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="temp.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/temperature/temp.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8560606">
+              <caret line="45" column="28" selection-start-line="45" selection-start-column="28" selection-end-line="45" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="login-controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/login/login-controller.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -98,16 +108,16 @@
         <entry file="file://$PROJECT_DIR$/temperature/temp-controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="85" selection-end-column="36" />
+              <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="18" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="update-controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="update-controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/update-recipe/update-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8203781">
+            <state vertical-scroll-proportion="0.0">
               <caret line="61" column="32" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
               <folding />
             </state>
@@ -130,7 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/php/createRecipeTable.php" />
         <option value="$PROJECT_DIR$/php/session.php" />
         <option value="$PROJECT_DIR$/php/register.php" />
         <option value="$PROJECT_DIR$/php/login.php" />
@@ -172,7 +181,6 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/html/updateRecipe.html" />
         <option value="$PROJECT_DIR$/controllers/update-controller.js" />
-        <option value="$PROJECT_DIR$/temperature/temp.html" />
         <option value="$PROJECT_DIR$/update-recipe/updateRecipe.html" />
         <option value="$PROJECT_DIR$/main/main.html" />
         <option value="$PROJECT_DIR$/dashboard/dash.html" />
@@ -181,6 +189,8 @@
         <option value="$PROJECT_DIR$/dashboard/dashboard-controller.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/update-recipe/update-controller.js" />
+        <option value="$PROJECT_DIR$/temperature/temp-controller.js" />
+        <option value="$PROJECT_DIR$/temperature/temp.html" />
       </list>
     </option>
   </component>
@@ -450,12 +460,6 @@
       <created>1452464390972</created>
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Working on the style">
-      <created>1457995696325</created>
-      <option name="number" value="00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1457995696325</updated>
     </task>
     <task id="LOCAL-00067" summary="Working on the style">
       <created>1457995816305</created>
@@ -745,7 +749,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459112823997</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="Add redirection when updating recipe">
+      <created>1459112900766</created>
+      <option name="number" value="00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1459112900766</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -811,7 +821,8 @@
     <MESSAGE value="Move controllers and everything into separate files for better understanding things" />
     <MESSAGE value="Move stuff again into better organized folders" />
     <MESSAGE value="Fix wrong urls" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix wrong urls" />
+    <MESSAGE value="Add redirection when updating recipe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add redirection when updating recipe" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1080,14 +1091,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/temperature/temp.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.89285713">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="46" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/registration/registration-page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3495671">
@@ -1104,26 +1107,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="137" column="3" selection-start-line="137" selection-start-column="3" selection-end-line="137" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/registration/registration-controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="140" column="3" selection-start-line="140" selection-start-column="3" selection-end-line="140" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/temperature/temp-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="85" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -1170,8 +1157,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/update-recipe/update-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8203781">
+        <state vertical-scroll-proportion="0.0">
           <caret line="61" column="32" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/temperature/temp-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="18" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="137" column="3" selection-start-line="137" selection-start-column="3" selection-end-line="137" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/temperature/temp.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8560606">
+          <caret line="45" column="28" selection-start-line="45" selection-start-column="28" selection-end-line="45" selection-end-column="35" />
           <folding />
         </state>
       </provider>

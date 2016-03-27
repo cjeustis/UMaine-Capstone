@@ -16,6 +16,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, localSt
             success :  function(response) {
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $scope.$apply();
                     doLogout();
                 }, 1000);
             }
