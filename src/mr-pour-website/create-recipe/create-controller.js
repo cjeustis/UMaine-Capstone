@@ -46,6 +46,7 @@ mrPour.controller('createController', function ($scope, $rootScope, $http, local
             success: function ( data ) {
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $scope.$apply();
                 }, 1000);
                 $location.path('/dashboard/recipes');
                 $scope.$apply();

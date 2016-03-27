@@ -56,6 +56,7 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, local
             success: function ( data ) {
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $scope.$apply();
                 }, 1000);
                 console.log(data);
             }

@@ -13,6 +13,7 @@ mrPour.controller('dashboardController', function ($scope, $rootScope, $http, lo
             success :  function(response) {
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $scope.$apply();
                     doLogout();
                 }, 1000);
             }
