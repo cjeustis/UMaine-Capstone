@@ -58,7 +58,8 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, local
                     $scope.modalShown = false;
                     $scope.$apply();
                 }, 1000);
-                console.log(data);
+                $location.path('/dashboard/recipes');
+                $scope.$apply();
             }
         });
     }
