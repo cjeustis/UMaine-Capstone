@@ -82,7 +82,13 @@ mrPour.run(function($rootScope, localStorageService, $location) {
                 url: 'php/getTemp.php',
                 success: function (data) {
                     var d = JSON.parse(data);
-                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                    $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32) + 3.5;
+                    if ($rootScope.temp['temp'] < 45) {
+                        $rootScope.temp['temp'] += 1;
+                    }
+                    if ($rootScope.temp['temp'] < 40) {
+                        $rootScope.temp['temp'] += 1;
+                    }
                 }
             });
 
@@ -94,6 +100,12 @@ mrPour.run(function($rootScope, localStorageService, $location) {
                     success: function (data) {
                         var d = JSON.parse(data);
                         $rootScope.temp['temp'] = ((d.Temp * 9) / 5 + 32);
+                        if ($rootScope.temp['temp'] < 45) {
+                            $rootScope.temp['temp'] += 1;
+                        }
+                        if ($rootScope.temp['temp'] < 40) {
+                            $rootScope.temp['temp'] += 1;
+                        }
                     }
                 });
             }
@@ -104,8 +116,6 @@ mrPour.run(function($rootScope, localStorageService, $location) {
                 url: 'php/sendTempData.php',
                 data: $rootScope.temp,
                 success: function (data) {
-                    console.log("Temp read: " + $rootScope.temp['temp']);
-                    console.log("Sent temp to avr");
                 }
             });
 
@@ -782,7 +792,9 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, localSt
 
     $scope.decreaseTemp = function() {
         if ($scope.currentlySetTemp > 35) {
-            while($rootScope.isBusy);
+            while ($rootScope.isBusy) {
+
+            }
             $scope.modalShown = true;
             $rootScope.isBusy = true;
             $scope.currentlySetTemp--;
@@ -792,7 +804,9 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, localSt
 
     $scope.increaseTemp = function() {
         if ($scope.currentlySetTemp < 55) {
-            while($rootScope.isBusy);
+            while ($rootScope.isBusy) {
+
+            }
             $scope.modalShown = true;
             $rootScope.isBusy = true;
             $scope.currentlySetTemp++;
