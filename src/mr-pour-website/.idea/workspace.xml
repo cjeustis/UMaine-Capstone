@@ -2,26 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/app.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/main.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/create-controller.js" afterPath="$PROJECT_DIR$/create-recipe/create-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/dashboard-controller.js" afterPath="$PROJECT_DIR$/dashboard/dashboard-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/login-controller.js" afterPath="$PROJECT_DIR$/login/login-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/main-controller.js" afterPath="$PROJECT_DIR$/main/main-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/recipe-controller.js" afterPath="$PROJECT_DIR$/recipe/recipe-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/registration-controller.js" afterPath="$PROJECT_DIR$/registration/registration-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/temp-controller.js" afterPath="$PROJECT_DIR$/temperature/temp-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/update-controller.js" afterPath="$PROJECT_DIR$/update-recipe/update-controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/createRecipe.html" afterPath="$PROJECT_DIR$/create-recipe/createRecipe.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/dash.html" afterPath="$PROJECT_DIR$/dashboard/dash.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/login-page.html" afterPath="$PROJECT_DIR$/login/login-page.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/main.html" afterPath="$PROJECT_DIR$/main/main.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/recipes.html" afterPath="$PROJECT_DIR$/recipe/recipes.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/registration-page.html" afterPath="$PROJECT_DIR$/registration/registration-page.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/temp.html" afterPath="$PROJECT_DIR$/temperature/temp.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/html/updateRecipe.html" afterPath="$PROJECT_DIR$/update-recipe/updateRecipe.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
     </list>
     <ignored path="mr-pour.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,6 +44,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.464286">
+              <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="login-controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/login/login-controller.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -72,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main-controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/main-controller.js">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.019957984">
+              <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -112,10 +104,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="update-controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="update-controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/update-recipe/update-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7205882">
+            <state vertical-scroll-proportion="0.0">
               <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
               <folding />
             </state>
@@ -169,7 +161,6 @@
         <option value="$PROJECT_DIR$/html/modal.html" />
         <option value="$PROJECT_DIR$/html/temp.html" />
         <option value="$PROJECT_DIR$/html/recipes.html" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/directives/modal-directive.js" />
         <option value="$PROJECT_DIR$/controllers/main-controller.js" />
         <option value="$PROJECT_DIR$/controllers/registration-controller.js" />
@@ -189,6 +180,7 @@
         <option value="$PROJECT_DIR$/create-recipe/createRecipe.html" />
         <option value="$PROJECT_DIR$/create-recipe/create-controller.js" />
         <option value="$PROJECT_DIR$/dashboard/dashboard-controller.js" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -458,12 +450,6 @@
       <created>1452464390972</created>
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Working on the style">
-      <created>1457995313374</created>
-      <option name="number" value="00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1457995313375</updated>
     </task>
     <task id="LOCAL-00065" summary="Working on the style">
       <created>1457995605526</created>
@@ -753,7 +739,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459111635377</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="Move stuff again into better organized folders">
+      <created>1459112695600</created>
+      <option name="number" value="00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1459112695600</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -817,7 +809,8 @@
     <MESSAGE value="Scratch the percentage thing" />
     <MESSAGE value="Update temp values to match multimeter" />
     <MESSAGE value="Move controllers and everything into separate files for better understanding things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Move controllers and everything into separate files for better understanding things" />
+    <MESSAGE value="Move stuff again into better organized folders" />
+    <option name="LAST_COMMIT_MESSAGE" value="Move stuff again into better organized folders" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1030,26 +1023,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="182" column="3" selection-start-line="182" selection-start-column="3" selection-end-line="182" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/directives/modal-directive.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39915967">
           <caret line="20" column="3" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24891774">
-          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1118,34 +1095,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/create-recipe/create-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="46" selection-start-line="47" selection-start-column="46" selection-end-line="48" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dashboard/dashboard-controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login/login-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="3" selection-start-line="81" selection-start-column="3" selection-end-line="81" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/main-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -1176,8 +1129,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/update-recipe/update-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7205882">
+        <state vertical-scroll-proportion="0.0">
           <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.464286">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create-recipe/create-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="46" selection-start-line="47" selection-start-column="46" selection-end-line="48" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/main-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09978992">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/login/login-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="81" column="3" selection-start-line="81" selection-start-column="3" selection-end-line="81" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.019957984">
+          <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
           <folding />
         </state>
       </provider>

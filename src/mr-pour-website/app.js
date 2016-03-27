@@ -23,37 +23,37 @@ mrPour.config(function ($routeProvider, localStorageServiceProvider) {
         })
 
         .when('/registration', {
-            templateUrl: 'html/registration-page.html',
+            templateUrl: 'registration/registration-page.html',
             controller: 'registrationController'
         })
 
         .when('/login', {
-            templateUrl: 'html/login-page.html',
+            templateUrl: 'login/login-page.html',
             controller: 'loginController'
         })
 
         .when('/dashboard', {
-            templateUrl: 'html/dash.html',
+            templateUrl: 'dashboard/dash.html',
             controller: 'dashboardController'
         })
 
         .when('/dashboard/recipes', {
-            templateUrl: 'html/recipes.html',
+            templateUrl: 'recipe/recipes.html',
             controller: 'recipeController'
         })
 
         .when('/dashboard/recipes/create', {
-            templateUrl: 'html/createRecipe.html',
+            templateUrl: 'create-recipe/createRecipe.html',
             controller: 'createController'
         })
 
         .when('/dashboard/recipes/update', {
-            templateUrl: 'html/updateRecipe.html',
+            templateUrl: 'update-recipe/updateRecipe.html',
             controller: 'updateController'
         })
 
         .when('/dashboard/temperature', {
-            templateUrl: 'html/temp.html',
+            templateUrl: 'temperature/temp.html',
             controller: 'tempController'
         })
 
