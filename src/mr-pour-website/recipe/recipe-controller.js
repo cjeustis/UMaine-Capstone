@@ -102,7 +102,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
                     + parseFloat($scope.rowData['amount_2'])
                     + parseFloat($scope.rowData['amount_3'])
                     + parseFloat($scope.rowData['amount_4']);
-                var pouringTime = totalAmount * 26000;  // Guess/check with little buffer
+                var pouringTime = totalAmount * 23000;  // Guess/check with little buffer
                 setInterval(function() {
                     $scope.modalShown = false;
                     $rootScope.isBusy = false;

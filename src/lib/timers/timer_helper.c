@@ -38,9 +38,10 @@ void init_motors_timer(void)
 void enable_motor_timer(int motor)
 {
 	char lcd_string[17];
+	char lcd_string1[17];
 	int temp;
 	if(pouring_length != 0) {
-		LCDClear();
+		// LCDClear();
 		motor_on(motor);
 		enable_motors_timer_interrupt();
 
@@ -49,8 +50,9 @@ void enable_motor_timer(int motor)
 			if (percent != temp) {
 				percent = (motors_overflow_count / pouring_length) * 100;
 				sprintf(lcd_string, "Complete:   %d%%", percent);
-				LCDWriteString("Pouring recipe..");
-				LCDWriteStringXY(0, 1, lcd_string);
+				sprintf(lcd_string1, "Pouring # %d", motor);
+				// LCDWriteString(lcd_string1);
+				// LCDWriteStringXY(0, 1, lcd_string);
 				// printf("\rPouring: %d%%", percent);
 				// fflush(stdout);
 			}
@@ -59,9 +61,9 @@ void enable_motor_timer(int motor)
 		disable_motors_timer_interrupt();
 		motors_overflow_count = 0.0;
 
-		LCDClear();
-		LCDWriteString("Pouring recipe..");
-		LCDWriteStringXY(0, 1, "Complete:   100%%");
+		// LCDClear();
+		// LCDWriteString("Pouring recipe..");
+		// LCDWriteStringXY(0, 1, "Complete:   100%%");
 
 		// printf("\rPouring: 100%%\n");
 		// fflush(stdout);

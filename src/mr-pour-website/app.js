@@ -10,7 +10,7 @@ mrPour.config(function ($routeProvider, localStorageServiceProvider) {
 
     $routeProvider
         .when('/index.html', {
-            templateUrl: 'html/main.html',
+            templateUrl: 'main/main.html',
             controller: 'mainController',
             resolve: function($q, $location) {
                 var deferred = $q.defer();

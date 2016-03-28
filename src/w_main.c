@@ -138,9 +138,6 @@ void pour_recipe(Recipe *recipe)
 		pouring_length += MOTOR4_OFFSET;
 		enable_motor_timer(4);
 	}
-
-	/* Put LCD back to where it was */
-	update_LCD_screen(LCD_CURRENT_TEMP);
 }
 
 /* Converts the recipe's ingredient's amounts from char to float to use when dispensing liquids */
