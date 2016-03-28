@@ -1,0 +1,12 @@
+{
+	"recipe_name": "Manhattan",
+	"ingredient_one_name": "Rye Whiskey",
+	"ingredient_one_amount": 4.0,
+	"ingredient_two_name": "Sweet Vermouth",
+	"ingredient_two_amount": 2.0,
+	"ingredient_three_name": "Angostura Bitter",
+	"ingredient_three_amount": 0.1,
+	"ingredient_four_name": "Cherries",
+	"ingredient_four_amount": 0.0,
+	"glass_type": "Cocktail Glass"
+}
