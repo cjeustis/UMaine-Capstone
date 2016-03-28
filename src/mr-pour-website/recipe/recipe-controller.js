@@ -1,5 +1,5 @@
 mrPour.controller('recipeController', function ($scope, $rootScope, $http, localStorageService, $location, $timeout) {
-    get_recipes();
+    $scope.get_recipes();
 
     $scope.modalShown = false;
 
@@ -129,7 +129,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
         });
     };
 
-    function get_recipes() {
+    $scope.get_recipes = function() {
         var data = {};
         data['table_name'] = $rootScope.userData.user_name;
         //$scope.rowData['table_name'] = $rootScope.userData.user_name;
