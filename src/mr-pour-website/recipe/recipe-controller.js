@@ -1,4 +1,5 @@
 mrPour.controller('recipeController', function ($scope, $rootScope, $http, localStorageService, $location, $timeout) {
+    get_recipes();
 
     $scope.modalShown = false;
 
