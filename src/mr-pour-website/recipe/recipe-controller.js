@@ -15,6 +15,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
             {
                 setInterval(function() {
                     $scope.modalShown = false;
+                    $scope.$apply();
                     doLogout();
                 }, 1000);
             }
@@ -140,11 +141,11 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
             data: data,
             success: function ( data ) {
                 console.log(data);
-                $scope.$apply(function() {
-                    $scope.hasRecipes = true;
-                    $scope._userRecipes = data;
-                    gridOptions.api.setRowData(data);
-                });
+                $scope.hasRecipes = true;
+                $scope._userRecipes = data;
+                gridOptions.api.setRowData(data);
+                $location.path('/dashboard/recipes');
+                $scope.$apply();
             },
             error: function(data) {
                 console.log('ERROR!');
@@ -152,12 +153,4 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
             }
         });
     };
-
-    //$.getJSON('php/getRecipes.php', function(data) {
-    //    $scope.$apply(function() {
-    //        $scope.hasRecipes = true;
-    //        $scope._userRecipes = data;
-    //        gridOptions.api.setRowData(data);
-    //    });
-    //}).error(function() { console.log('No recipes exist!'); $scope.hasRecipes = false; });
 });

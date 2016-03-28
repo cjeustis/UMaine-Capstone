@@ -31,7 +31,7 @@ mrPour.controller('tempController', function ($scope, $rootScope, $http, localSt
     }
 
     $scope.currentlySetTemp = localStorageService.get('currentlySetTemp');
-    if ($scope.currentlySetTemp < 35 && $scope.currentlySetTemp > 55) {
+    if ($scope.currentlySetTemp == null) {
         $scope.currentlySetTemp = 35;
         localStorageService.set('currentlySetTemp', $scope.currentlySetTemp);
         $scope.sendUpdatedTemp();

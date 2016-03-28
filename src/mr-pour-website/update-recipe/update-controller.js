@@ -43,7 +43,6 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, local
     };
 
     $scope.saveRecipe = function(recipe) {
-
         recipe['table_name'] = $rootScope.userData.user_name;
         // Create sql table to hold user recipes
         $.ajax({
@@ -57,8 +56,8 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, local
                 setInterval(function() {
                     $scope.modalShown = false;
                     $scope.$apply();
-                }, 1000);
-                $location.path('/dashboard/recipes');
+                    }, 1000);
+                    $location.path('/dashboard/recipes');
                 $scope.$apply();
             }
         });
