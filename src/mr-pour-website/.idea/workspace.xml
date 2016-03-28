@@ -4,8 +4,6 @@
     <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/recipe/recipe-controller.js" afterPath="$PROJECT_DIR$/recipe/recipe-controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temperature/temp-controller.js" afterPath="$PROJECT_DIR$/temperature/temp-controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/update-recipe/update-controller.js" afterPath="$PROJECT_DIR$/update-recipe/update-controller.js" />
     </list>
     <ignored path="mr-pour.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,21 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="recipe-controller.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="recipe-controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="147" column="32" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.53886557">
+              <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="temp-controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="temp-controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/temperature/temp-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65861344">
-              <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="26" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -90,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="171" column="47" selection-start-line="171" selection-start-column="47" selection-end-line="171" selection-end-column="47" />
+              <caret line="18" column="42" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -447,12 +445,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00076" summary="Attempt to set loading indicator for pouring length">
-      <created>1458579224269</created>
-      <option name="number" value="00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1458579224270</updated>
-    </task>
     <task id="LOCAL-00077" summary="Attempt to set loading indicator for pouring length">
       <created>1458579258948</created>
       <option name="number" value="00077" />
@@ -741,7 +733,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459183040733</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="Fix recipe retrieval for users">
+      <created>1459183753931</created>
+      <option name="number" value="00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1459183753931</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1153,14 +1151,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="171" column="47" selection-start-line="171" selection-start-column="47" selection-end-line="171" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/php/getRecipes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1177,18 +1167,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
+    <entry file="file://$PROJECT_DIR$/temperature/temp-controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="147" column="32" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
+          <caret line="28" column="26" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/temperature/temp-controller.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65861344">
-          <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="42" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53886557">
+          <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
           <folding />
         </state>
       </provider>
