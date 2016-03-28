@@ -25,7 +25,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
     function doLogout () {
         localStorageService.set('auth', false);
         localStorageService.set('expires', (Date.now() + 120000));
-        $location.path('/');
+        $location.path('#/');
         $scope.$apply();
     }
 
