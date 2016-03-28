@@ -128,11 +128,28 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
         });
     };
 
-    $.getJSON('php/getRecipes.php', function(data) {
-        $scope.$apply(function() {
-            $scope.hasRecipes = true;
-            $scope._userRecipes = data;
-            gridOptions.api.setRowData(data);
+    function get_recipes() {
+        $scope.rowData['table_name'] = $rootScope.userData.user_name;
+        // Delete selected recipe from table
+        $.ajax({
+            type: 'post',
+            url: 'php/getRecipes.php',
+            data: $rootScope.userData.user_name,
+            success: function ( data ) {
+                $scope.$apply(function() {
+                    $scope.hasRecipes = true;
+                    $scope._userRecipes = data;
+                    gridOptions.api.setRowData(data);
+                });
+            }
         });
-    }).error(function() { console.log('No recipes exist!'); $scope.hasRecipes = false; });
+    }
+
+    //$.getJSON('php/getRecipes.php', function(data) {
+    //    $scope.$apply(function() {
+    //        $scope.hasRecipes = true;
+    //        $scope._userRecipes = data;
+    //        gridOptions.api.setRowData(data);
+    //    });
+    //}).error(function() { console.log('No recipes exist!'); $scope.hasRecipes = false; });
 });

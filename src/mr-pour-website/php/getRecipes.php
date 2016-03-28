@@ -8,7 +8,9 @@ if(!isset($_SESSION['user_session']))
 
 include_once 'dbconfig.php';
 
-$stmt = $db_con->prepare("SELECT * FROM ceustis");
+$tableName = $_POST['table_name'];
+
+$stmt = $db_con->prepare("SELECT * FROM $tableName");
 $stmt->execute(array(":uid"=>$_SESSION['user_session']));
 
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
