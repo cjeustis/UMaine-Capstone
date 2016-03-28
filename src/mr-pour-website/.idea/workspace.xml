@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="37434bc0-5120-4f8b-8f02-3be015994b52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/getRecipes.php" afterPath="$PROJECT_DIR$/php/getRecipes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/recipe/recipe-controller.js" afterPath="$PROJECT_DIR$/recipe/recipe-controller.js" />
     </list>
     <ignored path="mr-pour.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="recipe-controller.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="recipe-controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.7405462">
+              <caret line="150" column="34" selection-start-line="150" selection-start-column="34" selection-end-line="150" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -64,10 +64,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="getRecipes.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="getRecipes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/php/getRecipes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4789916">
+            <state vertical-scroll-proportion="0.0">
               <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
               <folding />
             </state>
@@ -139,8 +139,8 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/php/updateRecipe.php" />
         <option value="$PROJECT_DIR$/create-recipe/create-controller.js" />
-        <option value="$PROJECT_DIR$/recipe/recipe-controller.js" />
         <option value="$PROJECT_DIR$/php/getRecipes.php" />
+        <option value="$PROJECT_DIR$/recipe/recipe-controller.js" />
       </list>
     </option>
   </component>
@@ -424,12 +424,6 @@
       <created>1452464390972</created>
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
-    </task>
-    <task id="LOCAL-00074" summary="Attempt to set loading indicator for pouring length">
-      <created>1458578936003</created>
-      <option name="number" value="00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1458578936004</updated>
     </task>
     <task id="LOCAL-00075" summary="Attempt to set loading indicator for pouring length">
       <created>1458579165186</created>
@@ -719,7 +713,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459182769886</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="Fix recipe retrieval for users">
+      <created>1459182972907</created>
+      <option name="number" value="00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1459182972907</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1154,18 +1154,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
+    <entry file="file://$PROJECT_DIR$/php/getRecipes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/getRecipes.php">
+    <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4789916">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.7405462">
+          <caret line="150" column="34" selection-start-line="150" selection-start-column="34" selection-end-line="150" selection-end-column="34" />
           <folding />
         </state>
       </provider>
