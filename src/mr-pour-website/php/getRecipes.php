@@ -3,7 +3,7 @@ session_start();
 
 if(!isset($_SESSION['user_session']))
 {
- header("Location: ../html/dash.html");
+ header("Location: ../dashboard/dash.html");
 }
 
 include_once 'dbconfig.php';
