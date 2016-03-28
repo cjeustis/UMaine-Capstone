@@ -27,8 +27,8 @@
       <file leaf-file-name="recipe-controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.019957984">
-              <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.039915968">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -475,12 +475,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00072" summary="Working on the style">
-      <created>1457996512944</created>
-      <option name="number" value="00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1457996512944</updated>
-    </task>
     <task id="LOCAL-00073" summary="Ony send temp every 10 seconds if not sending other info">
       <created>1458578604733</created>
       <option name="number" value="00073" />
@@ -769,7 +763,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459182318769</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="Fix recipe retrieval for users">
+      <created>1459182514830</created>
+      <option name="number" value="00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1459182514830</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1214,8 +1214,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.019957984">
-          <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.039915968">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>

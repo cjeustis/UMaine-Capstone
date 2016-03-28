@@ -1,5 +1,5 @@
 mrPour.controller('recipeController', function ($scope, $rootScope, $http, localStorageService, $location, $timeout) {
-    $scope.get_recipes();
+    //get_recipes();
 
     $scope.modalShown = false;
 
@@ -129,7 +129,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
         });
     };
 
-    $scope.get_recipes = function() {
+    window.onload = function() {
         var data = {};
         data['table_name'] = $rootScope.userData.user_name;
         //$scope.rowData['table_name'] = $rootScope.userData.user_name;
@@ -146,7 +146,7 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
                 });
             }
         });
-    }
+    };
 
     //$.getJSON('php/getRecipes.php', function(data) {
     //    $scope.$apply(function() {
