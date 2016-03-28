@@ -27,8 +27,8 @@
       <file leaf-file-name="recipe-controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.019957984">
-              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.6207983">
+              <caret line="133" column="41" selection-start-line="133" selection-start-column="41" selection-end-line="133" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -38,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/update-recipe/update-controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="61" selection-start-line="46" selection-start-column="61" selection-end-line="46" selection-end-column="61" />
+              <caret line="46" column="31" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -475,12 +475,6 @@
       <option name="number" value="Default" />
       <updated>1452464390972</updated>
     </task>
-    <task id="LOCAL-00069" summary="Working on the style">
-      <created>1457995969099</created>
-      <option name="number" value="00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1457995969100</updated>
-    </task>
     <task id="LOCAL-00070" summary="Working on the style">
       <created>1457996424877</created>
       <option name="number" value="00070" />
@@ -769,7 +763,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459181912581</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <task id="LOCAL-00118" summary="Fix recipe retrieval for users">
+      <created>1459181957630</created>
+      <option name="number" value="00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1459181957630</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1194,15 +1194,15 @@
     <entry file="file://$PROJECT_DIR$/update-recipe/update-controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="61" selection-start-line="46" selection-start-column="61" selection-end-line="46" selection-end-column="61" />
+          <caret line="46" column="31" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/recipe/recipe-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.019957984">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.6207983">
+          <caret line="133" column="41" selection-start-line="133" selection-start-column="41" selection-end-line="133" selection-end-column="41" />
           <folding />
         </state>
       </provider>
