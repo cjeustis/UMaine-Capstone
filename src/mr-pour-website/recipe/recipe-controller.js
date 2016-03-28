@@ -130,12 +130,14 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
     };
 
     function get_recipes() {
+        var data = {};
+        data['table_name'] = $rootScope.userData.user_name;
         //$scope.rowData['table_name'] = $rootScope.userData.user_name;
         // Delete selected recipe from table
         $.ajax({
             type: 'post',
             url: 'php/getRecipes.php',
-            data: $rootScope.userData.user_name,
+            data: data,
             success: function ( data ) {
                 $scope.$apply(function() {
                     $scope.hasRecipes = true;
