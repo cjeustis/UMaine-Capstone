@@ -139,11 +139,15 @@ mrPour.controller('recipeController', function ($scope, $rootScope, $http, local
             type: 'post',
             url: 'php/getRecipes.php',
             data: data,
+            beforeSend: function() {
+                $scope.modalShown = true;
+            },
             success: function ( data ) {
                 console.log(data);
                 $scope.hasRecipes = true;
                 $scope._userRecipes = data;
                 gridOptions.api.setRowData(data);
+                $scope.modalShown = false;
                 $location.path('/dashboard/recipes');
                 $scope.$apply();
             },

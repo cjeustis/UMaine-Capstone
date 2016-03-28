@@ -40,6 +40,7 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, local
 
     $scope.cancel = function() {
         $location.path('/dashboard/recipes');
+        $scope.$apply();
     };
 
     $scope.saveRecipe = function(recipe) {
@@ -56,8 +57,8 @@ mrPour.controller('updateController', function ($scope, $rootScope, $http, local
                 setInterval(function() {
                     $scope.modalShown = false;
                     $scope.$apply();
-                    }, 1000);
-                    $location.path('/dashboard/recipes');
+                }, 1000);
+                $location.path('/dashboard/recipes');
                 $scope.$apply();
             }
         });
